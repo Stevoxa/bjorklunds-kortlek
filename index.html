@@ -406,8 +406,7 @@
             text-align: center; 
         }
         #advancedPassSettings .action-buttons { 
-            /* margin-bottom är 0 redan, men vi kan lägga till margin-top här om det behövs */
-            margin-top: 10px; /* Lite utrymme efter passlistan och innan knapparna */
+            margin-top: 10px; 
         }
         #advancedPassSettings .action-buttons > button,
         #advancedPassSettings .action-buttons > .file-input-wrapper {
@@ -427,7 +426,7 @@
 
         #customPassesInfo {
             color: var(--primary-color); 
-            margin-top: 15px; /* Lite mer utrymme efter action-knapparna */
+            margin-top: 15px; 
             text-align: center; 
         }
         #unassignedParticipantsList {
@@ -675,7 +674,7 @@
         <button id="randomizeBtn" style="width: 100%; margin-top: 20px; padding: 15px; font-size: 1.2em;">Slumpa Pass</button>
     </div>
 
-    <!-- Resten av Overlays och Script är oförändrat från föregående version -->
+    <!-- Resten av Overlays och Script är oförändrat -->
     <div id="resultOverlay" class="content-overlay" style="display: none;">
         <div class="overlay-content-box">
             <div class="overlay-header">
@@ -1029,6 +1028,23 @@
         }
         
         // --- KÄRNFUNKTIONER ---
+        function smartSortPasses(a, b) {
+            const numA = parseFloat(a);
+            const numB = parseFloat(b);
+            const aIsNumber = !isNaN(numA) && isFinite(a);
+            const bIsNumber = !isNaN(numB) && isFinite(b);
+
+            if (aIsNumber && bIsNumber) {
+                return numA - numB; 
+            } else if (aIsNumber && !bIsNumber) {
+                return -1; 
+            } else if (!aIsNumber && bIsNumber) {
+                return 1; 
+            } else {
+                return a.localeCompare(b, 'sv', { numeric: true, sensitivity: 'base' }); // numeric: true för bättre "naturlig" sortering av text med siffror
+            }
+        }
+
         function addNameToParticipantsList(nameToAdd) {
             const name = nameToAdd.trim();
             if (!name) { return false; }
@@ -1043,12 +1059,13 @@
         function addPassNameToList(passIdToAdd) {
             const passId = passIdToAdd.trim();
             if (!passId) { return false; }
-            const passIdLower = passId.toLowerCase();
+            const passIdLower = passId.toLowerCase(); 
             if (customPasses.some(existingPass => existingPass.toLowerCase() === passIdLower)) {
                 alert('Pass-ID "' + passId + '" (eller en variant) finns redan i listan.');
                 return false;
             }
-            customPasses.push(passId);
+            customPasses.push(passId); 
+            customPasses.sort(smartSortPasses); 
             updateCustomPassesUI(); 
             return true;
         }
@@ -1081,6 +1098,7 @@
         function renderCustomPassList() {
             if (!customPassDisplayList || !noCustomPassesInfo) return;
             customPassDisplayList.innerHTML = '';
+            // `customPasses` är redan sorterad tack vare anrop i addPassNameToList och loadCustomPassesFromFile
             noCustomPassesInfo.style.display = customPasses.length === 0 ? 'block' : 'none';
 
             customPasses.forEach((passId) => {
@@ -1106,6 +1124,7 @@
             const idx = customPasses.indexOf(passIdToDelete);
             if (idx > -1) {
                 customPasses.splice(idx, 1);
+                // customPasses behöver inte sorteras om här, den är redan sorterad och ett element tas bort
                 updateCustomPassesUI(); 
             }
         }
@@ -1161,7 +1180,7 @@
 
             if (customPasses.length > 0) {
                 const availableParticipants = [...shuffledParticipants];
-                customPasses.forEach(passId => {
+                customPasses.forEach(passId => { // Använder den sorterade customPasses
                     const assignedParticipant = availableParticipants.length > 0 ? availableParticipants.shift() : "<i>Ledigt</i>";
                     if(resultsList) resultsList.appendChild(createResultListItem(passId, assignedParticipant));
                     if(overlayResultsList) overlayResultsList.appendChild(createResultListItem(passId, assignedParticipant));
@@ -1285,10 +1304,23 @@
             if (file && passFileInput) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    customPasses = e.target.result.split(/\r\n|\n/).map(line => line.trim()).filter(line => line !== '');
+                    const loadedPasses = e.target.result.split(/\r\n|\n/).map(line => line.trim()).filter(line => line !== '');
+                    const uniqueLoadedPasses = [];
+                    const existingPassesLower = customPasses.map(p => p.toLowerCase());
+
+                    loadedPasses.forEach(newPass => {
+                        if (!existingPassesLower.includes(newPass.toLowerCase()) && 
+                            !uniqueLoadedPasses.map(p => p.toLowerCase()).includes(newPass.toLowerCase())) {
+                            uniqueLoadedPasses.push(newPass);
+                        }
+                    });
+                    
+                    customPasses.push(...uniqueLoadedPasses);
+                    customPasses.sort(smartSortPasses);
+                    
                     updateCustomPassesUI();
                     passFileInput.value = '';
-                    alert(`${customPasses.length} pass laddades från filen.`);
+                    alert(`${uniqueLoadedPasses.length} nya unika pass laddades och lades till. Total: ${customPasses.length}.`);
                 };
                 reader.onerror = () => alert("Kunde inte läsa passfilen.");
                 reader.readAsText(file);
