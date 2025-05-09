@@ -102,27 +102,40 @@
             transition: background-color 0.3s ease;
         }
         
-        .app-header-actions {
+        .app-header-actions-left {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            z-index: 10;
+        }
+
+        .app-header-actions { /* Nu för höger-sidan */
             position: absolute;
             top: 10px; 
             right: 10px; 
             display: flex;
-            gap: 0px; /* Ännu tätare mellan ikoner */
+            gap: 0px; /* Håller knapparna kant-i-kant */
             z-index: 10;
         }
+        
+        /* Gemensam stil för alla header-action knappar */
+        .app-header-actions-left .icon-button,
         .app-header-actions .icon-button { 
             background-color: transparent !important; 
             border: none !important;    
-            padding: 6px; 
-            width: 34px;  
-            height: 34px;
+            padding: 4px; /* Minskad padding för att göra dem tätare */
+            width: 28px;  /* 20px (ikon) + 4px*2 (padding) */
+            height: 28px; /* 20px (ikon) + 4px*2 (padding) */
         }
+        .app-header-actions-left .icon-button svg,
         .app-header-actions .icon-button svg {
             fill: var(--icon-fill-color) !important; 
             width: 20px; 
             height: 20px;
         }
-         .app-header-actions .icon-button:hover svg {
+        .app-header-actions-left .icon-button:hover svg,
+        .app-header-actions .icon-button:hover svg {
              fill: var(--icon-hover-fill-color) !important; 
          }
 
@@ -204,9 +217,6 @@
         .button-secondary:hover {
             background-color: color-mix(in srgb, var(--secondary-button-bg-color) 90%, #000000 10%); 
         }
-
-        /* Rensa-knappen är nu en vanlig .button-secondary */
-        /* .button-danger-secondary borttagen från att användas på Rensa */
         
         .icon-button { 
             padding: 8px;
@@ -231,13 +241,14 @@
              fill: var(--secondary-button-text-color) !important; 
         }
 
-        .icon-button:not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):not(#speakNameBtn):not(.settings-toggle-btn):not(.delete-btn) svg {
+        /* Undantag för knappar som inte är i app-header-actions */
+        .icon-button:not(.app-header-actions-left .icon-button):not(.app-header-actions .icon-button):not(#speakNameBtn):not(.settings-toggle-btn):not(.delete-btn) svg {
             width: 20px;
             height: 20px;
             fill: var(--primary-color); 
             transition: fill 0.3s ease;
         }
-        .icon-button:not(.button-secondary):not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):not(.settings-toggle-btn):not(.delete-btn):hover:not(:disabled) svg, 
+        .icon-button:not(.button-secondary):not(.app-header-actions-left .icon-button):not(.app-header-actions .icon-button):not(#speakNameBtn):not(.settings-toggle-btn):not(.delete-btn):hover:not(:disabled) svg, 
         .overlay-header .icon-button:hover:not(:disabled) svg { 
             fill: var(--icon-hover-fill-color); 
         }
@@ -283,18 +294,17 @@
             flex-direction: column; 
             align-items: stretch; 
          }
-         .action-buttons > button:not(#installAppBtn) { 
+         .action-buttons > button:not(#installAppBtn) { /* #installAppBtn styrs av .app-header-actions .icon-button */
             padding: 8px 12px; 
             height: 38px; 
             align-items: center; 
             justify-content: center;
          }
-         #installAppBtn { 
-            /* Styrs nu av .app-header-actions */
-         }
+         /* #installAppBtn styrs nu av .app-header-actions .icon-button eller .app-header-actions-left .icon-button */
          #installAppBtn svg { 
-             fill: currentColor; 
-             width:18px; height:18px; margin-right: 8px;
+             fill: currentColor; /* Eller var(--icon-fill-color) om det är standard */
+             width:18px; height:18px; /* Kan behöva vara 20px för att matcha de andra */
+             /* margin-right: 8px; om det vore en textknapp */
          }
          .action-buttons .file-input-wrapper .button-like { 
             width: 100%; 
@@ -557,23 +567,23 @@
 </head>
 <body>
     <div class="container">
-        <div class="app-header-actions">
-            <!-- ORDNING ÄNDRAD: Tema först, sedan Hjälp, sedan Dela -->
+        <div class="app-header-actions-left">
             <button id="themeToggleBtn" class="icon-button" title="Växla tema">
-                <!-- Spegelvänd måne (genom att transformera eller justera path) -->
-                <!-- Enkel spegelvändning: transform="scale(-1, 1)" på en grupp runt månen eller justera path d -->
                 <svg id="themeIconMoon" viewBox="0 0 24 24" style="display: none;" transform="scale(-1,1) translate(-24,0)"> 
                     <path d="M10 2c-1.82 0-3.53.5-5 1.35c2.99 1.73 5 4.95 5 8.65s-2.01 6.92-5 8.65A9.973 9.973 0 0 0 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/>
                 </svg>
-                <!-- Ny Sol-ikon (mer traditionell) -->
-                <svg id="themeIconSun" viewBox="0 0 24 24" style="display: block;">
-                    <path d="M12 5.69c-3.31 0-6 2.69-6 6s2.69 6 6 6s6-2.69 6-6s-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4s4 1.79 4 4s-1.79 4-4 4zM12 2L10.59 3.41L12 4.83L13.41 3.41L12 2zm8 6.36l-2.05 2.05l1.41 1.41L21.95 9.77l-1.41-1.41zM3.64 19.95l2.05-2.05l-1.41-1.41L1.64 18.54l1.41 1.41zm0-12.28l1.41-1.41L6.46 7.7l-1.41 1.41L3.64 7.67zM22 12l-1.41 1.41L19.17 12l1.41-1.41L22 12zm-20 0l1.41 1.41L4.83 12l-1.41-1.41L2 12zm8.59-8.59L12 2l-1.41 1.41L12 4.83l-1.41-1.42zM12 20l1.41-1.41L12 17.17l-1.41 1.41L12 20zm6.36-1.46l-1.41-1.41L19.05 16.1l1.41 1.41l-2.1-2.02z"/>
+                <!-- NY Sol-ikon (Bootstrap Icons sun-fill, anpassad till fill) -->
+                <svg id="themeIconSun" viewBox="0 0 16 16" style="display: block;">
+                    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
                 </svg>
             </button>
-            <button id="helpBtn" class="icon-button" title="Hjälp"> <!-- Hjälp -->
+        </div>
+
+        <div class="app-header-actions"> <!-- Endast höger-ikoner kvar här -->
+            <button id="helpBtn" class="icon-button" title="Hjälp">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
             </button>
-            <button id="shareBtn" class="icon-button" title="Dela appen"> <!-- Dela -->
+            <button id="shareBtn" class="icon-button" title="Dela appen">
                 <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>
             </button>
             <button id="installAppBtn" class="icon-button" title="Installera appen" style="display: none;">
@@ -785,24 +795,30 @@
         function applyTheme(theme) {
             const newTheme = theme === 'dark' ? 'dark' : 'light'; 
             document.body.setAttribute('data-theme', newTheme);
-            if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none';
-            if (themeIconMoon) themeIconMoon.style.display = newTheme === 'dark' ? 'none' : 'block';
+            if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none'; // Mörk tema -> visa sol för att byta till ljus
+            if (themeIconMoon) themeIconMoon.style.display = newTheme === 'dark' ? 'none' : 'block'; // Mörk tema -> göm måne
             localStorage.setItem('theme', newTheme);
             if (themeToggleBtn) themeToggleBtn.title = newTheme === 'dark' ? "Växla till ljust tema" : "Växla till mörkt tema";
             
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
             if (metaThemeColor) {
                 let colorForMeta;
+                // Vi måste tillfälligt applicera temat för att läsa CSS-variabler korrekt
+                const bodyAlreadyHasTheme = document.body.getAttribute('data-theme') === newTheme;
+                if (!bodyAlreadyHasTheme) document.body.setAttribute('data-theme', newTheme);
+
                 const rootStyle = getComputedStyle(document.documentElement);
                 if (newTheme === 'dark') {
-                     colorForMeta = rootStyle.getPropertyValue('--primary-color').trim() || '#76c776'; // Fallback om CSS inte laddat
+                     colorForMeta = rootStyle.getPropertyValue('--primary-color').trim() || '#76c776';
                 } else {
-                    // Försök läsa från :root, annars fallback
-                    const lightPrimaryColorFromRoot = rootStyle.getPropertyValue('--primary-color').trim();
-                    // Kolla att det inte är den mörka färgen (om temat precis bytts och CSS inte hunnit med)
-                     colorForMeta = (lightPrimaryColorFromRoot && lightPrimaryColorFromRoot !== '#76c776') ? lightPrimaryColorFromRoot : '#344a34';
+                     colorForMeta = rootStyle.getPropertyValue('--primary-color').trim() || '#344a34';
                 }
                 metaThemeColor.setAttribute("content", colorForMeta);
+                
+                // Återställ om vi tillfälligt ändrade det, ifall applyTheme anropas innan DOMContentLoaded
+                if (!bodyAlreadyHasTheme && document.body.getAttribute('data-theme') !== localStorage.getItem('theme')) {
+                     document.body.setAttribute('data-theme', localStorage.getItem('theme'));
+                }
             }
         }
         function toggleTheme() {
