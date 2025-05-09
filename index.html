@@ -229,19 +229,18 @@
             justify-content: center;
         }
         #speakNameBtn.icon-button.button-secondary,
-        #speakPassNameBtn.icon-button.button-secondary { /* Lade till #speakPassNameBtn här */
+        #speakPassNameBtn.icon-button.button-secondary { 
              background-color: var(--secondary-button-bg-color); 
              border: 1px solid var(--secondary-button-border-color); 
         }
          #speakNameBtn.icon-button.button-secondary:hover,
-         #speakPassNameBtn.icon-button.button-secondary:hover { /* Lade till #speakPassNameBtn här */
+         #speakPassNameBtn.icon-button.button-secondary:hover {
              background-color: color-mix(in srgb, var(--secondary-button-bg-color) 90%, #000000 10%);
          }
          #speakNameBtn.icon-button.button-secondary svg,
-         #speakPassNameBtn.icon-button.button-secondary svg { /* Lade till #speakPassNameBtn här */
+         #speakPassNameBtn.icon-button.button-secondary svg { 
              fill: var(--secondary-button-text-color) !important; 
         }
-
 
         .icon-button:not(.app-header-actions-left .icon-button):not(.app-header-actions .icon-button):not(#speakNameBtn):not(#speakPassNameBtn):not(.settings-toggle-btn):not(.delete-btn) svg {
             width: 20px;
@@ -323,13 +322,13 @@
             line-height: 1.2; 
          }
 
-        #nameList ul, #resultsList ul, #overlayResultsList ul { 
+        #nameList ul, #resultsList ul, #overlayResultsList ul, #customPassDisplayList ul { /* Lade till #customPassDisplayList ul */
             list-style-type: none;
             padding: 0;
             margin: 0; 
         }
 
-        #nameList li, #resultsList li, #overlayResultsList li { 
+        #nameList li, #resultsList li, #overlayResultsList li, #customPassDisplayList li { /* Lade till #customPassDisplayList li */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -344,7 +343,8 @@
             color: var(--text-color); 
         }
 
-        #nameList li:last-child, #resultsList li:last-child, #overlayResultsList li:last-child {
+        #nameList li:last-child, #resultsList li:last-child, 
+        #overlayResultsList li:last-child, #customPassDisplayList li:last-child { /* Lade till #customPassDisplayList li:last-child */
             border-bottom: none;
         }
 
@@ -382,10 +382,15 @@
         .info-text {
             color: var(--secondary-text-color); 
         }
-        #customPassesInfo, #noResultsInfo {
+        #customPassesInfo, #noResultsInfo, #noCustomPassesInfo { /* Lade till #noCustomPassesInfo */
             font-size: inherit;
             line-height: inherit;
         }
+         #noCustomPassesInfo { /* Kan behöva centreras om den ser konstig ut */
+            text-align: center; 
+            padding: 10px 0;
+         }
+
 
         #advancedPassSettings {
             border: 1px solid var(--border-color); 
@@ -423,6 +428,7 @@
         #customPassesInfo {
             color: var(--primary-color); 
             margin-top: 8px; 
+            text-align: center; /* Centrera summeringstexten */
         }
         #unassignedParticipantsList {
             color: var(--danger-color); 
@@ -634,6 +640,11 @@
                     </button>
                 </div>
 
+                <section id="customPassListSection" style="margin-bottom: 15px;"> 
+                    <ul id="customPassDisplayList"></ul> 
+                    <p id="noCustomPassesInfo" class="info-text" style="display: none;">Inga egna pass tillagda.</p>
+                </section>
+
                 <div class="action-buttons">
                     <div class="file-input-wrapper">
                         <label for="passFileInput" class="button-like button-secondary">Läs in pass från fil</label>
@@ -641,9 +652,9 @@
                         <p class="file-format-info">Förväntat filformat: .txt (ett pass-ID per rad)</p>
                     </div>
                     <button id="savePassListBtn" class="button-secondary">Spara passlista</button>
-                    <button id="clearCustomPassesBtn" class="button-secondary">Rensa</button>
+                    <button id="clearCustomPassesBtn" class="button-secondary">Rensa hela listan</button> 
                 </div>
-                <p id="customPassesInfo" class="info-text"></p>
+                <p id="customPassesInfo" class="info-text"></p> 
             </div>
 
             <div class="result-actions-top" id="mainResultActionsTop">
@@ -707,7 +718,7 @@
                 
                 <h4>Grundläggande Användning</h4>
                 <p><strong>1. Lägg till Deltagare:</strong> Skriv namn i fältet och klicka "Lägg till" eller tala in namn med mikrofonikonen.</p>
-                <p><strong>2. (Avancerat) Anpassad Passlista:</strong> Klicka på kugghjulet bredvid "Passfördelning" för att ladda in en egen lista med passnamn/nummer från en .txt-fil (ett pass per rad).</p>
+                <p><strong>2. (Avancerat) Anpassad Passlista:</strong> Klicka på kugghjulet bredvid "Passfördelning" för att ladda in en egen lista med passnamn/nummer från en .txt-fil (ett pass per rad), eller mata in dem manuellt.</p>
                 <p><strong>3. Slumpa Pass:</strong> Klicka på den stora "Slumpa Pass"-knappen. Resultatet visas både i huvudvyn och i ett helskärmsläge.</p>
                 <p><strong>4. Återöppna Resultat:</strong> Använd ögon-ikonen ovanför resultatlistan i huvudvyn för att återöppna helskärmsresultatet.</p>
                 <p><strong>5. Kopiera/Dela:</strong> Använd kopieringsikonen för att kopiera resultatlistan. Använd dela-ikonen högst upp för att dela en länk till appen via en QR-kod.</p>
@@ -742,7 +753,8 @@
             overlayUnassignedParticipants, mainResultActionsTop, reopenOverlayBtn, mainCopyBtn,
             overlayCopyBtn, helpBtn, shareBtn, helpOverlay, helpOverlayCloseBtn, shareOverlay,
             shareOverlayCloseBtn, qrCodeContainer, shareableLink, installAppBtn,
-            passNameInput, addPassNameBtn, speakPassNameBtn; // Nya för pass-input
+            passNameInput, addPassNameBtn, speakPassNameBtn, 
+            customPassDisplayList, noCustomPassesInfo; // Nya för pass-lista
 
         // --- GLOBALA VARIABLER ---
         let participants = [];
@@ -752,7 +764,7 @@
         const appURL = "https://stevoxa.github.io/bjorklunds-kortlek/"; 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition;
-        let passRecognition; // Separat för pass
+        let passRecognition; 
 
         // --- INITIERING VID LADDNING AV SIDAN ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -794,10 +806,11 @@
             qrCodeContainer = document.getElementById('qrCodeContainer');
             shareableLink = document.getElementById('shareableLink');
             installAppBtn = document.getElementById('installAppBtn');
-            passNameInput = document.getElementById('passNameInput'); // Ny
-            addPassNameBtn = document.getElementById('addPassNameBtn'); // Ny
-            speakPassNameBtn = document.getElementById('speakPassNameBtn'); // Ny
-
+            passNameInput = document.getElementById('passNameInput'); 
+            addPassNameBtn = document.getElementById('addPassNameBtn'); 
+            speakPassNameBtn = document.getElementById('speakPassNameBtn'); 
+            customPassDisplayList = document.getElementById('customPassDisplayList');
+            noCustomPassesInfo = document.getElementById('noCustomPassesInfo');
 
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
@@ -811,7 +824,7 @@
             
             applyTheme(currentTheme); 
             renderNameList(); 
-            updateCustomPassesUI();
+            updateCustomPassesUI(); // Detta anropar renderCustomPassList och clearResults
 
             if (addNameBtn) addNameBtn.addEventListener('click', addName);
             if (nameInput) nameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addName(); });
@@ -831,12 +844,11 @@
             if (helpBtn) helpBtn.addEventListener('click', openHelpOverlay);
             if (shareBtn) shareBtn.addEventListener('click', openShareOverlay);
             if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
-            
-            if (addPassNameBtn) addPassNameBtn.addEventListener('click', addPassManually); // Ny
-            if (passNameInput) passNameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addPassManually(); }); // Ny
+            if (addPassNameBtn) addPassNameBtn.addEventListener('click', addPassManually); 
+            if (passNameInput) passNameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addPassManually(); }); 
             
             setupSpeechRecognition();
-            setupPassSpeechRecognition(); // Ny
+            setupPassSpeechRecognition(); 
             setupPWAInstallation();
         });
 
@@ -882,7 +894,11 @@
                             else console.error("Namn-röstigenkänning är inte korrekt initierad.");
                         } catch (e) { 
                             console.error("Kunde inte starta namn-röstigenkänning (catch): ", e);
-                            if (speakNameBtn) { /* Återställ knapp */ }
+                            if (speakNameBtn) {
+                                speakNameBtn.classList.remove('is-listening'); 
+                                speakNameBtn.disabled = false; 
+                                speakNameBtn.title = "Tala in namn";
+                            }
                         }
                     });
                 } catch (e) { 
@@ -894,20 +910,16 @@
             }
         }
 
-        function setupPassSpeechRecognition() { // Ny funktion
+        function setupPassSpeechRecognition() { 
             if (SpeechRecognition && speakPassNameBtn) {
-                if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-                    // Ingen varning här, redan gjord för namn
-                }
                 try {
                     passRecognition = new SpeechRecognition();
-                    passRecognition.lang = 'sv-SE'; // Anpassa vid behov
+                    passRecognition.lang = 'sv-SE'; 
                     passRecognition.continuous = false;
                     passRecognition.interimResults = false;
-                    
                     passRecognition.onresult = (event) => { 
                         const spokenPassId = event.results[0][0].transcript.trim();
-                        addPassNameToList(spokenPassId); // UI uppdateras inuti denna
+                        addPassNameToList(spokenPassId);
                     };
                     passRecognition.onerror = (event) => {
                         console.error('Fel vid pass-röstigenkänning:', event.error, event.message);
@@ -953,18 +965,18 @@
             }
         }
 
-
         function setupPWAInstallation() {
             window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault();
                 deferredPrompt = e;
                 if (installAppBtn) {
                     installAppBtn.style.display = 'inline-flex';
-                    const newInstallBtn = installAppBtn.cloneNode(true); // För att undvika multipla listeners
-                    installAppBtn.parentNode.replaceChild(newInstallBtn, installAppBtn);
+                    const newInstallBtn = installAppBtn.cloneNode(true); 
+                    if (installAppBtn.parentNode) {
+                        installAppBtn.parentNode.replaceChild(newInstallBtn, installAppBtn);
+                    }
                     installAppBtn = newInstallBtn;
-
-                    installAppBtn.addEventListener('click', async () => { // Använd addEventListener för tydlighet
+                    installAppBtn.addEventListener('click', async () => { 
                         if (deferredPrompt) {
                             deferredPrompt.prompt();
                             await deferredPrompt.userChoice; 
@@ -1026,26 +1038,26 @@
             participants.push(name); return true;
         }
 
-        function addPassNameToList(passIdToAdd) { // Ny funktion
+        function addPassNameToList(passIdToAdd) {
             const passId = passIdToAdd.trim();
             if (!passId) { return false; }
             const passIdLower = passId.toLowerCase();
             if (customPasses.some(existingPass => existingPass.toLowerCase() === passIdLower)) {
-                alert('Pass-ID "' + passId + '" finns redan i listan.');
+                alert('Pass-ID "' + passId + '" (eller en variant) finns redan i listan.');
                 return false;
             }
             customPasses.push(passId);
+            // renderCustomPassList(); // Ritas om via updateCustomPassesUI
             updateCustomPassesUI(); 
             return true;
         }
 
-        function addPassManually() { // Ny funktion
+        function addPassManually() { 
             if (passNameInput && addPassNameToList(passNameInput.value.trim())) {
                 passNameInput.value = '';
             }
             if (passNameInput) passNameInput.focus();
         }
-
 
         function renderNameList() {
             if (!nameList || !noNamesInfo) return;
@@ -1064,6 +1076,39 @@
                 deleteBtn.onclick = () => deleteNameByValue(name); li.appendChild(deleteBtn); nameList.appendChild(li);
             });
         }
+
+        function renderCustomPassList() {
+            if (!customPassDisplayList || !noCustomPassesInfo) return;
+            customPassDisplayList.innerHTML = '';
+            noCustomPassesInfo.style.display = customPasses.length === 0 ? 'block' : 'none';
+
+            customPasses.forEach((passId) => {
+                const li = document.createElement('li');
+                li.textContent = passId;
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.setAttribute('aria-label', 'Ta bort pass ' + passId);
+                deleteBtn.title = 'Ta bort pass ' + passId;
+                const svgNS = "http://www.w3.org/2000/svg"; const svgIcon = document.createElementNS(svgNS, "svg");
+                svgIcon.setAttributeNS(null, "viewBox", "0 0 24 24");
+                const p1 = document.createElementNS(svgNS, "path"); p1.setAttributeNS(null, "d", "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z");
+                const p2 = document.createElementNS(svgNS, "path"); p2.setAttributeNS(null, "d", "M17 11H7v2h10v-2z");
+                svgIcon.appendChild(p1); svgIcon.appendChild(p2); deleteBtn.appendChild(svgIcon);
+                deleteBtn.onclick = () => deleteCustomPassByValue(passId); 
+                li.appendChild(deleteBtn);
+                customPassDisplayList.appendChild(li);
+            });
+            updateCustomPassesSummary();
+        }
+
+        function deleteCustomPassByValue(passIdToDelete) {
+            const idx = customPasses.indexOf(passIdToDelete);
+            if (idx > -1) {
+                customPasses.splice(idx, 1);
+                // renderCustomPassList(); // Ritas om via updateCustomPassesUI
+                updateCustomPassesUI(); 
+            }
+        }
         
         function deleteNameByValue(nameToDelete) {
             const idx = participants.indexOf(nameToDelete);
@@ -1080,7 +1125,7 @@
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none'; 
             if (resultOverlay && resultOverlay.style.display === 'flex') {
                 resultOverlay.style.display = 'none';
-                // Hantera body.classList.remove('overlay-open') i closeAllOverlays för att undvika race conditions
+                checkAndCloseBodyOverlay();
             }
         }
 
@@ -1178,15 +1223,14 @@
             if (shareOverlay) shareOverlay.style.display = 'none';
             checkAndCloseBodyOverlay();
         }
-        function checkAndCloseBodyOverlay() { // Hjälpfunktion för att stänga body overlay
+        function checkAndCloseBodyOverlay() { 
             const anyOverlayOpen = (resultOverlay && resultOverlay.style.display === 'flex') ||
                                  (helpOverlay && helpOverlay.style.display === 'flex') ||
                                  (shareOverlay && shareOverlay.style.display === 'flex');
-            if (!anyOverlayOpen) {
+            if (!anyOverlayOpen && document.body.classList.contains('overlay-open')) {
                 document.body.classList.remove('overlay-open');
             }
         }
-
 
         function loadParticipantNamesFromFile(event) {
             const file = event.target.files[0];
@@ -1213,17 +1257,27 @@
                 if (toggleAdvancedPassBtn) toggleAdvancedPassBtn.classList.toggle('open', !isOpen);
             }
         }
-
-        function updateCustomPassesUI() {
-            if (customPassesInfo && passDistributionTitle) {
-                if (customPasses.length > 0) {
-                    customPassesInfo.textContent = `Avancerad är aktiv (${customPasses.length} pass: ${customPasses.join(', ')}).`; // Visa passen
-                    passDistributionTitle.textContent = 'Passfördelning (Avancerad)';
+        
+        function updateCustomPassesSummary() { 
+            if (customPassesInfo) {
+                 if (customPasses.length > 0) {
+                    customPassesInfo.textContent = `Avancerad är aktiv (${customPasses.length} pass tillagda).`;
                 } else {
                     customPassesInfo.textContent = 'Inga avancerade inställningar. Standardnumrering (1-n) kommer användas.';
+                }
+            }
+        }
+
+        function updateCustomPassesUI() {
+            if (passDistributionTitle) { 
+                if (customPasses.length > 0) {
+                    passDistributionTitle.textContent = 'Passfördelning (Avancerad)';
+                } else {
                     passDistributionTitle.textContent = 'Passfördelning (1-n)';
                 }
             }
+            renderCustomPassList(); 
+            // updateCustomPassesSummary(); // Anropas nu från renderCustomPassList
             clearResults(); 
         }
 
@@ -1249,9 +1303,9 @@
         }
 
         function clearLoadedCustomPasses() {
-            if (confirm("Är du säker på att du vill rensa avancerad och återgå till standardnumrering?")) {
+            if (confirm("Är du säker på att du vill rensa hela listan med egna pass och återgå till standardnumrering?")) {
                 customPasses = [];
-                if(passNameInput) passNameInput.value = ''; // Rensa även inputfältet
+                if(passNameInput) passNameInput.value = ''; 
                 updateCustomPassesUI();
             }
         }
