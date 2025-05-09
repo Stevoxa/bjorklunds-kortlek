@@ -218,7 +218,7 @@
             width: 40px; 
             height: 40px;
             min-width: 40px; 
-            background-color: transparent; /* Default transparent */
+            background-color: transparent; 
             border: none;
             flex-shrink: 0;
             display: inline-flex; 
@@ -236,7 +236,6 @@
              fill: var(--secondary-button-text-color) !important; 
         }
 
-        /* Generell fill för ikoner inuti .icon-button som inte är #speakNameBtn eller de i headern eller .settings-toggle-btn eller .delete-btn */
         .icon-button:not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):not(#speakNameBtn):not(.settings-toggle-btn):not(.delete-btn) svg {
             width: 20px;
             height: 20px;
@@ -254,7 +253,6 @@
         .icon-button:disabled svg {
             fill: var(--secondary-text-color) !important;  
         }
-
 
         .settings-toggle-btn { 
             background-color: transparent !important; 
@@ -406,7 +404,7 @@
 
         .content-overlay, #resultOverlay {
             background-color: var(--overlay-bg-color); 
-            display: none; /* Default dold */
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
@@ -515,8 +513,8 @@
         }
         #qrCodeContainer canvas { 
             display: block;
-            max-width: 100%; 
-            max-height: 100%;
+            /* max-width: 100%;  Borttagen för test */
+            /* max-height: 100%; Borttagen för test */
         }
         #shareableLink {
             color: var(--overlay-link-color); 
@@ -731,12 +729,12 @@
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
-            if (installAppBtn) installAppBtn.style.display = 'none';
+            if (installAppBtn) installAppBtn.style.display = 'none'; 
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none';
             document.body.classList.remove('overlay-open');
 
-            // Applicera initialt tema EFTER att DOM är laddad så vi kan läsa CSS-variabler
+            // Applicera initialt tema EFTER att DOM är laddad
             if (currentTheme) {
                 applyTheme(currentTheme);
             } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -745,7 +743,6 @@
                 applyTheme('light'); 
             }
         });
-
 
         // --- TEMA HANTERING ---
         function applyTheme(theme) {
@@ -758,21 +755,24 @@
             
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
             if (metaThemeColor) {
-                // För att tillförlitligt få CSS-variabeln, se till att temat är applicerat på body först
                 let colorForMeta;
                 if (newTheme === 'dark') {
-                    // Temporärt applicera temat om det inte redan är det för att läsa variabeln
-                    const wasLight = !document.body.getAttribute('data-theme') || document.body.getAttribute('data-theme') === 'light';
-                    if(wasLight) document.body.setAttribute('data-theme', 'dark');
+                    // Sätt temat temporärt för att kunna läsa CSS-variabeln om den inte redan är satt
+                    const needsTempSet = document.body.getAttribute('data-theme') !== 'dark';
+                    if(needsTempSet) document.body.setAttribute('data-theme', 'dark');
                     colorForMeta = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
-                    if(wasLight) document.body.removeAttribute('data-theme'); // Återställ om det var temporärt
+                    if(needsTempSet) document.body.setAttribute('data-theme', 'light'); // Återställ om det var temporärt
                 } else {
-                     // För ljust tema, använd antingen hårdkodat eller läs från :root om det är säkrare
-                    colorForMeta = '#344a34'; // Fallback
-                    try { // Försök läsa från root om möjligt
-                         const rootPrimary = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
-                         if(rootPrimary) colorForMeta = rootPrimary;
-                    } catch(e){}
+                    colorForMeta = '#344a34'; // Fallback för ljust tema
+                     // Om :root har en primärfärg för ljust tema, använd den
+                    const rootStyle = getComputedStyle(document.documentElement);
+                    const lightPrimaryColor = rootStyle.getPropertyValue('--primary-color').trim();
+                    // Kolla att den inte är samma som den mörka (vilket den skulle vara om mörkt tema var aktivt)
+                    const darkPrimaryColorIfActive = newTheme === 'dark' ? colorForMeta : getComputedStyle(document.body.appendChild(Object.assign(document.createElement('div'),{style:'display:none;--primary-color:initial;'}))).getPropertyValue('--primary-color').trim();
+                    if(lightPrimaryColor && lightPrimaryColor !== darkPrimaryColorIfActive){
+                        colorForMeta = lightPrimaryColor;
+                    }
+
                 }
                 metaThemeColor.setAttribute("content", colorForMeta);
             }
@@ -872,7 +872,7 @@
             e.preventDefault();
             deferredPrompt = e;
             if (installAppBtn) {
-                installAppBtn.style.display = 'inline-flex'; // Använd inline-flex för ikonknappar
+                installAppBtn.style.display = 'inline-flex'; 
             }
         });
 
@@ -948,7 +948,7 @@
             if (overlayUnassignedParticipants) overlayUnassignedParticipants.style.display = 'none';
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none'; 
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none'; 
-            // Explicit döljning av alla overlays
+            // Dubbelkolla att overlays är dolda
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
@@ -1013,7 +1013,7 @@
                 resultOverlay.style.display = 'flex';
                 document.body.classList.add('overlay-open');
             } else if (resultOverlay) { 
-                // Undvik alert om inga resultat, noResultsInfo hanterar det.
+                // No alert here, noResultsInfo in main view handles it
             }
         }
 
@@ -1038,22 +1038,47 @@
         }
 
         function generateQRCode() {
-            if (qrCodeContainer && typeof QRious !== 'undefined') {
+            console.log("Attempting to generate QR code...");
+            if (!qrCodeContainer) {
+                console.error("QR Code container element (qrCodeContainer) not found in DOM.");
+                return;
+            }
+            if (typeof QRious === 'undefined') {
+                console.error("QRious library is not loaded (typeof QRious === 'undefined'). Check CDN link or network.");
+                qrCodeContainer.innerHTML = 'Fel: QR-kodsbibliotek saknas.';
+                return;
+            }
+
+            try {
                 qrCodeContainer.innerHTML = ''; 
-                new QRious({
+                const qrInstance = new QRious({ 
                     element: qrCodeContainer,
                     value: appURL,
-                    size: 200, 
+                    size: 188, 
+                    padding: 0, 
                     background: 'white',
                     foreground: 'black',
                     level: 'H' 
                 });
-                if(shareableLink) {shareableLink.href = appURL; shareableLink.textContent = appURL;}
-            } else if (typeof QRious === 'undefined'){
-                console.error("QRious library not loaded.");
-                if(qrCodeContainer) qrCodeContainer.textContent = "Kunde inte ladda QR-kod.";
+                console.log("QRious instance:", qrInstance);
+                const canvasElement = qrCodeContainer.querySelector('canvas');
+                if (canvasElement) {
+                    console.log("Canvas element found:", canvasElement, "width:", canvasElement.width, "height:", canvasElement.height);
+                } else {
+                    console.error("QRious ran but no canvas was found in qrCodeContainer.");
+                    qrCodeContainer.innerHTML = 'Fel: Kunde inte rendera QR-kod (canvas).';
+                }
+
+                if(shareableLink) {
+                    shareableLink.href = appURL; 
+                    shareableLink.textContent = appURL;
+                }
+            } catch (error) {
+                console.error("Error during QRious instantiation or rendering:", error);
+                qrCodeContainer.innerHTML = `Fel vid QR-generering: ${error.message}`;
             }
         }
+
 
         function openShareOverlay() {
             if (shareOverlay) {
@@ -1069,7 +1094,7 @@
                 document.body.classList.remove('overlay-open');
             }
         }
-        function closeAllOverlays() { // Hjälpfunktion
+        function closeAllOverlays() { 
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
@@ -1109,7 +1134,7 @@
                     passDistributionTitle.textContent = 'Passfördelning (1-n)';
                 }
             }
-            clearResults();
+            clearResults(); 
         }
 
         function loadCustomPassesFromFile(event) {
@@ -1179,8 +1204,8 @@
 
         // Initiera UI
         renderNameList();
-        updateCustomPassesUI(); // Detta anropar clearResults() som döljer alla overlays
-        // installAppBtn döljs också via DOMContentLoaded-eventet
+        updateCustomPassesUI(); 
+        // clearResults() anropas nu från DOMContentLoaded för att vara extra säker
     </script>
 </body>
 </html>
