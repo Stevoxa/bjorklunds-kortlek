@@ -9,7 +9,6 @@
     <link rel="apple-touch-icon" href="icon-192x192.png"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
-        /* ... (CSS oförändrad från föregående version) ... */
         :root {
             /* Light Theme (Default) */
             --bg-color: #fdfcf7;
@@ -383,19 +382,18 @@
         .info-text {
             color: var(--secondary-text-color); 
         }
-        #customPassesInfo, #noResultsInfo, #noCustomPassesInfo, #participantsCountInfo { /* Lade till #participantsCountInfo */
+        #customPassesInfo, #noResultsInfo, #noCustomPassesInfo, #participantsCountInfo { 
             font-size: inherit;
             line-height: inherit;
-            text-align: center; /* Gemensam centrering för dessa info-texter */
-            margin-top: 8px; /* Lite luft ovanför */
+            text-align: center; 
+            margin-top: 8px; 
         }
          #noCustomPassesInfo, #noNamesInfo { 
-            padding: 10px 0; /* Behåll padding för de som visas när listan är tom */
+            padding: 10px 0; 
          }
-         #customPassesInfo, #participantsCountInfo { /* Specifik styling för räknare */
-            color: var(--primary-color); /* Använd primärfärg för räknare */
+         #customPassesInfo, #participantsCountInfo { 
+            color: var(--primary-color); 
          }
-
 
         #advancedPassSettings {
             border: 1px solid var(--border-color); 
@@ -622,7 +620,7 @@
         <section id="nameListSection">
             <h2>Passkyttar (A-Ö)</h2>
             <ul id="nameList"></ul>
-            <p id="participantsCountInfo" class="info-text"></p> <!-- Ny räknare -->
+            <p id="participantsCountInfo" class="info-text"></p>
             <p id="noNamesInfo" class="info-text" style="display: none;">Inga passkyttar tillagda.</p>
         </section>
 
@@ -681,7 +679,6 @@
         <button id="randomizeBtn" style="width: 100%; margin-top: 20px; padding: 15px; font-size: 1.2em;">Slumpa Pass</button>
     </div>
 
-    <!-- ... (Overlays oförändrade) ... -->
     <div id="resultOverlay" class="content-overlay" style="display: none;">
         <div class="overlay-content-box">
             <div class="overlay-header">
@@ -725,8 +722,8 @@
                 </ol>
                 
                 <h4>Grundläggande Användning</h4>
-                <p><strong>1. Lägg till Passkyttar:</strong> Skriv namn i fältet och klicka "Lägg till" eller tala in namn med mikrofonikonen.</p>
-                <p><strong>2. (Avancerat) Anpassad Passlista:</strong> Klicka på kugghjulet bredvid "Passfördelning" för att ladda in en egen lista med passnamn/nummer från en .txt-fil (ett pass per rad), eller mata in dem manuellt.</p>
+                <p><strong>1. Lägg till Passkyttar:</strong> Skriv namn i fältet och klicka "Lägg till" eller tala in namn med mikrofonikonen. Antalet tillagda passkyttar visas under listan.</p>
+                <p><strong>2. (Avancerat) Anpassad Passlista:</strong> Klicka på kugghjulet bredvid "Passfördelning". Du kan sedan mata in pass-ID manuellt (och tala in dem), ladda in en egen lista med passnamn/nummer från en .txt-fil (ett pass-ID per rad), eller spara den aktuella passlistan. Den tillagda passlistan visas och enskilda pass kan tas bort med minus-ikonen. En summering av antalet tillagda pass visas också.</p>
                 <p><strong>3. Slumpa Pass:</strong> Klicka på den stora "Slumpa Pass"-knappen. Resultatet visas både i huvudvyn och i ett helskärmsläge.</p>
                 <p><strong>4. Återöppna Resultat:</strong> Använd ögon-ikonen ovanför resultatlistan i huvudvyn för att återöppna helskärmsresultatet.</p>
                 <p><strong>5. Kopiera/Dela:</strong> Använd kopieringsikonen för att kopiera resultatlistan. Använd dela-ikonen högst upp för att dela en länk till appen via en QR-kod.</p>
@@ -763,7 +760,7 @@
             shareOverlayCloseBtn, qrCodeContainer, shareableLink, installAppBtn,
             passNameInput, addPassNameBtn, speakPassNameBtn, 
             customPassDisplayList, noCustomPassesInfo,
-            participantsCountInfo; // Ny referens
+            participantsCountInfo;
 
         // --- GLOBALA VARIABLER ---
         let participants = [];
@@ -772,8 +769,8 @@
         let deferredPrompt;
         const appURL = "https://stevoxa.github.io/bjorklunds-kortlek/"; 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        let recognition; // För namn
-        let passRecognition; // För pass
+        let recognition; 
+        let passRecognition;  
 
         // --- INITIERING VID LADDNING AV SIDAN ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -820,7 +817,7 @@
             speakPassNameBtn = document.getElementById('speakPassNameBtn'); 
             customPassDisplayList = document.getElementById('customPassDisplayList');
             noCustomPassesInfo = document.getElementById('noCustomPassesInfo');
-            participantsCountInfo = document.getElementById('participantsCountInfo'); // Ny
+            participantsCountInfo = document.getElementById('participantsCountInfo');
 
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
@@ -829,7 +826,7 @@
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none';
             if (advancedPassSettings) advancedPassSettings.style.display = 'none';
-            if (participantsCountInfo) participantsCountInfo.style.display = 'none'; // Dölj initialt
+            if (participantsCountInfo) participantsCountInfo.style.display = 'none';
 
             document.body.classList.remove('overlay-open'); 
             
@@ -1087,7 +1084,7 @@
             if (passNameInput) passNameInput.focus();
         }
 
-        function updateParticipantsCount() { // Ny funktion för att uppdatera räknaren
+        function updateParticipantsCount() {
             if (participantsCountInfo) {
                 if (participants.length > 0) {
                     participantsCountInfo.textContent = `(${participants.length} passkyttar tillagda)`;
@@ -1115,7 +1112,7 @@
                 svgIcon.appendChild(p1); svgIcon.appendChild(p2); deleteBtn.appendChild(svgIcon);
                 deleteBtn.onclick = () => deleteNameByValue(name); li.appendChild(deleteBtn); nameList.appendChild(li);
             });
-            updateParticipantsCount(); // Uppdatera räknaren
+            updateParticipantsCount();
         }
 
         function renderCustomPassList() {
@@ -1186,7 +1183,7 @@
         }
 
         function randomizePasses() {
-            if (participants.length === 0) { alert('Lägg till passkyttar först!'); return; } // Ändrad text
+            if (participants.length === 0) { alert('Lägg till passkyttar först!'); return; } 
             clearResults();
             if (noResultsInfo) noResultsInfo.style.display = 'none'; 
 
@@ -1216,7 +1213,7 @@
             }
 
             if (unassignedP.length > 0) {
-                const unassignedText = `<strong>Oplacerade passkyttar:</strong> ${unassignedP.join(', ')}`; // Ändrad text
+                const unassignedText = `<strong>Oplacerade passkyttar:</strong> ${unassignedP.join(', ')}`; 
                 if(unassignedParticipantsList) { unassignedParticipantsList.innerHTML = unassignedText; unassignedParticipantsList.style.display = 'block'; }
                 if(overlayUnassignedParticipants) { overlayUnassignedParticipants.innerHTML = unassignedText; overlayUnassignedParticipants.style.display = 'block'; }
             } else {
@@ -1281,13 +1278,13 @@
                     if (added > 0) renderNameList(); 
                     fileInput.value = ''; 
                 };
-                reader.onerror = () => alert("Kunde inte läsa passkyttsfilen."); reader.readAsText(file); // Ändrad text
+                reader.onerror = () => alert("Kunde inte läsa passkyttsfilen."); reader.readAsText(file);
             }
         }
         function saveParticipantNamesToFile() {
-            if (participants.length === 0) { alert('Inga passkyttar att spara.'); return; } // Ändrad text
+            if (participants.length === 0) { alert('Inga passkyttar att spara.'); return; }
             const text = participants.join('\n'); const blob = new Blob([text], { type: 'text/plain' });
-            const a = document.createElement('a'); a.download = 'passkyttlista.txt'; a.href = URL.createObjectURL(blob); a.click(); URL.revokeObjectURL(a.href); // Ändrat filnamn
+            const a = document.createElement('a'); a.download = 'passkyttlista.txt'; a.href = URL.createObjectURL(blob); a.click(); URL.revokeObjectURL(a.href);
         }
 
         function toggleAdvancedPassSettings() {
