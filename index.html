@@ -639,12 +639,7 @@
                     </button>
                 </div>
 
-                <section id="customPassListSection" style="margin-bottom: 15px;"> 
-                    <ul id="customPassDisplayList"></ul> 
-                    <p id="noCustomPassesInfo" class="info-text" style="display: none;">Inga egna pass tillagda.</p>
-                </section>
-
-                <div class="action-buttons">
+                <div class="action-buttons"> <!-- Flyttad hit -->
                     <div class="file-input-wrapper">
                         <label for="passFileInput" class="button-like button-secondary">Läs in pass från fil</label>
                         <input type="file" id="passFileInput" accept=".txt">
@@ -653,6 +648,11 @@
                     <button id="savePassListBtn" class="button-secondary">Spara passlista</button>
                     <button id="clearCustomPassesBtn" class="button-secondary">Rensa hela listan</button> 
                 </div>
+
+                <section id="customPassListSection" style="margin-bottom: 15px; margin-top: 15px;"> 
+                    <ul id="customPassDisplayList"></ul> 
+                    <p id="noCustomPassesInfo" class="info-text" style="display: none;">Inga egna pass tillagda.</p>
+                </section>
                 
                 <p id="customPassesInfo" class="info-text"></p> 
             </div>
@@ -1041,7 +1041,7 @@
             } else if (!aIsNumber && bIsNumber) {
                 return 1; 
             } else {
-                return a.localeCompare(b, 'sv', { numeric: true, sensitivity: 'base' }); // numeric: true för bättre "naturlig" sortering av text med siffror
+                return a.localeCompare(b, 'sv', { numeric: true, sensitivity: 'base' });
             }
         }
 
@@ -1098,7 +1098,6 @@
         function renderCustomPassList() {
             if (!customPassDisplayList || !noCustomPassesInfo) return;
             customPassDisplayList.innerHTML = '';
-            // `customPasses` är redan sorterad tack vare anrop i addPassNameToList och loadCustomPassesFromFile
             noCustomPassesInfo.style.display = customPasses.length === 0 ? 'block' : 'none';
 
             customPasses.forEach((passId) => {
@@ -1124,7 +1123,6 @@
             const idx = customPasses.indexOf(passIdToDelete);
             if (idx > -1) {
                 customPasses.splice(idx, 1);
-                // customPasses behöver inte sorteras om här, den är redan sorterad och ett element tas bort
                 updateCustomPassesUI(); 
             }
         }
@@ -1180,7 +1178,7 @@
 
             if (customPasses.length > 0) {
                 const availableParticipants = [...shuffledParticipants];
-                customPasses.forEach(passId => { // Använder den sorterade customPasses
+                customPasses.forEach(passId => { 
                     const assignedParticipant = availableParticipants.length > 0 ? availableParticipants.shift() : "<i>Ledigt</i>";
                     if(resultsList) resultsList.appendChild(createResultListItem(passId, assignedParticipant));
                     if(overlayResultsList) overlayResultsList.appendChild(createResultListItem(passId, assignedParticipant));
