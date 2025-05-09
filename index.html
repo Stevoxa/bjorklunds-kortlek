@@ -196,13 +196,41 @@
             margin-bottom: 10px; 
             flex-wrap: wrap; 
         }
-         .action-buttons button, .action-buttons .button-like {
-            /* flex-grow: 1; BORTTAGEN */
+        /* Gäller för både direkta button-barn och .file-input-wrapper */
+         .action-buttons > button, 
+         .action-buttons > .file-input-wrapper {
             font-size: 0.9em; 
-            padding: 8px 12px; 
-            height: 38px;
+            height: auto; /* Låt höjden bestämmas av innehållet (knapp + text) */
             flex-basis: calc(50% - 5px); 
-            min-width: 120px; 
+            min-width: 130px; /* Justera vid behov */
+            display: flex; /* För .file-input-wrapper */
+            flex-direction: column; /* För .file-input-wrapper */
+            align-items: stretch; /* För .file-input-wrapper, så label tar bredd */
+         }
+         /* Specifik stil för knappar som är direkta barn (Spara-knapparna) */
+         .action-buttons > button {
+            padding: 8px 12px; 
+            height: 38px; /* Behåll fast höjd för rena knappar */
+            align-items: center; /* Centrera text i rena knappar */
+            justify-content: center;
+         }
+         /* Stil för label inuti wrapper */
+         .action-buttons .file-input-wrapper .button-like {
+            width: 100%; /* Se till att labeln fyller wrapperns bredd */
+            font-size: 1em; /* Återställ till standard knapp-fontstorlek */
+            padding: 8px 10px; 
+            height: 38px;
+         }
+        
+         .file-format-info {
+            font-size: 0.8em;
+            font-style: italic;
+            color: #777;
+            text-align: center; 
+            margin-top: 4px; 
+            margin-bottom: 0; 
+            padding: 0 5px; 
+            line-height: 1.2; 
          }
 
 
@@ -279,14 +307,17 @@
             border-radius: 4px;
             background-color: #f9f9f9; 
         }
-        #advancedPassSettings p {
+        #advancedPassSettings p:first-child { /* Första p-taggen (instruktionen) */
             margin-top:0;
-            margin-bottom: 10px;
+            margin-bottom: 15px; /* Lite mer utrymme till knapparna */
+        }
+        #advancedPassSettings .action-buttons { /* Justera specifikt för knapparna inuti advanced */
+            margin-bottom: 5px;
         }
         #customPassesInfo {
             font-size: 0.9em;
             color: var(--primary-color);
-            margin-top: 5px;
+            margin-top: 10px; /* Lite mer space om texten visas */
             text-align: center;
         }
         #unassignedParticipantsList {
@@ -378,8 +409,11 @@
         </div>
         
         <div class="action-buttons">
-            <label for="fileInput" class="button-like button-secondary">Läs in deltagare (.txt)</label>
-            <input type="file" id="fileInput" accept=".txt">
+            <div class="file-input-wrapper">
+                <label for="fileInput" class="button-like button-secondary">Läs in deltagare</label>
+                <input type="file" id="fileInput" accept=".txt">
+                <p class="file-format-info">Förväntat filformat: .txt (ett namn per rad)</p>
+            </div>
             <button id="saveNamesBtn" class="button-secondary">Spara deltagarlista</button>
         </div>
 
@@ -401,8 +435,11 @@
             <div id="advancedPassSettings" style="display: none;">
                 <p>Använd en egen lista med passnamn/nummer istället för standardnumrering 1-n.</p>
                 <div class="action-buttons">
-                    <label for="passFileInput" class="button-like button-secondary">Läs in pass från fil (.txt)</label>
-                    <input type="file" id="passFileInput" accept=".txt">
+                    <div class="file-input-wrapper">
+                        <label for="passFileInput" class="button-like button-secondary">Läs in pass från fil</label>
+                        <input type="file" id="passFileInput" accept=".txt">
+                        <p class="file-format-info">Förväntat filformat: .txt (ett pass-ID per rad)</p>
+                    </div>
                     <button id="savePassListBtn" class="button-secondary">Spara passlista</button>
                     <button id="clearCustomPassesBtn" class="button-secondary button-danger-secondary">Rensa</button>
                 </div>
