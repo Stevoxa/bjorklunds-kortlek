@@ -27,8 +27,9 @@
             --subtle-border-color: #eee; 
             
             --danger-color: #c0392b;
-            --danger-secondary-bg: #f5c6cb;
-            --danger-secondary-text-color: var(--danger-color);
+            /* Rensa-knappen använder nu vanlig sekundär stil, så dessa är mest för delete-ikonen */
+            --danger-secondary-bg: #f8d7da; 
+            --danger-secondary-text-color: #721c24; 
             
             --listening-color: #FFC107;
             --icon-fill-color: var(--primary-color); 
@@ -60,8 +61,8 @@
             --subtle-border-color: #2c2c2c; 
             
             --danger-color: #ff8a80; 
-            --danger-secondary-bg: #4d2222; 
-            --danger-secondary-text-color: var(--danger-color);
+            --danger-secondary-bg: #5c2b2b; 
+            --danger-secondary-text-color: #ffcdd2; 
             
             --listening-color: #FFEB3B; 
             --icon-fill-color: var(--text-color); 
@@ -94,7 +95,7 @@
             margin: 0 auto;
             background-color: var(--surface-bg-color); 
             padding: 20px;
-            padding-top: 60px; 
+            padding-top: 50px; /* Minskad lite för att flytta upp allt */
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
             position: relative; 
@@ -103,23 +104,23 @@
         
         .app-header-actions {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 10px; 
+            right: 10px; 
             display: flex;
-            gap: 5px; 
+            gap: 0px; /* Ännu tätare mellan ikoner */
             z-index: 10;
         }
         .app-header-actions .icon-button { 
             background-color: transparent !important; 
             border: none !important;    
             padding: 6px; 
-            width: 36px;  
-            height: 36px;
+            width: 34px;  
+            height: 34px;
         }
         .app-header-actions .icon-button svg {
             fill: var(--icon-fill-color) !important; 
-            width: 22px; 
-            height: 22px;
+            width: 20px; 
+            height: 20px;
         }
          .app-header-actions .icon-button:hover svg {
              fill: var(--icon-hover-fill-color) !important; 
@@ -130,17 +131,17 @@
             color: var(--primary-color); 
             text-align: center;
             margin-bottom: 20px;
-            font-size: 1.8em;
+            font-size: 1.7em; 
             margin-top: 0; 
         }
         h2 {
             color: var(--primary-color); 
             text-align: center; 
             margin-bottom: 10px; 
-            font-size: 1.4em;
-            margin-top: 30px;
+            font-size: 1.3em; 
+            margin-top: 25px; 
             border-bottom: 1px solid var(--border-color); 
-            padding-bottom: 10px;
+            padding-bottom: 8px; 
             display: flex; 
             justify-content: center; 
             align-items: center;
@@ -204,14 +205,8 @@
             background-color: color-mix(in srgb, var(--secondary-button-bg-color) 90%, #000000 10%); 
         }
 
-        .button-danger-secondary {
-            background-color: var(--danger-secondary-bg); 
-            color: var(--danger-secondary-text-color); 
-            border: 1px solid var(--danger-color); 
-        }
-        .button-danger-secondary:hover {
-             background-color: color-mix(in srgb, var(--danger-secondary-bg) 90%, #000000 10%);
-        }
+        /* Rensa-knappen är nu en vanlig .button-secondary */
+        /* .button-danger-secondary borttagen från att användas på Rensa */
         
         .icon-button { 
             padding: 8px;
@@ -295,8 +290,7 @@
             justify-content: center;
          }
          #installAppBtn { 
-            flex-basis: 100%; 
-            margin-top: 5px; 
+            /* Styrs nu av .app-header-actions */
          }
          #installAppBtn svg { 
              fill: currentColor; 
@@ -384,16 +378,40 @@
         #advancedPassSettings {
             border: 1px solid var(--border-color); 
             background-color: color-mix(in srgb, var(--surface-bg-color) 95%, var(--bg-color)); 
-        }
-        #advancedPassSettings p:first-child { 
-            margin-top:0;
+            padding: 12px; 
+            margin-top: 10px;
             margin-bottom: 15px; 
         }
-        #advancedPassSettings .action-buttons { 
-            margin-bottom: 5px;
+        #advancedPassSettings > p:first-of-type { 
+            margin-top:0;
+            margin-bottom: 10px; 
+            font-size: 0.9em;
+            text-align: center; /* Centrera instruktionstexten */
         }
+        #advancedPassSettings .action-buttons { 
+            margin-bottom: 0; 
+        }
+        /* Justera knapparna inuti #advancedPassSettings för bättre responsivitet */
+        #advancedPassSettings .action-buttons > button,
+        #advancedPassSettings .action-buttons > .file-input-wrapper {
+            flex-basis: 100%; /* Ta full bredd på mindre skärmar */
+            margin-bottom: 8px; /* Lite luft mellan knapparna om de wrappar */
+        }
+        @media (min-width: 480px) { /* På lite större skärmar, låt dem vara sida vid sida */
+            #advancedPassSettings .action-buttons > button,
+            #advancedPassSettings .action-buttons > .file-input-wrapper {
+                 flex-basis: calc(33.333% - 7px); /* För tre knappar på en rad */
+                 min-width: 100px;
+            }
+             #advancedPassSettings .action-buttons > .file-input-wrapper {
+                min-width: 120px; /* Ge label-knappen lite mer plats */
+             }
+        }
+
+
         #customPassesInfo {
             color: var(--primary-color); 
+            margin-top: 8px; 
         }
         #unassignedParticipantsList {
             color: var(--danger-color); 
@@ -511,25 +529,51 @@
             align-items: center;
             justify-content: center;
         }
-        /* Ingen specifik #qrCodeContainer canvas CSS behövs, QRious hanterar det */
+        #qrCodeContainer canvas { 
+            display: block;
+        }
 
         #shareableLink {
             color: var(--overlay-link-color); 
         }
         
+        .result-actions-top {
+            display: none; 
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 8px; 
+            gap: 0px; /* Tätare mellan öga och kopiera */
+        }
+        .result-actions-top .icon-button {
+            padding: 6px; 
+            width: 34px;
+            height: 34px;
+        }
+        .result-actions-top .icon-button svg {
+            width: 20px;
+            height: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="app-header-actions">
+            <!-- ORDNING ÄNDRAD: Tema först, sedan Hjälp, sedan Dela -->
             <button id="themeToggleBtn" class="icon-button" title="Växla tema">
-                <svg id="themeIconMoon" viewBox="0 0 24 24"><path d="M10 2c-1.82 0-3.53.5-5 1.35c2.99 1.73 5 4.95 5 8.65s-2.01 6.92-5 8.65A9.973 9.973 0 0 0 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>
-                <svg id="themeIconSun" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5s5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3s-1.34 3-3 3zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8z"/></svg>
+                <!-- Spegelvänd måne (genom att transformera eller justera path) -->
+                <!-- Enkel spegelvändning: transform="scale(-1, 1)" på en grupp runt månen eller justera path d -->
+                <svg id="themeIconMoon" viewBox="0 0 24 24" style="display: none;" transform="scale(-1,1) translate(-24,0)"> 
+                    <path d="M10 2c-1.82 0-3.53.5-5 1.35c2.99 1.73 5 4.95 5 8.65s-2.01 6.92-5 8.65A9.973 9.973 0 0 0 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/>
+                </svg>
+                <!-- Ny Sol-ikon (mer traditionell) -->
+                <svg id="themeIconSun" viewBox="0 0 24 24" style="display: block;">
+                    <path d="M12 5.69c-3.31 0-6 2.69-6 6s2.69 6 6 6s6-2.69 6-6s-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4s4 1.79 4 4s-1.79 4-4 4zM12 2L10.59 3.41L12 4.83L13.41 3.41L12 2zm8 6.36l-2.05 2.05l1.41 1.41L21.95 9.77l-1.41-1.41zM3.64 19.95l2.05-2.05l-1.41-1.41L1.64 18.54l1.41 1.41zm0-12.28l1.41-1.41L6.46 7.7l-1.41 1.41L3.64 7.67zM22 12l-1.41 1.41L19.17 12l1.41-1.41L22 12zm-20 0l1.41 1.41L4.83 12l-1.41-1.41L2 12zm8.59-8.59L12 2l-1.41 1.41L12 4.83l-1.41-1.42zM12 20l1.41-1.41L12 17.17l-1.41 1.41L12 20zm6.36-1.46l-1.41-1.41L19.05 16.1l1.41 1.41l-2.1-2.02z"/>
+                </svg>
             </button>
-            <button id="helpBtn" class="icon-button" title="Hjälp">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
+            <button id="helpBtn" class="icon-button" title="Hjälp"> <!-- Hjälp -->
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
             </button>
-            <button id="shareBtn" class="icon-button" title="Dela appen">
+            <button id="shareBtn" class="icon-button" title="Dela appen"> <!-- Dela -->
                 <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>
             </button>
             <button id="installAppBtn" class="icon-button" title="Installera appen" style="display: none;">
@@ -580,7 +624,7 @@
                         <p class="file-format-info">Förväntat filformat: .txt (ett pass-ID per rad)</p>
                     </div>
                     <button id="savePassListBtn" class="button-secondary">Spara passlista</button>
-                    <button id="clearCustomPassesBtn" class="button-secondary button-danger-secondary">Rensa</button>
+                    <button id="clearCustomPassesBtn" class="button-secondary">Rensa</button> <!-- Nu vanlig sekundär knapp -->
                 </div>
                 <p id="customPassesInfo" class="info-text"></p>
             </div>
@@ -721,7 +765,7 @@
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition;
 
-        // --- OMEDELBAR DÖLJNING AV OVERLAYS OCH KONTROLLER VID LADDNING ---
+        // --- INITIERING VID LADDNING AV SIDAN ---
         document.addEventListener('DOMContentLoaded', () => {
             // Dölj alla overlays och action-knappar som inte ska synas direkt
             if (resultOverlay) resultOverlay.style.display = 'none';
@@ -730,8 +774,10 @@
             if (installAppBtn) installAppBtn.style.display = 'none'; 
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none';
-            document.body.classList.remove('overlay-open'); // Säkerställ att scroll är möjlig
-            applyTheme(currentTheme); // Applicera tema när DOM är redo
+            document.body.classList.remove('overlay-open'); 
+            applyTheme(currentTheme); 
+            renderNameList(); // Rendera eventuella sparade namn (om du implementerar det senare)
+            updateCustomPassesUI(); // Detta anropar clearResults()
         });
 
 
@@ -747,19 +793,14 @@
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
             if (metaThemeColor) {
                 let colorForMeta;
-                const root = document.documentElement;
+                const rootStyle = getComputedStyle(document.documentElement);
                 if (newTheme === 'dark') {
-                    colorForMeta = getComputedStyle(root).getPropertyValue('--primary-color').trim();
+                     colorForMeta = rootStyle.getPropertyValue('--primary-color').trim() || '#76c776'; // Fallback om CSS inte laddat
                 } else {
-                    // För ljust tema, försök läsa :root --primary-color. Om den inte är satt (eller ärver från dark), använd fallback.
-                    // Detta kräver att vi vet vad standard-ljusa primärfärgen är om inte :root har det.
-                    const tempBodyTheme = document.body.getAttribute('data-theme'); // Spara nuvarande tema
-                    document.body.removeAttribute('data-theme'); // Ta bort temat för att läsa från :root
-                    colorForMeta = getComputedStyle(root).getPropertyValue('--primary-color').trim();
-                    if (tempBodyTheme) document.body.setAttribute('data-theme', tempBodyTheme); // Återställ temat
-                    if (!colorForMeta || colorForMeta === getComputedStyle(root).getPropertyValue('--primary-color').trim()) { // Om det fortfarande är mörka temats färg
-                        colorForMeta = '#344a34'; // Hårdkodad fallback för ljust
-                    }
+                    // Försök läsa från :root, annars fallback
+                    const lightPrimaryColorFromRoot = rootStyle.getPropertyValue('--primary-color').trim();
+                    // Kolla att det inte är den mörka färgen (om temat precis bytts och CSS inte hunnit med)
+                     colorForMeta = (lightPrimaryColorFromRoot && lightPrimaryColorFromRoot !== '#76c776') ? lightPrimaryColorFromRoot : '#344a34';
                 }
                 metaThemeColor.setAttribute("content", colorForMeta);
             }
@@ -935,10 +976,11 @@
             if (overlayUnassignedParticipants) overlayUnassignedParticipants.style.display = 'none';
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none'; 
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none'; 
-            // Se till att alla overlays är dolda när resultat rensas
-            if (resultOverlay) resultOverlay.style.display = 'none';
-            if (helpOverlay) helpOverlay.style.display = 'none';
-            if (shareOverlay) shareOverlay.style.display = 'none';
+            
+            // Säkerställ att ALLA overlays är dolda
+            if (resultOverlay && resultOverlay.style.display !== 'none') resultOverlay.style.display = 'none';
+            if (helpOverlay && helpOverlay.style.display !== 'none') helpOverlay.style.display = 'none';
+            if (shareOverlay && shareOverlay.style.display !== 'none') shareOverlay.style.display = 'none';
             document.body.classList.remove('overlay-open');
         }
 
@@ -1000,7 +1042,7 @@
                 resultOverlay.style.display = 'flex';
                 document.body.classList.add('overlay-open');
             } else if (resultOverlay) { 
-                // Ingen alert om inga resultat, noResultsInfo hanterar det
+                // Ingen alert här
             }
         }
 
@@ -1040,7 +1082,7 @@
                 qrCodeContainer.innerHTML = ''; 
                 console.log("qrCodeContainer cleared. About to create QRious instance.");
 
-                const canvasElement = document.createElement('canvas'); // Skapa canvas dynamiskt
+                const canvasElement = document.createElement('canvas'); 
 
                 const qrInstance = new QRious({ 
                     element: canvasElement, 
@@ -1172,7 +1214,7 @@
             } else { const ta = document.createElement("textarea"); ta.value = txt.trim(); document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); alert('Resultaten kopierade!'); } catch (e) { alert('Kopiering misslyckades.'); } document.body.removeChild(ta); }
         }
 
-        // Event Listeners
+        // --- EVENT LISTENERS (se till att alla är kopplade) ---
         if (addNameBtn) addNameBtn.addEventListener('click', addName);
         if (nameInput) nameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addName(); });
         if (randomizeBtn) randomizeBtn.addEventListener('click', randomizePasses);
@@ -1194,9 +1236,6 @@
         if(helpBtn) helpBtn.addEventListener('click', openHelpOverlay);
         if(shareBtn) shareBtn.addEventListener('click', openShareOverlay);
 
-        // Initiera UI
-        renderNameList();
-        updateCustomPassesUI(); 
     </script>
 </body>
 </html>
