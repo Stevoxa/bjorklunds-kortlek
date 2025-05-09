@@ -27,7 +27,6 @@
             --subtle-border-color: #eee; 
             
             --danger-color: #c0392b;
-            /* Rensa-knappen använder nu vanlig sekundär stil, så dessa är mest för delete-ikonen */
             --danger-secondary-bg: #f8d7da; 
             --danger-secondary-text-color: #721c24; 
             
@@ -35,7 +34,7 @@
             --icon-fill-color: var(--primary-color); 
             --icon-hover-fill-color: #000;
 
-            --overlay-bg-color: rgba(var(--primary-color-rgb), 0.85);
+            --overlay-bg-color: rgba(var(--primary-color-rgb), 0.85); /* Ljus tema overlay bakgrund */
             --overlay-content-bg: var(--surface-bg-color);
             --overlay-header-text-color: var(--primary-color);
             --overlay-text-color: var(--text-color);
@@ -50,7 +49,7 @@
             --text-color: #e0e0e0;
             --secondary-text-color: #a0a0a0;
             --primary-color: #76c776; 
-            --primary-color-rgb: 118, 199, 118;
+            --primary-color-rgb: 118, 199, 118; /* Används inte längre för overlay i dark mode */
             --primary-text-color: #121212; 
             
             --secondary-button-bg-color: #333; 
@@ -68,7 +67,7 @@
             --icon-fill-color: var(--text-color); 
             --icon-hover-fill-color: #fff;
 
-            --overlay-bg-color: rgba(var(--primary-color-rgb), 0.85);
+            --overlay-bg-color: rgba(18, 18, 18, 0.9); /* Mörkare overlay bakgrund för dark mode */
             --overlay-content-bg: var(--surface-bg-color);
             --overlay-header-text-color: var(--primary-color);
             --overlay-text-color: var(--text-color);
@@ -95,7 +94,7 @@
             margin: 0 auto;
             background-color: var(--surface-bg-color); 
             padding: 20px;
-            padding-top: 50px; /* Minskad lite för att flytta upp allt */
+            padding-top: 50px; 
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
             position: relative; 
@@ -115,18 +114,20 @@
             top: 10px; 
             right: 10px; 
             display: flex;
-            gap: 0px; /* Håller knapparna kant-i-kant */
+            gap: 0px; 
             z-index: 10;
         }
         
-        /* Gemensam stil för alla header-action knappar */
         .app-header-actions-left .icon-button,
         .app-header-actions .icon-button { 
             background-color: transparent !important; 
             border: none !important;    
-            padding: 4px; /* Minskad padding för att göra dem tätare */
-            width: 28px;  /* 20px (ikon) + 4px*2 (padding) */
-            height: 28px; /* 20px (ikon) + 4px*2 (padding) */
+            padding: 4px; 
+            width: 28px;  
+            height: 28px; 
+            display: flex; /* För att centrera SVG inuti knappen */
+            align-items: center;
+            justify-content: center;
         }
         .app-header-actions-left .icon-button svg,
         .app-header-actions .icon-button svg {
@@ -241,7 +242,6 @@
              fill: var(--secondary-button-text-color) !important; 
         }
 
-        /* Undantag för knappar som inte är i app-header-actions */
         .icon-button:not(.app-header-actions-left .icon-button):not(.app-header-actions .icon-button):not(#speakNameBtn):not(.settings-toggle-btn):not(.delete-btn) svg {
             width: 20px;
             height: 20px;
@@ -294,17 +294,15 @@
             flex-direction: column; 
             align-items: stretch; 
          }
-         .action-buttons > button:not(#installAppBtn) { /* #installAppBtn styrs av .app-header-actions .icon-button */
+         .action-buttons > button:not(#installAppBtn) { 
             padding: 8px 12px; 
             height: 38px; 
             align-items: center; 
             justify-content: center;
          }
-         /* #installAppBtn styrs nu av .app-header-actions .icon-button eller .app-header-actions-left .icon-button */
          #installAppBtn svg { 
-             fill: currentColor; /* Eller var(--icon-fill-color) om det är standard */
-             width:18px; height:18px; /* Kan behöva vara 20px för att matcha de andra */
-             /* margin-right: 8px; om det vore en textknapp */
+             fill: currentColor; 
+             width:18px; height:18px; 
          }
          .action-buttons .file-input-wrapper .button-like { 
             width: 100%; 
@@ -396,25 +394,24 @@
             margin-top:0;
             margin-bottom: 10px; 
             font-size: 0.9em;
-            text-align: center; /* Centrera instruktionstexten */
+            text-align: center; 
         }
         #advancedPassSettings .action-buttons { 
             margin-bottom: 0; 
         }
-        /* Justera knapparna inuti #advancedPassSettings för bättre responsivitet */
         #advancedPassSettings .action-buttons > button,
         #advancedPassSettings .action-buttons > .file-input-wrapper {
-            flex-basis: 100%; /* Ta full bredd på mindre skärmar */
-            margin-bottom: 8px; /* Lite luft mellan knapparna om de wrappar */
+            flex-basis: 100%; 
+            margin-bottom: 8px; 
         }
-        @media (min-width: 480px) { /* På lite större skärmar, låt dem vara sida vid sida */
+        @media (min-width: 480px) { 
             #advancedPassSettings .action-buttons > button,
             #advancedPassSettings .action-buttons > .file-input-wrapper {
-                 flex-basis: calc(33.333% - 7px); /* För tre knappar på en rad */
+                 flex-basis: calc(33.333% - 7px); 
                  min-width: 100px;
             }
              #advancedPassSettings .action-buttons > .file-input-wrapper {
-                min-width: 120px; /* Ge label-knappen lite mer plats */
+                min-width: 120px; 
              }
         }
 
@@ -552,7 +549,7 @@
             justify-content: flex-end;
             align-items: center;
             margin-bottom: 8px; 
-            gap: 0px; /* Tätare mellan öga och kopiera */
+            gap: 0px; 
         }
         .result-actions-top .icon-button {
             padding: 6px; 
@@ -569,17 +566,18 @@
     <div class="container">
         <div class="app-header-actions-left">
             <button id="themeToggleBtn" class="icon-button" title="Växla tema">
-                <svg id="themeIconMoon" viewBox="0 0 24 24" style="display: none;" transform="scale(-1,1) translate(-24,0)"> 
-                    <path d="M10 2c-1.82 0-3.53.5-5 1.35c2.99 1.73 5 4.95 5 8.65s-2.01 6.92-5 8.65A9.973 9.973 0 0 0 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/>
+                <!-- Ny Mån-ikon (Bootstrap Icons moon-fill, anpassad till fill och viewBox 24x24) -->
+                <svg id="themeIconMoon" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M12 1.993C11.419 1.993 10.847 2.022 10.285 2.076C5.262 2.58 1.993 6.832 1.993 11.999C1.993 17.635 6.365 22 11.999 22C16.957 22 21.145 18.053 21.904 13.269C21.951 12.989 21.979 12.705 21.993 12.416C21.964 12.393 21.938 12.372 21.911 12.353C16.334 11.653 12.707 7.586 12.085 1.993H12Z"/>
                 </svg>
-                <!-- NY Sol-ikon (Bootstrap Icons sun-fill, anpassad till fill) -->
-                <svg id="themeIconSun" viewBox="0 0 16 16" style="display: block;">
-                    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                <!-- NY Sol-ikon (Bootstrap Icons sun-fill, anpassad till fill och viewBox 24x24 för konsekvens) -->
+                <svg id="themeIconSun" viewBox="0 0 24 24" style="display: block;">
+                    <path d="M12 17.25a5.25 5.25 0 1 0 0-10.5 5.25 5.25 0 0 0 0 10.5zM12 2.25a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 .75-.75zM12 18a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3A.75.75 0 0 1 12 18zM21.75 12a.75.75 0 0 1-.75.75h-3a.75.75 0 0 1 0-1.5h3a.75.75 0 0 1 .75.75zM6 12a.75.75 0 0 1-.75.75h-3A.75.75 0 0 1 1.5 12a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75zm13.93-6.53a.75.75 0 0 1 0 1.06l-2.12 2.122a.75.75 0 1 1-1.06-1.06l2.12-2.122a.75.75 0 0 1 1.06 0zm-12.86 12.86a.75.75 0 0 1 0 1.06l-2.122 2.121a.75.75 0 0 1-1.06-1.06l2.122-2.121a.75.75 0 0 1 1.06 0zM19.93 5.53a.75.75 0 0 1-1.06 0l-2.122-2.121a.75.75 0 0 1 1.06-1.06l2.122 2.12L19.93 5.53zm-12.86 12.86a.75.75 0 0 1-1.06 0L3.889 16.27a.75.75 0 1 1 1.06-1.06l2.122 2.122a.75.75 0 0 1 0 1.06z"/>
                 </svg>
             </button>
         </div>
 
-        <div class="app-header-actions"> <!-- Endast höger-ikoner kvar här -->
+        <div class="app-header-actions">
             <button id="helpBtn" class="icon-button" title="Hjälp">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
             </button>
@@ -634,7 +632,7 @@
                         <p class="file-format-info">Förväntat filformat: .txt (ett pass-ID per rad)</p>
                     </div>
                     <button id="savePassListBtn" class="button-secondary">Spara passlista</button>
-                    <button id="clearCustomPassesBtn" class="button-secondary">Rensa</button> <!-- Nu vanlig sekundär knapp -->
+                    <button id="clearCustomPassesBtn" class="button-secondary">Rensa</button>
                 </div>
                 <p id="customPassesInfo" class="info-text"></p>
             </div>
@@ -777,7 +775,6 @@
 
         // --- INITIERING VID LADDNING AV SIDAN ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Dölj alla overlays och action-knappar som inte ska synas direkt
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
@@ -786,8 +783,8 @@
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none';
             document.body.classList.remove('overlay-open'); 
             applyTheme(currentTheme); 
-            renderNameList(); // Rendera eventuella sparade namn (om du implementerar det senare)
-            updateCustomPassesUI(); // Detta anropar clearResults()
+            renderNameList(); 
+            updateCustomPassesUI(); 
         });
 
 
@@ -795,30 +792,24 @@
         function applyTheme(theme) {
             const newTheme = theme === 'dark' ? 'dark' : 'light'; 
             document.body.setAttribute('data-theme', newTheme);
-            if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none'; // Mörk tema -> visa sol för att byta till ljus
-            if (themeIconMoon) themeIconMoon.style.display = newTheme === 'dark' ? 'none' : 'block'; // Mörk tema -> göm måne
+            // Korrekt logik: Om dark theme är aktivt, visa SOL-ikonen (för att kunna byta till light)
+            // Om light theme är aktivt, visa MÅN-ikonen (för att kunna byta till dark)
+            if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none';
+            if (themeIconMoon) themeIconMoon.style.display = newTheme === 'light' ? 'block' : 'none';
+            
             localStorage.setItem('theme', newTheme);
             if (themeToggleBtn) themeToggleBtn.title = newTheme === 'dark' ? "Växla till ljust tema" : "Växla till mörkt tema";
             
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
             if (metaThemeColor) {
                 let colorForMeta;
-                // Vi måste tillfälligt applicera temat för att läsa CSS-variabler korrekt
-                const bodyAlreadyHasTheme = document.body.getAttribute('data-theme') === newTheme;
-                if (!bodyAlreadyHasTheme) document.body.setAttribute('data-theme', newTheme);
-
-                const rootStyle = getComputedStyle(document.documentElement);
+                const rootStyle = getComputedStyle(document.documentElement); // Läser från det tema som nu är applicerat på body
                 if (newTheme === 'dark') {
                      colorForMeta = rootStyle.getPropertyValue('--primary-color').trim() || '#76c776';
                 } else {
                      colorForMeta = rootStyle.getPropertyValue('--primary-color').trim() || '#344a34';
                 }
                 metaThemeColor.setAttribute("content", colorForMeta);
-                
-                // Återställ om vi tillfälligt ändrade det, ifall applyTheme anropas innan DOMContentLoaded
-                if (!bodyAlreadyHasTheme && document.body.getAttribute('data-theme') !== localStorage.getItem('theme')) {
-                     document.body.setAttribute('data-theme', localStorage.getItem('theme'));
-                }
             }
         }
         function toggleTheme() {
@@ -993,7 +984,6 @@
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none'; 
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none'; 
             
-            // Säkerställ att ALLA overlays är dolda
             if (resultOverlay && resultOverlay.style.display !== 'none') resultOverlay.style.display = 'none';
             if (helpOverlay && helpOverlay.style.display !== 'none') helpOverlay.style.display = 'none';
             if (shareOverlay && shareOverlay.style.display !== 'none') shareOverlay.style.display = 'none';
@@ -1057,8 +1047,6 @@
                 closeAllOverlays();
                 resultOverlay.style.display = 'flex';
                 document.body.classList.add('overlay-open');
-            } else if (resultOverlay) { 
-                // Ingen alert här
             }
         }
 
@@ -1230,7 +1218,7 @@
             } else { const ta = document.createElement("textarea"); ta.value = txt.trim(); document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); alert('Resultaten kopierade!'); } catch (e) { alert('Kopiering misslyckades.'); } document.body.removeChild(ta); }
         }
 
-        // --- EVENT LISTENERS (se till att alla är kopplade) ---
+        // --- EVENT LISTENERS ---
         if (addNameBtn) addNameBtn.addEventListener('click', addName);
         if (nameInput) nameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addName(); });
         if (randomizeBtn) randomizeBtn.addEventListener('click', randomizePasses);
