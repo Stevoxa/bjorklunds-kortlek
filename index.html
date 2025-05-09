@@ -511,11 +511,8 @@
             align-items: center;
             justify-content: center;
         }
-        #qrCodeContainer canvas { 
-            display: block;
-            /* max-width: 100%;  Borttagen för test */
-            /* max-height: 100%; Borttagen för test */
-        }
+        /* Ingen specifik #qrCodeContainer canvas CSS behövs, QRious hanterar det */
+
         #shareableLink {
             color: var(--overlay-link-color); 
         }
@@ -675,7 +672,7 @@
     </div>
 
     <script>
-        // --- DOM ELEMENT REFERENSER (samlade högst upp) ---
+        // --- DOM ELEMENT REFERENSER ---
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeIconSun = document.getElementById('themeIconSun');
         const themeIconMoon = document.getElementById('themeIconMoon');
@@ -718,7 +715,7 @@
         // --- GLOBALA VARIABLER ---
         let participants = [];
         let customPasses = [];
-        let currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+        let currentTheme = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         let deferredPrompt;
         const appURL = "https://stevoxa.github.io/bjorklunds-kortlek/"; 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -726,23 +723,17 @@
 
         // --- OMEDELBAR DÖLJNING AV OVERLAYS OCH KONTROLLER VID LADDNING ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Dölj alla overlays och action-knappar som inte ska synas direkt
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
             if (installAppBtn) installAppBtn.style.display = 'none'; 
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none';
-            document.body.classList.remove('overlay-open');
-
-            // Applicera initialt tema EFTER att DOM är laddad
-            if (currentTheme) {
-                applyTheme(currentTheme);
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                applyTheme('dark'); 
-            } else {
-                applyTheme('light'); 
-            }
+            document.body.classList.remove('overlay-open'); // Säkerställ att scroll är möjlig
+            applyTheme(currentTheme); // Applicera tema när DOM är redo
         });
+
 
         // --- TEMA HANTERING ---
         function applyTheme(theme) {
@@ -756,23 +747,19 @@
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
             if (metaThemeColor) {
                 let colorForMeta;
+                const root = document.documentElement;
                 if (newTheme === 'dark') {
-                    // Sätt temat temporärt för att kunna läsa CSS-variabeln om den inte redan är satt
-                    const needsTempSet = document.body.getAttribute('data-theme') !== 'dark';
-                    if(needsTempSet) document.body.setAttribute('data-theme', 'dark');
-                    colorForMeta = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
-                    if(needsTempSet) document.body.setAttribute('data-theme', 'light'); // Återställ om det var temporärt
+                    colorForMeta = getComputedStyle(root).getPropertyValue('--primary-color').trim();
                 } else {
-                    colorForMeta = '#344a34'; // Fallback för ljust tema
-                     // Om :root har en primärfärg för ljust tema, använd den
-                    const rootStyle = getComputedStyle(document.documentElement);
-                    const lightPrimaryColor = rootStyle.getPropertyValue('--primary-color').trim();
-                    // Kolla att den inte är samma som den mörka (vilket den skulle vara om mörkt tema var aktivt)
-                    const darkPrimaryColorIfActive = newTheme === 'dark' ? colorForMeta : getComputedStyle(document.body.appendChild(Object.assign(document.createElement('div'),{style:'display:none;--primary-color:initial;'}))).getPropertyValue('--primary-color').trim();
-                    if(lightPrimaryColor && lightPrimaryColor !== darkPrimaryColorIfActive){
-                        colorForMeta = lightPrimaryColor;
+                    // För ljust tema, försök läsa :root --primary-color. Om den inte är satt (eller ärver från dark), använd fallback.
+                    // Detta kräver att vi vet vad standard-ljusa primärfärgen är om inte :root har det.
+                    const tempBodyTheme = document.body.getAttribute('data-theme'); // Spara nuvarande tema
+                    document.body.removeAttribute('data-theme'); // Ta bort temat för att läsa från :root
+                    colorForMeta = getComputedStyle(root).getPropertyValue('--primary-color').trim();
+                    if (tempBodyTheme) document.body.setAttribute('data-theme', tempBodyTheme); // Återställ temat
+                    if (!colorForMeta || colorForMeta === getComputedStyle(root).getPropertyValue('--primary-color').trim()) { // Om det fortfarande är mörka temats färg
+                        colorForMeta = '#344a34'; // Hårdkodad fallback för ljust
                     }
-
                 }
                 metaThemeColor.setAttribute("content", colorForMeta);
             }
@@ -948,7 +935,7 @@
             if (overlayUnassignedParticipants) overlayUnassignedParticipants.style.display = 'none';
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none'; 
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none'; 
-            // Dubbelkolla att overlays är dolda
+            // Se till att alla overlays är dolda när resultat rensas
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
@@ -1013,7 +1000,7 @@
                 resultOverlay.style.display = 'flex';
                 document.body.classList.add('overlay-open');
             } else if (resultOverlay) { 
-                // No alert here, noResultsInfo in main view handles it
+                // Ingen alert om inga resultat, noResultsInfo hanterar det
             }
         }
 
@@ -1038,44 +1025,49 @@
         }
 
         function generateQRCode() {
-            console.log("Attempting to generate QR code...");
+            console.log("Attempting to generate QR code for URL:", appURL);
             if (!qrCodeContainer) {
-                console.error("QR Code container element (qrCodeContainer) not found in DOM.");
+                console.error("QR Code container DIV (qrCodeContainer) not found in DOM.");
                 return;
             }
             if (typeof QRious === 'undefined') {
-                console.error("QRious library is not loaded (typeof QRious === 'undefined'). Check CDN link or network.");
-                qrCodeContainer.innerHTML = 'Fel: QR-kodsbibliotek saknas.';
+                console.error("QRious library is not loaded. Check CDN link or network.");
+                if (qrCodeContainer) qrCodeContainer.innerHTML = 'Fel: QR-kodsbibliotek saknas.';
                 return;
             }
 
             try {
                 qrCodeContainer.innerHTML = ''; 
+                console.log("qrCodeContainer cleared. About to create QRious instance.");
+
+                const canvasElement = document.createElement('canvas'); // Skapa canvas dynamiskt
+
                 const qrInstance = new QRious({ 
-                    element: qrCodeContainer,
+                    element: canvasElement, 
                     value: appURL,
-                    size: 188, 
-                    padding: 0, 
+                    size: 188,      
+                    padding: 5,     
+                    level: 'H',     
                     background: 'white',
-                    foreground: 'black',
-                    level: 'H' 
+                    foreground: 'black'
                 });
-                console.log("QRious instance:", qrInstance);
-                const canvasElement = qrCodeContainer.querySelector('canvas');
-                if (canvasElement) {
-                    console.log("Canvas element found:", canvasElement, "width:", canvasElement.width, "height:", canvasElement.height);
+                
+                if (qrInstance && canvasElement.width > 0 && canvasElement.height > 0) {
+                    qrCodeContainer.appendChild(canvasElement); 
+                    console.log("QR code canvas successfully generated and appended. Dimensions:", canvasElement.width, "x", canvasElement.height);
                 } else {
-                    console.error("QRious ran but no canvas was found in qrCodeContainer.");
-                    qrCodeContainer.innerHTML = 'Fel: Kunde inte rendera QR-kod (canvas).';
+                    console.error("QRious instance created, but canvas has no dimensions or was not properly set up by QRious.");
+                    qrCodeContainer.innerHTML = 'Fel: Kunde inte skapa QR-kodens bildyta.';
                 }
 
                 if(shareableLink) {
                     shareableLink.href = appURL; 
                     shareableLink.textContent = appURL;
                 }
+
             } catch (error) {
                 console.error("Error during QRious instantiation or rendering:", error);
-                qrCodeContainer.innerHTML = `Fel vid QR-generering: ${error.message}`;
+                qrCodeContainer.innerHTML = `Fel vid QR-generering: ${error.message || 'Okänt fel'}`;
             }
         }
 
@@ -1205,7 +1197,6 @@
         // Initiera UI
         renderNameList();
         updateCustomPassesUI(); 
-        // clearResults() anropas nu från DOMContentLoaded för att vara extra säker
     </script>
 </body>
 </html>
