@@ -228,24 +228,28 @@
             align-items: center;
             justify-content: center;
         }
-        #speakNameBtn.icon-button.button-secondary { 
+        #speakNameBtn.icon-button.button-secondary,
+        #speakPassNameBtn.icon-button.button-secondary { /* Lade till #speakPassNameBtn här */
              background-color: var(--secondary-button-bg-color); 
              border: 1px solid var(--secondary-button-border-color); 
         }
-         #speakNameBtn.icon-button.button-secondary:hover {
+         #speakNameBtn.icon-button.button-secondary:hover,
+         #speakPassNameBtn.icon-button.button-secondary:hover { /* Lade till #speakPassNameBtn här */
              background-color: color-mix(in srgb, var(--secondary-button-bg-color) 90%, #000000 10%);
          }
-         #speakNameBtn.icon-button.button-secondary svg { 
+         #speakNameBtn.icon-button.button-secondary svg,
+         #speakPassNameBtn.icon-button.button-secondary svg { /* Lade till #speakPassNameBtn här */
              fill: var(--secondary-button-text-color) !important; 
         }
 
-        .icon-button:not(.app-header-actions-left .icon-button):not(.app-header-actions .icon-button):not(#speakNameBtn):not(.settings-toggle-btn):not(.delete-btn) svg {
+
+        .icon-button:not(.app-header-actions-left .icon-button):not(.app-header-actions .icon-button):not(#speakNameBtn):not(#speakPassNameBtn):not(.settings-toggle-btn):not(.delete-btn) svg {
             width: 20px;
             height: 20px;
             fill: var(--primary-color); 
             transition: fill 0.3s ease;
         }
-        .icon-button:not(.button-secondary):not(.app-header-actions-left .icon-button):not(.app-header-actions .icon-button):not(#speakNameBtn):not(.settings-toggle-btn):not(.delete-btn):hover:not(:disabled) svg, 
+        .icon-button:not(.button-secondary):not(.app-header-actions-left .icon-button):not(.app-header-actions .icon-button):not(#speakNameBtn):not(#speakPassNameBtn):not(.settings-toggle-btn):not(.delete-btn):hover:not(:disabled) svg, 
         .overlay-header .icon-button:hover:not(:disabled) svg { 
             fill: var(--icon-hover-fill-color); 
         }
@@ -375,15 +379,12 @@
             overflow: hidden !important; 
         }
         
-        .info-text { 
+        .info-text {
             color: var(--secondary-text-color); 
         }
-
-        #customPassesInfo, #noResultsInfo { /* Ny gemensam regel för att säkerställa ärvning */
+        #customPassesInfo, #noResultsInfo {
             font-size: inherit;
             line-height: inherit;
-            font-family: inherit; /* Kan också läggas till om det finns tvivel */
-            /* Behåller sina individuella färg- och margin-regler nedan */
         }
 
         #advancedPassSettings {
@@ -392,7 +393,7 @@
             padding: 12px; 
             margin-top: 10px;
             margin-bottom: 15px; 
-            display: none;
+            display: none; 
         }
         #advancedPassSettings > p:first-of-type { 
             margin-top:0;
@@ -624,6 +625,15 @@
             </h2>
             <div id="advancedPassSettings" style="display: none;">
                 <p>Använd en egen lista med passnamn/nummer istället för standardnumrering 1-n.</p>
+                
+                <div class="input-group" id="passInputGroup">
+                    <input type="text" id="passNameInput" placeholder="Ange pass-ID...">
+                    <button id="addPassNameBtn">Lägg till pass</button>
+                    <button id="speakPassNameBtn" class="icon-button button-secondary" title="Tala in pass-ID">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.58 14.34 14.5 16 12 16s-4.58-1.66-4.93-4.15a1 1 0 0 0-.98-.85c-.61 0-1.09.54-1 1.14C5.55 15.18 8.41 17 12 17s6.45-1.82 6.91-4.86c.09-.6-.39-1.14-1-1.14z"/><path d="M12 19c-2.21 0-4-1.79-4-4h2c0 1.1.9 2 2 2s2-.9 2-2h2c0 2.21-1.79 4-4 4z"/></svg>
+                    </button>
+                </div>
+
                 <div class="action-buttons">
                     <div class="file-input-wrapper">
                         <label for="passFileInput" class="button-like button-secondary">Läs in pass från fil</label>
@@ -731,7 +741,8 @@
             passDistributionTitle, resultOverlay, overlayResultsList, resultOverlayCloseBtn,
             overlayUnassignedParticipants, mainResultActionsTop, reopenOverlayBtn, mainCopyBtn,
             overlayCopyBtn, helpBtn, shareBtn, helpOverlay, helpOverlayCloseBtn, shareOverlay,
-            shareOverlayCloseBtn, qrCodeContainer, shareableLink, installAppBtn;
+            shareOverlayCloseBtn, qrCodeContainer, shareableLink, installAppBtn,
+            passNameInput, addPassNameBtn, speakPassNameBtn; // Nya för pass-input
 
         // --- GLOBALA VARIABLER ---
         let participants = [];
@@ -741,10 +752,10 @@
         const appURL = "https://stevoxa.github.io/bjorklunds-kortlek/"; 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition;
+        let passRecognition; // Separat för pass
 
         // --- INITIERING VID LADDNING AV SIDAN ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Initiera alla DOM-element-referenser
             themeToggleBtn = document.getElementById('themeToggleBtn');
             themeIconSun = document.getElementById('themeIconSun');
             themeIconMoon = document.getElementById('themeIconMoon');
@@ -783,15 +794,18 @@
             qrCodeContainer = document.getElementById('qrCodeContainer');
             shareableLink = document.getElementById('shareableLink');
             installAppBtn = document.getElementById('installAppBtn');
+            passNameInput = document.getElementById('passNameInput'); // Ny
+            addPassNameBtn = document.getElementById('addPassNameBtn'); // Ny
+            speakPassNameBtn = document.getElementById('speakPassNameBtn'); // Ny
 
-            // Dölj element och sätt initialt tillstånd
+
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
             if (installAppBtn) installAppBtn.style.display = 'none'; 
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none';
-            if (advancedPassSettings) advancedPassSettings.style.display = 'none'; // Viktigt!
+            if (advancedPassSettings) advancedPassSettings.style.display = 'none';
 
             document.body.classList.remove('overlay-open'); 
             
@@ -799,7 +813,6 @@
             renderNameList(); 
             updateCustomPassesUI();
 
-            // Koppla event listeners
             if (addNameBtn) addNameBtn.addEventListener('click', addName);
             if (nameInput) nameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addName(); });
             if (randomizeBtn) randomizeBtn.addEventListener('click', randomizePasses);
@@ -819,7 +832,11 @@
             if (shareBtn) shareBtn.addEventListener('click', openShareOverlay);
             if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
             
+            if (addPassNameBtn) addPassNameBtn.addEventListener('click', addPassManually); // Ny
+            if (passNameInput) passNameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addPassManually(); }); // Ny
+            
             setupSpeechRecognition();
+            setupPassSpeechRecognition(); // Ny
             setupPWAInstallation();
         });
 
@@ -838,7 +855,7 @@
                         if (addNameToParticipantsList(spokenName)) renderNameList(); 
                     };
                     recognition.onerror = (event) => {
-                        console.error('Fel vid röstigenkänning:', event.error, event.message);
+                        console.error('Fel vid namn-röstigenkänning:', event.error, event.message);
                         if (speakNameBtn) {
                             speakNameBtn.title = "Fel vid röstinmatning"; 
                             speakNameBtn.classList.remove('is-listening'); 
@@ -849,7 +866,7 @@
                         if (speakNameBtn) {
                             speakNameBtn.classList.add('is-listening'); 
                             speakNameBtn.disabled = true; 
-                            speakNameBtn.title = "Lyssnar..."; 
+                            speakNameBtn.title = "Lyssnar (namn)..."; 
                         }
                     };
                     recognition.onend = () => { 
@@ -862,24 +879,80 @@
                     speakNameBtn.addEventListener('click', () => { 
                         try { 
                             if (recognition) recognition.start(); 
-                            else console.error("Röstigenkänning är inte korrekt initierad.");
+                            else console.error("Namn-röstigenkänning är inte korrekt initierad.");
                         } catch (e) { 
-                            console.error("Kunde inte starta röstigenkänning (catch): ", e);
-                            if (speakNameBtn) {
-                                speakNameBtn.classList.remove('is-listening'); 
-                                speakNameBtn.disabled = false; 
-                                speakNameBtn.title = "Tala in namn";
+                            console.error("Kunde inte starta namn-röstigenkänning (catch): ", e);
+                            if (speakNameBtn) { /* Återställ knapp */ }
+                        }
+                    });
+                } catch (e) { 
+                    console.error("Kunde inte initiera namn-SpeechRecognition objektet:", e);
+                    if (speakNameBtn) { speakNameBtn.disabled = true; speakNameBtn.title = 'Namn-röstigenkänning initiering misslyckades.'; }
+                }
+            } else { 
+                if (speakNameBtn) { speakNameBtn.disabled = true; speakNameBtn.title = 'Namn-röstinmatning stöds ej.'; }
+            }
+        }
+
+        function setupPassSpeechRecognition() { // Ny funktion
+            if (SpeechRecognition && speakPassNameBtn) {
+                if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                    // Ingen varning här, redan gjord för namn
+                }
+                try {
+                    passRecognition = new SpeechRecognition();
+                    passRecognition.lang = 'sv-SE'; // Anpassa vid behov
+                    passRecognition.continuous = false;
+                    passRecognition.interimResults = false;
+                    
+                    passRecognition.onresult = (event) => { 
+                        const spokenPassId = event.results[0][0].transcript.trim();
+                        addPassNameToList(spokenPassId); // UI uppdateras inuti denna
+                    };
+                    passRecognition.onerror = (event) => {
+                        console.error('Fel vid pass-röstigenkänning:', event.error, event.message);
+                        if (speakPassNameBtn) {
+                            speakPassNameBtn.title = "Fel vid pass-röstinmatning"; 
+                            speakPassNameBtn.classList.remove('is-listening'); 
+                            speakPassNameBtn.disabled = false;
+                        }
+                    };
+                    passRecognition.onstart = () => { 
+                        if (speakPassNameBtn) {
+                            speakPassNameBtn.classList.add('is-listening'); 
+                            speakPassNameBtn.disabled = true; 
+                            speakPassNameBtn.title = "Lyssnar (pass)..."; 
+                        }
+                    };
+                    passRecognition.onend = () => { 
+                        if (speakPassNameBtn) {
+                            speakPassNameBtn.classList.remove('is-listening'); 
+                            speakPassNameBtn.disabled = false; 
+                            speakPassNameBtn.title = "Tala in pass-ID"; 
+                        }
+                    };
+                    speakPassNameBtn.addEventListener('click', () => { 
+                        try { 
+                            if (passRecognition) passRecognition.start(); 
+                            else console.error("Pass-röstigenkänning är inte korrekt initierad.");
+                        } catch (e) { 
+                            console.error("Kunde inte starta pass-röstigenkänning (catch): ", e);
+                            if (speakPassNameBtn) {
+                                speakPassNameBtn.classList.remove('is-listening'); 
+                                speakPassNameBtn.disabled = false; 
+                                speakPassNameBtn.title = "Tala in pass-ID";
                             }
                         }
                     });
                 } catch (e) { 
-                    console.error("Kunde inte initiera SpeechRecognition objektet:", e);
-                    if (speakNameBtn) { speakNameBtn.disabled = true; speakNameBtn.title = 'Röstigenkänning initiering misslyckades.'; }
+                    console.error("Kunde inte initiera pass-SpeechRecognition objektet:", e);
+                    if (speakPassNameBtn) { speakPassNameBtn.disabled = true; speakPassNameBtn.title = 'Pass-röstigenkänning initiering misslyckades.'; }
                 }
             } else { 
-                if (speakNameBtn) { speakNameBtn.disabled = true; speakNameBtn.title = 'Röstinmatning stöds ej.'; }
+                if (speakPassNameBtn) { speakPassNameBtn.disabled = true; speakPassNameBtn.title = 'Pass-röstinmatning stöds ej.'; }
             }
         }
+
 
         function setupPWAInstallation() {
             window.addEventListener('beforeinstallprompt', (e) => {
@@ -887,15 +960,14 @@
                 deferredPrompt = e;
                 if (installAppBtn) {
                     installAppBtn.style.display = 'inline-flex';
-                    // Ta bort gammal listener om den finns, för säkerhets skull
-                    const newInstallBtn = installAppBtn.cloneNode(true);
+                    const newInstallBtn = installAppBtn.cloneNode(true); // För att undvika multipla listeners
                     installAppBtn.parentNode.replaceChild(newInstallBtn, installAppBtn);
-                    installAppBtn = newInstallBtn; // Uppdatera referensen
+                    installAppBtn = newInstallBtn;
 
-                    installAppBtn.addEventListener('click', async () => {
+                    installAppBtn.addEventListener('click', async () => { // Använd addEventListener för tydlighet
                         if (deferredPrompt) {
                             deferredPrompt.prompt();
-                            await deferredPrompt.userChoice; // outcome kan kollas här
+                            await deferredPrompt.userChoice; 
                             deferredPrompt = null;
                             if (installAppBtn) installAppBtn.style.display = 'none';
                         } else { 
@@ -917,17 +989,14 @@
             });
         }
 
-
         // --- TEMA HANTERING ---
         function applyTheme(theme) {
             const newTheme = theme === 'dark' ? 'dark' : 'light'; 
             document.body.setAttribute('data-theme', newTheme);
             if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none';
             if (themeIconMoon) themeIconMoon.style.display = newTheme === 'light' ? 'block' : 'none';
-            
             localStorage.setItem('theme', newTheme);
             if (themeToggleBtn) themeToggleBtn.title = newTheme === 'dark' ? "Växla till ljust tema" : "Växla till mörkt tema";
-            
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
             if (metaThemeColor) {
                 let colorForMeta;
@@ -951,11 +1020,32 @@
             if (!name) { return false; }
             const nameLower = name.toLowerCase();
             if (participants.some(existingName => existingName.toLowerCase() === nameLower)) {
-                console.warn('Namnet "' + name + '" finns redan.');
+                alert('Namnet "' + name + '" finns redan i listan.');
                 return false;
             }
             participants.push(name); return true;
         }
+
+        function addPassNameToList(passIdToAdd) { // Ny funktion
+            const passId = passIdToAdd.trim();
+            if (!passId) { return false; }
+            const passIdLower = passId.toLowerCase();
+            if (customPasses.some(existingPass => existingPass.toLowerCase() === passIdLower)) {
+                alert('Pass-ID "' + passId + '" finns redan i listan.');
+                return false;
+            }
+            customPasses.push(passId);
+            updateCustomPassesUI(); 
+            return true;
+        }
+
+        function addPassManually() { // Ny funktion
+            if (passNameInput && addPassNameToList(passNameInput.value.trim())) {
+                passNameInput.value = '';
+            }
+            if (passNameInput) passNameInput.focus();
+        }
+
 
         function renderNameList() {
             if (!nameList || !noNamesInfo) return;
@@ -990,7 +1080,7 @@
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none'; 
             if (resultOverlay && resultOverlay.style.display === 'flex') {
                 resultOverlay.style.display = 'none';
-                document.body.classList.remove('overlay-open');
+                // Hantera body.classList.remove('overlay-open') i closeAllOverlays för att undvika race conditions
             }
         }
 
@@ -1064,9 +1154,9 @@
             }
         }
 
-        function closeResultOverlay() { if (resultOverlay) { resultOverlay.style.display = 'none'; document.body.classList.remove('overlay-open'); } }
+        function closeResultOverlay() { if (resultOverlay) { resultOverlay.style.display = 'none'; checkAndCloseBodyOverlay(); } }
         function openHelpOverlay() { if (helpOverlay) { closeAllOverlays(); helpOverlay.style.display = 'flex'; document.body.classList.add('overlay-open'); } }
-        function closeHelpOverlay() { if (helpOverlay) { helpOverlay.style.display = 'none'; document.body.classList.remove('overlay-open'); } }
+        function closeHelpOverlay() { if (helpOverlay) { helpOverlay.style.display = 'none'; checkAndCloseBodyOverlay(); } }
 
         function generateQRCode() {
             if (!qrCodeContainer || typeof QRious === 'undefined') return;
@@ -1080,21 +1170,23 @@
         }
 
         function openShareOverlay() { if (shareOverlay) { closeAllOverlays(); generateQRCode(); shareOverlay.style.display = 'flex'; document.body.classList.add('overlay-open'); } }
-        function closeShareOverlay() { if (shareOverlay) { shareOverlay.style.display = 'none'; document.body.classList.remove('overlay-open'); } }
+        function closeShareOverlay() { if (shareOverlay) { shareOverlay.style.display = 'none'; checkAndCloseBodyOverlay(); } }
         
         function closeAllOverlays() { 
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
-            if (document.body.classList.contains('overlay-open')) { // Only remove if an overlay was actually closed
-                const anyOverlayOpen = (resultOverlay && resultOverlay.style.display === 'flex') ||
-                                     (helpOverlay && helpOverlay.style.display === 'flex') ||
-                                     (shareOverlay && shareOverlay.style.display === 'flex');
-                if (!anyOverlayOpen) {
-                    document.body.classList.remove('overlay-open');
-                }
+            checkAndCloseBodyOverlay();
+        }
+        function checkAndCloseBodyOverlay() { // Hjälpfunktion för att stänga body overlay
+            const anyOverlayOpen = (resultOverlay && resultOverlay.style.display === 'flex') ||
+                                 (helpOverlay && helpOverlay.style.display === 'flex') ||
+                                 (shareOverlay && shareOverlay.style.display === 'flex');
+            if (!anyOverlayOpen) {
+                document.body.classList.remove('overlay-open');
             }
         }
+
 
         function loadParticipantNamesFromFile(event) {
             const file = event.target.files[0];
@@ -1125,7 +1217,7 @@
         function updateCustomPassesUI() {
             if (customPassesInfo && passDistributionTitle) {
                 if (customPasses.length > 0) {
-                    customPassesInfo.textContent = `Avancerad är aktiv (${customPasses.length} pass).`;
+                    customPassesInfo.textContent = `Avancerad är aktiv (${customPasses.length} pass: ${customPasses.join(', ')}).`; // Visa passen
                     passDistributionTitle.textContent = 'Passfördelning (Avancerad)';
                 } else {
                     customPassesInfo.textContent = 'Inga avancerade inställningar. Standardnumrering (1-n) kommer användas.';
@@ -1159,6 +1251,7 @@
         function clearLoadedCustomPasses() {
             if (confirm("Är du säker på att du vill rensa avancerad och återgå till standardnumrering?")) {
                 customPasses = [];
+                if(passNameInput) passNameInput.value = ''; // Rensa även inputfältet
                 updateCustomPassesUI();
             }
         }
