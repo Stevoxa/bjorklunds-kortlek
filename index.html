@@ -375,8 +375,15 @@
             overflow: hidden !important; 
         }
         
-        .info-text { /* KORRIGERAD TILLBAKA TILL ENKEL VERSION */
+        .info-text { 
             color: var(--secondary-text-color); 
+        }
+
+        #customPassesInfo, #noResultsInfo { /* Ny gemensam regel för att säkerställa ärvning */
+            font-size: inherit;
+            line-height: inherit;
+            font-family: inherit; /* Kan också läggas till om det finns tvivel */
+            /* Behåller sina individuella färg- och margin-regler nedan */
         }
 
         #advancedPassSettings {
@@ -385,7 +392,7 @@
             padding: 12px; 
             margin-top: 10px;
             margin-bottom: 15px; 
-            display: none; /* Säkerställ att den är dold initialt, detta är korrekt i din fil */
+            display: none;
         }
         #advancedPassSettings > p:first-of-type { 
             margin-top:0;
@@ -716,46 +723,16 @@
     </div>
 
     <script>
-        // --- DOM ELEMENT REFERENSER ---
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const themeIconSun = document.getElementById('themeIconSun');
-        const themeIconMoon = document.getElementById('themeIconMoon');
-        const nameInput = document.getElementById('nameInput');
-        const addNameBtn = document.getElementById('addNameBtn');
-        const nameList = document.getElementById('nameList');
-        const randomizeBtn = document.getElementById('randomizeBtn');
-        const resultsList = document.getElementById('resultsList');
-        const fileInput = document.getElementById('fileInput');
-        const saveNamesBtn = document.getElementById('saveNamesBtn');
-        const noNamesInfo = document.getElementById('noNamesInfo');
-        const noResultsInfo = document.getElementById('noResultsInfo');
-        const speakNameBtn = document.getElementById('speakNameBtn');
-        const unassignedParticipantsList = document.getElementById('unassignedParticipantsList');
-        const toggleAdvancedPassBtn = document.getElementById('toggleAdvancedPassBtn');
-        const advancedPassSettings = document.getElementById('advancedPassSettings');
-        const passFileInput = document.getElementById('passFileInput');
-        const savePassListBtn = document.getElementById('savePassListBtn');
-        const clearCustomPassesBtn = document.getElementById('clearCustomPassesBtn');
-        const customPassesInfo = document.getElementById('customPassesInfo');
-        const passDistributionTitle = document.getElementById('passDistributionTitle');
-        const resultOverlay = document.getElementById('resultOverlay');
-        const overlayResultsList = document.getElementById('overlayResultsList');
-        const resultOverlayCloseBtn = document.getElementById('resultOverlayCloseBtn'); 
-        const overlayUnassignedParticipants = document.getElementById('overlayUnassignedParticipants');
-        const mainResultActionsTop = document.getElementById('mainResultActionsTop');
-        const reopenOverlayBtn = document.getElementById('reopenOverlayBtn');
-        const mainCopyBtn = document.getElementById('mainCopyBtn'); 
-        const overlayCopyBtn = document.getElementById('overlayCopyBtn');
-        const helpBtn = document.getElementById('helpBtn');
-        const shareBtn = document.getElementById('shareBtn');
-        const helpOverlay = document.getElementById('helpOverlay');
-        const helpOverlayCloseBtn = document.getElementById('helpOverlayCloseBtn');
-        const shareOverlay = document.getElementById('shareOverlay');
-        const shareOverlayCloseBtn = document.getElementById('shareOverlayCloseBtn');
-        const qrCodeContainer = document.getElementById('qrCodeContainer');
-        const shareableLink = document.getElementById('shareableLink');
-        const installAppBtn = document.getElementById('installAppBtn');
-        
+        // --- DOM ELEMENT REFERENSER (definieras globalt) ---
+        let themeToggleBtn, themeIconSun, themeIconMoon, nameInput, addNameBtn, nameList,
+            randomizeBtn, resultsList, fileInput, saveNamesBtn, noNamesInfo, noResultsInfo,
+            speakNameBtn, unassignedParticipantsList, toggleAdvancedPassBtn, advancedPassSettings,
+            passFileInput, savePassListBtn, clearCustomPassesBtn, customPassesInfo,
+            passDistributionTitle, resultOverlay, overlayResultsList, resultOverlayCloseBtn,
+            overlayUnassignedParticipants, mainResultActionsTop, reopenOverlayBtn, mainCopyBtn,
+            overlayCopyBtn, helpBtn, shareBtn, helpOverlay, helpOverlayCloseBtn, shareOverlay,
+            shareOverlayCloseBtn, qrCodeContainer, shareableLink, installAppBtn;
+
         // --- GLOBALA VARIABLER ---
         let participants = [];
         let customPasses = [];
@@ -767,50 +744,86 @@
 
         // --- INITIERING VID LADDNING AV SIDAN ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Initiera alla DOM-element-referenser inuti DOMContentLoaded
-            // för att säkerställa att elementen finns när skriptet körs.
-            // Detta är redan gjort ovanför denna funktion.
+            // Initiera alla DOM-element-referenser
+            themeToggleBtn = document.getElementById('themeToggleBtn');
+            themeIconSun = document.getElementById('themeIconSun');
+            themeIconMoon = document.getElementById('themeIconMoon');
+            nameInput = document.getElementById('nameInput');
+            addNameBtn = document.getElementById('addNameBtn');
+            nameList = document.getElementById('nameList');
+            randomizeBtn = document.getElementById('randomizeBtn');
+            resultsList = document.getElementById('resultsList');
+            fileInput = document.getElementById('fileInput');
+            saveNamesBtn = document.getElementById('saveNamesBtn');
+            noNamesInfo = document.getElementById('noNamesInfo');
+            noResultsInfo = document.getElementById('noResultsInfo');
+            speakNameBtn = document.getElementById('speakNameBtn');
+            unassignedParticipantsList = document.getElementById('unassignedParticipantsList');
+            toggleAdvancedPassBtn = document.getElementById('toggleAdvancedPassBtn');
+            advancedPassSettings = document.getElementById('advancedPassSettings');
+            passFileInput = document.getElementById('passFileInput');
+            savePassListBtn = document.getElementById('savePassListBtn');
+            clearCustomPassesBtn = document.getElementById('clearCustomPassesBtn');
+            customPassesInfo = document.getElementById('customPassesInfo');
+            passDistributionTitle = document.getElementById('passDistributionTitle');
+            resultOverlay = document.getElementById('resultOverlay');
+            overlayResultsList = document.getElementById('overlayResultsList');
+            resultOverlayCloseBtn = document.getElementById('resultOverlayCloseBtn'); 
+            overlayUnassignedParticipants = document.getElementById('overlayUnassignedParticipants');
+            mainResultActionsTop = document.getElementById('mainResultActionsTop');
+            reopenOverlayBtn = document.getElementById('reopenOverlayBtn');
+            mainCopyBtn = document.getElementById('mainCopyBtn'); 
+            overlayCopyBtn = document.getElementById('overlayCopyBtn');
+            helpBtn = document.getElementById('helpBtn');
+            shareBtn = document.getElementById('shareBtn');
+            helpOverlay = document.getElementById('helpOverlay');
+            helpOverlayCloseBtn = document.getElementById('helpOverlayCloseBtn');
+            shareOverlay = document.getElementById('shareOverlay');
+            shareOverlayCloseBtn = document.getElementById('shareOverlayCloseBtn');
+            qrCodeContainer = document.getElementById('qrCodeContainer');
+            shareableLink = document.getElementById('shareableLink');
+            installAppBtn = document.getElementById('installAppBtn');
 
+            // Dölj element och sätt initialt tillstånd
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
             if (installAppBtn) installAppBtn.style.display = 'none'; 
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none';
-            
-            // Säkerställ att advancedPassSettings är dolt initialt, både via CSS och JS för säkerhets skull
-            if (advancedPassSettings) advancedPassSettings.style.display = 'none';
-
+            if (advancedPassSettings) advancedPassSettings.style.display = 'none'; // Viktigt!
 
             document.body.classList.remove('overlay-open'); 
+            
             applyTheme(currentTheme); 
             renderNameList(); 
-            updateCustomPassesUI(); // Denna kommer att anropa clearResults(), som sätter noResultsInfo till 'block'
+            updateCustomPassesUI();
 
-            // Koppla alla event listeners HÄR, efter att allt annat är initierat
+            // Koppla event listeners
             if (addNameBtn) addNameBtn.addEventListener('click', addName);
             if (nameInput) nameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addName(); });
             if (randomizeBtn) randomizeBtn.addEventListener('click', randomizePasses);
             if (fileInput) fileInput.addEventListener('change', loadParticipantNamesFromFile);
             if (saveNamesBtn) saveNamesBtn.addEventListener('click', saveParticipantNamesToFile);
-            
             if (toggleAdvancedPassBtn) toggleAdvancedPassBtn.addEventListener('click', toggleAdvancedPassSettings);
             if (passFileInput) passFileInput.addEventListener('change', loadCustomPassesFromFile);
             if (savePassListBtn) savePassListBtn.addEventListener('click', saveCustomPassesToFile);
             if (clearCustomPassesBtn) clearCustomPassesBtn.addEventListener('click', clearLoadedCustomPasses);
-
             if (resultOverlayCloseBtn) resultOverlayCloseBtn.addEventListener('click', closeResultOverlay);
             if (helpOverlayCloseBtn) helpOverlayCloseBtn.addEventListener('click', closeHelpOverlay);
             if (shareOverlayCloseBtn) shareOverlayCloseBtn.addEventListener('click', closeShareOverlay);
-            
-            if(reopenOverlayBtn) reopenOverlayBtn.addEventListener('click', showResultOverlay);
-            if(mainCopyBtn) mainCopyBtn.addEventListener('click', copyResultsToClipboard);
-            if(overlayCopyBtn) overlayCopyBtn.addEventListener('click', copyResultsToClipboard);
-            if(helpBtn) helpBtn.addEventListener('click', openHelpOverlay);
-            if(shareBtn) shareBtn.addEventListener('click', openShareOverlay);
+            if (reopenOverlayBtn) reopenOverlayBtn.addEventListener('click', showResultOverlay);
+            if (mainCopyBtn) mainCopyBtn.addEventListener('click', copyResultsToClipboard);
+            if (overlayCopyBtn) overlayCopyBtn.addEventListener('click', copyResultsToClipboard);
+            if (helpBtn) helpBtn.addEventListener('click', openHelpOverlay);
+            if (shareBtn) shareBtn.addEventListener('click', openShareOverlay);
             if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
             
-            // Röstigenkänning setup (event listener för speakNameBtn sätts inuti denna if-sats)
+            setupSpeechRecognition();
+            setupPWAInstallation();
+        });
+
+        function setupSpeechRecognition() {
             if (SpeechRecognition && speakNameBtn) {
                 if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
                     console.warn("Web Speech API (microphone access) requires HTTPS or localhost.");
@@ -852,7 +865,11 @@
                             else console.error("Röstigenkänning är inte korrekt initierad.");
                         } catch (e) { 
                             console.error("Kunde inte starta röstigenkänning (catch): ", e);
-                            if (speakNameBtn) { /* Återställ knapp */ }
+                            if (speakNameBtn) {
+                                speakNameBtn.classList.remove('is-listening'); 
+                                speakNameBtn.disabled = false; 
+                                speakNameBtn.title = "Tala in namn";
+                            }
                         }
                     });
                 } catch (e) { 
@@ -862,29 +879,44 @@
             } else { 
                 if (speakNameBtn) { speakNameBtn.disabled = true; speakNameBtn.title = 'Röstinmatning stöds ej.'; }
             }
+        }
 
-            // PWA installation (event listener för installAppBtn sätts här om deferredPrompt finns)
+        function setupPWAInstallation() {
             window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault();
                 deferredPrompt = e;
                 if (installAppBtn) {
-                    installAppBtn.style.display = 'inline-flex'; 
-                    installAppBtn.onclick = async () => { // Använd onclick här för att säkerställa att det bara är en listener
+                    installAppBtn.style.display = 'inline-flex';
+                    // Ta bort gammal listener om den finns, för säkerhets skull
+                    const newInstallBtn = installAppBtn.cloneNode(true);
+                    installAppBtn.parentNode.replaceChild(newInstallBtn, installAppBtn);
+                    installAppBtn = newInstallBtn; // Uppdatera referensen
+
+                    installAppBtn.addEventListener('click', async () => {
                         if (deferredPrompt) {
                             deferredPrompt.prompt();
-                            await deferredPrompt.userChoice;
+                            await deferredPrompt.userChoice; // outcome kan kollas här
                             deferredPrompt = null;
-                            installAppBtn.style.display = 'none';
-                        } else { /* iOS/annan fallback logik */ }
-                    };
+                            if (installAppBtn) installAppBtn.style.display = 'none';
+                        } else { 
+                            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                            if (isIOS) {
+                                alert("För att installera appen på din iPhone/iPad:\n1. Klicka på Dela-ikonen i Safari.\n2. Skrolla ner och välj 'Lägg till på hemskärmen'.");
+                            } else if (navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) {
+                                alert("Appen är redan installerad!");
+                            } else {
+                                alert("Installationsprompten är inte tillgänglig. På iOS, använd 'Dela' -> 'Lägg till på hemskärmen'.");
+                            }
+                        }
+                    });
                 }
             });
             window.addEventListener('appinstalled', () => {
                 if (installAppBtn) installAppBtn.style.display = 'none';
                 deferredPrompt = null;
             });
+        }
 
-        }); // Slut på DOMContentLoaded
 
         // --- TEMA HANTERING ---
         function applyTheme(theme) {
@@ -908,12 +940,11 @@
                 metaThemeColor.setAttribute("content", colorForMeta);
             }
         }
-        function toggleTheme() { // Denna anropas av event listener som sätts i DOMContentLoaded
+        function toggleTheme() {
             currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             applyTheme(currentTheme);
         }
-        // Flyttade if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme); till DOMContentLoaded
-
+        
         // --- KÄRNFUNKTIONER ---
         function addNameToParticipantsList(nameToAdd) {
             const name = nameToAdd.trim();
@@ -952,7 +983,7 @@
         function clearResults() {
             if (resultsList) resultsList.innerHTML = '';
             if (overlayResultsList) overlayResultsList.innerHTML = '';
-            if (noResultsInfo) noResultsInfo.style.display = 'block'; // Standard när resultat rensas
+            if (noResultsInfo) noResultsInfo.style.display = 'block';
             if (unassignedParticipantsList) unassignedParticipantsList.style.display = 'none';
             if (overlayUnassignedParticipants) overlayUnassignedParticipants.style.display = 'none';
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none'; 
@@ -981,7 +1012,6 @@
 
         function randomizePasses() {
             if (participants.length === 0) { alert('Lägg till deltagare först!'); return; }
-            // clearResults() kommer att visa noResultsInfo, så vi döljer den direkt efter om vi har deltagare
             clearResults();
             if (noResultsInfo) noResultsInfo.style.display = 'none'; 
 
@@ -1056,7 +1086,14 @@
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
-            document.body.classList.remove('overlay-open');
+            if (document.body.classList.contains('overlay-open')) { // Only remove if an overlay was actually closed
+                const anyOverlayOpen = (resultOverlay && resultOverlay.style.display === 'flex') ||
+                                     (helpOverlay && helpOverlay.style.display === 'flex') ||
+                                     (shareOverlay && shareOverlay.style.display === 'flex');
+                if (!anyOverlayOpen) {
+                    document.body.classList.remove('overlay-open');
+                }
+            }
         }
 
         function loadParticipantNamesFromFile(event) {
