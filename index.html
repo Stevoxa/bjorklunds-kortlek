@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Björklunds Kortlek</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#344a34"> <!-- Startfärg för ljust tema -->
+    <meta name="theme-color" content="#344a34"> 
     <link rel="apple-touch-icon" href="icon-192x192.png"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
@@ -31,7 +31,7 @@
             --danger-secondary-text-color: var(--danger-color);
             
             --listening-color: #FFC107;
-            --icon-fill-color: var(--primary-color);
+            --icon-fill-color: var(--primary-color); 
             --icon-hover-fill-color: #000;
 
             --overlay-bg-color: rgba(var(--primary-color-rgb), 0.85);
@@ -53,7 +53,7 @@
             --primary-text-color: #1e1e1e; 
             
             --secondary-button-bg-color: #4a4a4a;
-            --secondary-button-text-color: var(--text-color);
+            --secondary-button-text-color: var(--text-color); 
             --secondary-button-border-color: #5c5c5c; 
             
             --border-color: #444;
@@ -94,7 +94,7 @@
             margin: 0 auto;
             background-color: var(--surface-bg-color); 
             padding: 20px;
-            padding-top: 60px; /* Mer utrymme för header-ikoner */
+            padding-top: 60px; 
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
             position: relative; 
@@ -109,6 +109,16 @@
             gap: 8px;
             z-index: 10;
         }
+        .app-header-actions .icon-button { 
+            background: none;
+            border: none;
+        }
+        .app-header-actions .icon-button svg {
+            fill: var(--icon-fill-color); 
+        }
+         .app-header-actions .icon-button:hover svg {
+             fill: var(--icon-hover-fill-color); 
+         }
 
 
         h1 {
@@ -186,7 +196,7 @@
             border: 1px solid var(--secondary-button-border-color); 
         }
         .button-secondary:hover {
-            background-color: color-mix(in srgb, var(--secondary-button-bg-color) 85%, black); 
+            background-color: color-mix(in srgb, var(--secondary-button-bg-color) 90%, #000000 10%); 
         }
 
         .button-danger-secondary {
@@ -195,7 +205,7 @@
             border: 1px solid var(--danger-color); 
         }
         .button-danger-secondary:hover {
-             background-color: color-mix(in srgb, var(--danger-secondary-bg) 85%, black);
+             background-color: color-mix(in srgb, var(--danger-secondary-bg) 90%, #000000 10%);
         }
         
         .icon-button { 
@@ -207,38 +217,34 @@
             border: none;
             flex-shrink: 0;
         }
-        .icon-button.button-secondary { 
+        #speakNameBtn.icon-button.button-secondary { /* Mikrofonknappen har specifik styling */
              background-color: var(--secondary-button-bg-color); 
              border: 1px solid var(--secondary-button-border-color); 
         }
-         .icon-button.button-secondary:hover {
-             background-color: color-mix(in srgb, var(--secondary-button-bg-color) 85%, black);
+         #speakNameBtn.icon-button.button-secondary:hover {
+             background-color: color-mix(in srgb, var(--secondary-button-bg-color) 90%, #000000 10%);
          }
+         #speakNameBtn.icon-button.button-secondary svg { 
+             fill: var(--secondary-button-text-color); 
+        }
 
-        .icon-button svg {
+        .icon-button svg { 
             width: 20px;
             height: 20px;
             fill: var(--icon-fill-color); 
             transition: fill 0.3s ease;
         }
-        #speakNameBtn.button-secondary.icon-button svg { 
-             fill: var(--secondary-button-text-color); 
-        }
-        .app-header-actions .icon-button svg {
-            fill: var(--icon-fill-color);
-        }
-         .app-header-actions .icon-button:hover svg {
-             fill: var(--icon-hover-fill-color); 
-         }
 
 
-        .icon-button.is-listening svg {
+        .icon-button.is-listening svg { 
             fill: var(--listening-color) !important; 
         }
         .icon-button:disabled svg {
             fill: var(--secondary-text-color) !important;  
         }
-        .icon-button:hover:not(:disabled) svg { 
+        /* Generell hover för ikoner som inte är i .app-header-actions, och inte heller mikrofonen */
+        .icon-button:not(.button-secondary):not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):hover:not(:disabled) svg, 
+        .overlay-header .icon-button:hover:not(:disabled) svg {
             fill: var(--icon-hover-fill-color); 
         }
 
@@ -269,13 +275,18 @@
             flex-direction: column; 
             align-items: stretch; 
          }
-         .action-buttons > button {
+         .action-buttons > button:not(#installAppBtn) { /* Alla knappar utom install */
             padding: 8px 12px; 
             height: 38px; 
             align-items: center; 
             justify-content: center;
          }
-         .action-buttons .file-input-wrapper .button-like {
+         #installAppBtn { /* Speciell styling för installationsknappen om den skulle vara här */
+             /* Den är nu i header, så denna regel kanske inte behövs strikt, men skadar inte */
+            flex-basis: 100%; 
+            margin-top: 5px; 
+         }
+         .action-buttons .file-input-wrapper .button-like { 
             width: 100%; 
             font-size: 1em; 
             padding: 8px 10px; 
@@ -307,7 +318,7 @@
             padding: 8px 0;
             border-bottom: 1px solid var(--subtle-border-color); 
             word-break: break-word; 
-            color: var(--text-color); /* Textfärg för listelement */
+            color: var(--text-color); 
         }
         #resultsList li span:first-child, #overlayResultsList li span:first-child { 
             margin-right: 5px;
@@ -327,7 +338,14 @@
         }
 
         hr {
+            border: 0;
+            height: 1px;
             background-color: var(--border-color); 
+            margin: 20px 0; 
+        }
+
+        input[type="file"] { 
+            display: none !important; 
         }
         
         .info-text {
@@ -366,7 +384,7 @@
         .overlay-header h3 {
             color: var(--overlay-header-text-color); 
         }
-        .overlay-header .icon-button svg {
+        .overlay-header .icon-button svg { /* För kopieringsikonen i overlay-headern */
             fill: var(--icon-fill-color); 
         }
 
@@ -392,23 +410,23 @@
             color: var(--overlay-link-color); 
         }
         
-         #installAppBtn svg {
-            fill: currentColor; 
-         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="app-header-actions">
             <button id="themeToggleBtn" class="icon-button" title="Växla tema">
-                <svg id="themeIconMoon" style="display: block;" viewBox="0 0 24 24"><path fill="currentColor" d="M10 2c-1.82 0-3.53.5-5 1.35c2.99 1.73 5 4.95 5 8.65s-2.01 6.92-5 8.65A9.973 9.973 0 0 0 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>
-                <svg id="themeIconSun" style="display: none;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5s5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3s-1.34 3-3 3zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8z"/></svg>
+                <svg id="themeIconMoon" style="display: block;" viewBox="0 0 24 24"><path d="M10 2c-1.82 0-3.53.5-5 1.35c2.99 1.73 5 4.95 5 8.65s-2.01 6.92-5 8.65A9.973 9.973 0 0 0 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>
+                <svg id="themeIconSun" style="display: none;" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5s5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3s-1.34 3-3 3zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8z"/></svg>
             </button>
             <button id="helpBtn" class="icon-button" title="Hjälp">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
             </button>
             <button id="shareBtn" class="icon-button" title="Dela appen">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </button>
+            <button id="installAppBtn" class="icon-button" title="Installera appen" style="display: none;">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
             </button>
         </div>
 
@@ -429,11 +447,7 @@
                 <p class="file-format-info">Förväntat filformat: .txt (ett namn per rad)</p>
             </div>
             <button id="saveNamesBtn" class="button-secondary">Spara deltagarlista</button>
-            
-            <button id="installAppBtn" class="button-secondary" style="display: none;">
-                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                Installera App
-            </button>
+            <!-- Installationsknappen är flyttad till .app-header-actions -->
         </div>
 
         <section id="nameListSection">
@@ -467,10 +481,10 @@
 
             <div class="result-actions-top" id="mainResultActionsTop">
                 <button id="reopenOverlayBtn" class="icon-button" title="Visa resultat i helskärm">
-                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
                 </button>
                 <button id="mainCopyBtn" class="icon-button" title="Kopiera resultat">
-                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                 </button>
             </div>
 
@@ -487,14 +501,14 @@
             <div class="overlay-header">
                 <h3>Slumpat Resultat</h3>
                 <button id="overlayCopyBtn" class="icon-button" title="Kopiera resultat" style="display: none;">
-                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                 </button>
             </div>
             <div class="overlay-results-list-container">
                 <ul id="overlayResultsList"></ul>
             </div>
             <p id="overlayUnassignedParticipants" class="info-text" style="display:none; margin-bottom: 15px;"></p>
-            <button id="overlayCloseBtn" class="overlay-close-btn">Stäng</button>
+            <button id="resultOverlayCloseBtn" class="overlay-close-btn">Stäng</button>
         </div>
     </div>
 
@@ -514,7 +528,7 @@
                     <li>Välj "Installera appen" eller "Lägg till på startskärmen".</li>
                     <li>Följ instruktionerna.</li>
                 </ol>
-                <p><em>Alternativt kan en "Installera App"-knapp dyka upp automatiskt i appens meny när du använt sidan ett tag.</em></p>
+                <p><em>Alternativt kan en "Installera App"-knapp ( <svg style="display:inline-block;width:1em;height:1em;vertical-align:-0.125em;" viewBox="0 0 24 24"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> ) dyka upp automatiskt högst upp i appen när du använt sidan ett tag.</em></p>
 
                 <h5>iOS (iPhone/iPad - Safari):</h5>
                 <ol>
@@ -552,23 +566,25 @@
     </div>
 
     <script>
+        // JavaScript-kod (ingen ändring från föregående svar, men hela inkluderas här)
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeIconSun = document.getElementById('themeIconSun');
         const themeIconMoon = document.getElementById('themeIconMoon');
         let currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
 
         function applyTheme(theme) {
-            const newTheme = theme === 'dark' ? 'dark' : 'light'; // Säkerställ giltigt värde
+            const newTheme = theme === 'dark' ? 'dark' : 'light'; 
             document.body.setAttribute('data-theme', newTheme);
             if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none';
             if (themeIconMoon) themeIconMoon.style.display = newTheme === 'dark' ? 'none' : 'block';
             localStorage.setItem('theme', newTheme);
             if (themeToggleBtn) themeToggleBtn.title = newTheme === 'dark' ? "Växla till ljust tema" : "Växla till mörkt tema";
             
-            // Uppdatera meta theme-color för webbläsarens UI
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
             if (metaThemeColor) {
-                metaThemeColor.setAttribute("content", newTheme === 'dark' ? "#6faa6f" : "#344a34");
+                const rootStyle = getComputedStyle(document.documentElement);
+                const primaryColorForMeta = newTheme === 'dark' ? rootStyle.getPropertyValue('--primary-color').trim() : '#344a34'; 
+                metaThemeColor.setAttribute("content", primaryColorForMeta);
             }
         }
 
@@ -576,15 +592,16 @@
             currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             applyTheme(currentTheme);
         }
-
+        
         if (currentTheme) {
             applyTheme(currentTheme);
         } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             applyTheme('dark');
         } else {
-            applyTheme('light'); // Default till ljust om inget är satt
+            applyTheme('light'); 
         }
         if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+
 
         let participants = [];
         let customPasses = [];
@@ -610,7 +627,7 @@
 
         const resultOverlay = document.getElementById('resultOverlay');
         const overlayResultsList = document.getElementById('overlayResultsList');
-        const overlayCloseBtn = document.getElementById('overlayCloseBtn');
+        const resultOverlayCloseBtn = document.getElementById('resultOverlayCloseBtn'); 
         const overlayUnassignedParticipants = document.getElementById('overlayUnassignedParticipants');
 
         const mainResultActionsTop = document.getElementById('mainResultActionsTop');
@@ -1002,7 +1019,7 @@
         if (savePassListBtn) savePassListBtn.addEventListener('click', saveCustomPassesToFile);
         if (clearCustomPassesBtn) clearCustomPassesBtn.addEventListener('click', clearLoadedCustomPasses);
 
-        if (overlayCloseBtn) overlayCloseBtn.addEventListener('click', closeResultOverlay);
+        if (resultOverlayCloseBtn) resultOverlayCloseBtn.addEventListener('click', closeResultOverlay);
         if (helpOverlayCloseBtn) helpOverlayCloseBtn.addEventListener('click', closeHelpOverlay);
         if (shareOverlayCloseBtn) shareOverlayCloseBtn.addEventListener('click', closeShareOverlay);
         
