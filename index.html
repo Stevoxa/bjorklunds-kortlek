@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Björklunds Kortlek</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#344a34"> <!-- Startfärg för ljust tema -->
+    <meta name="theme-color" content="#344a34"> 
     <link rel="apple-touch-icon" href="icon-192x192.png"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
@@ -44,22 +44,22 @@
 
         body[data-theme="dark"] {
             /* Dark Theme */
-            --bg-color: #121212; /* Ännu mörkare för bättre kontrast */
-            --surface-bg-color: #1e1e1e;  /* Mörkare yta */
+            --bg-color: #121212; 
+            --surface-bg-color: #1e1e1e;  
             --text-color: #e0e0e0;
             --secondary-text-color: #a0a0a0;
-            --primary-color: #76c776; /* Ljusare, mer levande grön */
+            --primary-color: #76c776; 
             --primary-color-rgb: 118, 199, 118;
             --primary-text-color: #121212; 
             
-            --secondary-button-bg-color: #333; /* Mörkgrå */
+            --secondary-button-bg-color: #333; 
             --secondary-button-text-color: var(--text-color); 
             --secondary-button-border-color: #555; 
             
-            --border-color: #3a3a3a; /* Mörkare ramar */
+            --border-color: #3a3a3a; 
             --subtle-border-color: #2c2c2c; 
             
-            --danger-color: #ff8a80; /* Ljusare röd för mörkt tema */
+            --danger-color: #ff8a80; 
             --danger-secondary-bg: #4d2222; 
             --danger-secondary-text-color: var(--danger-color);
             
@@ -106,19 +106,19 @@
             top: 15px;
             right: 15px;
             display: flex;
-            gap: 5px; /* Minskad gap lite */
+            gap: 5px; 
             z-index: 10;
         }
         .app-header-actions .icon-button { 
-            background: none !important; /* Tvinga transparent bakgrund */
-            border: none !important;    /* Tvinga ingen ram */
-            padding: 6px; /* Justerad padding */
-            width: 36px;  /* Justerad storlek */
+            background-color: transparent !important; 
+            border: none !important;    
+            padding: 6px; 
+            width: 36px;  
             height: 36px;
         }
         .app-header-actions .icon-button svg {
             fill: var(--icon-fill-color) !important; 
-            width: 22px; /* Justerad storlek på SVG */
+            width: 22px; 
             height: 22px;
         }
          .app-header-actions .icon-button:hover svg {
@@ -218,9 +218,12 @@
             width: 40px; 
             height: 40px;
             min-width: 40px; 
-            background: none; 
+            background-color: transparent; /* Default transparent */
             border: none;
             flex-shrink: 0;
+            display: inline-flex; 
+            align-items: center;
+            justify-content: center;
         }
         #speakNameBtn.icon-button.button-secondary { 
              background-color: var(--secondary-button-bg-color); 
@@ -230,15 +233,19 @@
              background-color: color-mix(in srgb, var(--secondary-button-bg-color) 90%, #000000 10%);
          }
          #speakNameBtn.icon-button.button-secondary svg { 
-             fill: var(--secondary-button-text-color) !important; /* Tvinga färg för denna specifika knapp */
+             fill: var(--secondary-button-text-color) !important; 
         }
 
-        /* Generell fill för ikoner inuti .icon-button som inte är i header eller mikrofonen */
-        .icon-button:not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):not(#speakNameBtn) svg {
+        /* Generell fill för ikoner inuti .icon-button som inte är #speakNameBtn eller de i headern eller .settings-toggle-btn eller .delete-btn */
+        .icon-button:not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):not(#speakNameBtn):not(.settings-toggle-btn):not(.delete-btn) svg {
             width: 20px;
             height: 20px;
             fill: var(--primary-color); 
             transition: fill 0.3s ease;
+        }
+        .icon-button:not(.button-secondary):not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):not(.settings-toggle-btn):not(.delete-btn):hover:not(:disabled) svg, 
+        .overlay-header .icon-button:hover:not(:disabled) svg { 
+            fill: var(--icon-hover-fill-color); 
         }
 
         .icon-button.is-listening svg { 
@@ -247,21 +254,17 @@
         .icon-button:disabled svg {
             fill: var(--secondary-text-color) !important;  
         }
-        .icon-button:not(.button-secondary):not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):hover:not(:disabled) svg, 
-        .overlay-header .icon-button:hover:not(:disabled) svg {
-            fill: var(--icon-hover-fill-color); 
-        }
 
 
-        .settings-toggle-btn { /* Kugghjulet */
-            background: none !important; /* Tvinga transparent */
+        .settings-toggle-btn { 
+            background-color: transparent !important; 
             border: none !important;
             padding: 0 5px 0 10px; 
         }
         .settings-toggle-btn svg {
             width: 20px;
             height: 20px;
-            fill: var(--primary-color) !important; /* Styrs av temat, inte icon-fill-color som de i headern */
+            fill: var(--primary-color) !important; 
             transition: transform 0.3s ease, fill 0.3s ease;
         }
         .settings-toggle-btn:hover svg {
@@ -296,6 +299,10 @@
          #installAppBtn { 
             flex-basis: 100%; 
             margin-top: 5px; 
+         }
+         #installAppBtn svg { 
+             fill: currentColor; 
+             width:18px; height:18px; margin-right: 8px;
          }
          .action-buttons .file-input-wrapper .button-like { 
             width: 100%; 
@@ -341,8 +348,8 @@
             border-bottom: none;
         }
 
-        .delete-btn { /* Radera-ikonen */
-            background: none !important; /* Tvinga transparent */
+        .delete-btn { 
+            background-color: transparent !important; 
             border: none !important;
         }
         .delete-btn svg {
@@ -362,18 +369,14 @@
             margin: 20px 0; 
         }
 
-        /* input[type="file"] { 
-             display: none !important; 
-        } */
-        /* Mer aggressiv döljning för filinputen för att undvika "Välj fil..." texten */
-        input[type="file"] {
+        input[type="file"] { 
             position: absolute !important;
             left: -9999px !important;
             width: 1px !important;
             height: 1px !important;
             opacity: 0 !important;
             pointer-events: none !important;
-            overflow: hidden !important; /* Extra säkerhet */
+            overflow: hidden !important; 
         }
         
         .info-text {
@@ -403,56 +406,130 @@
 
         .content-overlay, #resultOverlay {
             background-color: var(--overlay-bg-color); 
+            display: none; /* Default dold */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 15px; 
+            box-sizing: border-box;
         }
 
         .overlay-content-box {
             background-color: var(--overlay-content-bg); 
+            padding: 20px; 
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            max-width: 550px; 
+            width: 100%;
+            max-height: 90vh; 
+            display: flex;
+            flex-direction: column;
         }
         
+        .overlay-header { 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
         .overlay-header h3 {
             color: var(--overlay-header-text-color); 
+            text-align: left; 
+            margin: 0; 
+            font-size: 1.6em;
+            flex-grow: 1; 
+        }
+        .overlay-header .icon-button { 
+            background-color: transparent !important;
+            border: none !important;
+            width: 30px;  
+            height: 30px;
+            padding: 5px;
         }
         .overlay-header .icon-button svg { 
-            fill: var(--icon-fill-color); 
+            fill: var(--icon-fill-color) !important; 
+            width: 18px;
+            height: 18px;
         }
         .overlay-header .icon-button:hover svg {
-            fill: var(--icon-hover-fill-color);
+            fill: var(--icon-hover-fill-color) !important;
         }
 
 
         .overlay-scrollable-content, .overlay-results-list-container {
              color: var(--overlay-text-color); 
+             overflow-y: auto; 
+             flex-grow: 1; 
+             margin-bottom: 20px; 
+             padding-right: 5px; 
         }
         .overlay-results-list-container {
             border: 1px solid var(--border-color); 
+            padding: 10px;
+            border-radius: 4px;
         }
 
         .overlay-scrollable-content h4 {
             color: var(--overlay-header-text-color); 
             border-bottom: 1px solid var(--border-color); 
+            margin-top: 20px;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+        }
+        .overlay-scrollable-content h4:first-child {
+            margin-top: 0;
         }
         .overlay-scrollable-content h5 {
             color: var(--overlay-text-color); 
+            margin-top: 15px;
+            margin-bottom: 5px;
         }
+        .overlay-scrollable-content p, .overlay-scrollable-content ol {
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        .overlay-scrollable-content ol {
+            padding-left: 20px;
+        }
+        .overlay-scrollable-content li { 
+            margin-bottom: 5px;
+            border-bottom: none; 
+        }
+
+
         #qrCodeContainer {
             border:1px solid var(--border-color); 
             background:white; 
+            margin: 20px auto; 
+            width: 200px; 
+            height: 200px; 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+        }
+        #qrCodeContainer canvas { 
+            display: block;
+            max-width: 100%; 
+            max-height: 100%;
         }
         #shareableLink {
             color: var(--overlay-link-color); 
         }
         
-         #installAppBtn svg {
-            fill: currentColor; 
-         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="app-header-actions">
             <button id="themeToggleBtn" class="icon-button" title="Växla tema">
-                <svg id="themeIconMoon" style="display: block;" viewBox="0 0 24 24"><path d="M10 2c-1.82 0-3.53.5-5 1.35c2.99 1.73 5 4.95 5 8.65s-2.01 6.92-5 8.65A9.973 9.973 0 0 0 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>
-                <svg id="themeIconSun" style="display: none;" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5s5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3s-1.34 3-3 3zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8z"/></svg>
+                <svg id="themeIconMoon" viewBox="0 0 24 24"><path d="M10 2c-1.82 0-3.53.5-5 1.35c2.99 1.73 5 4.95 5 8.65s-2.01 6.92-5 8.65A9.973 9.973 0 0 0 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>
+                <svg id="themeIconSun" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5s5-2.24 5-5s-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3s-1.34 3-3 3zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8z"/></svg>
             </button>
             <button id="helpBtn" class="icon-button" title="Hjälp">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
@@ -530,7 +607,7 @@
         <button id="randomizeBtn" style="width: 100%; margin-top: 20px; padding: 15px; font-size: 1.2em;">Slumpa Pass</button>
     </div>
 
-    <div id="resultOverlay" class="content-overlay">
+    <div id="resultOverlay" class="content-overlay" style="display: none;">
         <div class="overlay-content-box">
             <div class="overlay-header">
                 <h3>Slumpat Resultat</h3>
@@ -600,49 +677,10 @@
     </div>
 
     <script>
+        // --- DOM ELEMENT REFERENSER (samlade högst upp) ---
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeIconSun = document.getElementById('themeIconSun');
         const themeIconMoon = document.getElementById('themeIconMoon');
-        let currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-
-        function applyTheme(theme) {
-            const newTheme = theme === 'dark' ? 'dark' : 'light'; 
-            document.body.setAttribute('data-theme', newTheme);
-            if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none';
-            if (themeIconMoon) themeIconMoon.style.display = newTheme === 'dark' ? 'none' : 'block';
-            localStorage.setItem('theme', newTheme);
-            if (themeToggleBtn) themeToggleBtn.title = newTheme === 'dark' ? "Växla till ljust tema" : "Växla till mörkt tema";
-            
-            const metaThemeColor = document.querySelector("meta[name=theme-color]");
-            if (metaThemeColor) {
-                const rootStyle = getComputedStyle(document.documentElement); // Läs från det faktiska elementet
-                const primaryColorForMeta = newTheme === 'dark' 
-                    ? rootStyle.getPropertyValue('--primary-color').trim() // Läs aktuell mörk primärfärg
-                    : '#344a34'; // Hårdkodad fallback för ljus (eller läs --primary-color från light)
-                metaThemeColor.setAttribute("content", primaryColorForMeta);
-            }
-        }
-
-        function toggleTheme() {
-            currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            applyTheme(currentTheme);
-        }
-        
-        // Applicera initialt tema
-        if (currentTheme === 'dark') {
-            applyTheme('dark');
-        } else if (currentTheme === 'light') {
-            applyTheme('light');
-        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            applyTheme('dark'); // Systemet föredrar mörkt
-        } else {
-            applyTheme('light'); // Fallback till ljust tema
-        }
-        if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
-
-
-        let participants = [];
-        let customPasses = [];
         const nameInput = document.getElementById('nameInput');
         const addNameBtn = document.getElementById('addNameBtn');
         const nameList = document.getElementById('nameList');
@@ -654,7 +692,6 @@
         const noResultsInfo = document.getElementById('noResultsInfo');
         const speakNameBtn = document.getElementById('speakNameBtn');
         const unassignedParticipantsList = document.getElementById('unassignedParticipantsList');
-
         const toggleAdvancedPassBtn = document.getElementById('toggleAdvancedPassBtn');
         const advancedPassSettings = document.getElementById('advancedPassSettings');
         const passFileInput = document.getElementById('passFileInput');
@@ -662,17 +699,14 @@
         const clearCustomPassesBtn = document.getElementById('clearCustomPassesBtn');
         const customPassesInfo = document.getElementById('customPassesInfo');
         const passDistributionTitle = document.getElementById('passDistributionTitle');
-
         const resultOverlay = document.getElementById('resultOverlay');
         const overlayResultsList = document.getElementById('overlayResultsList');
         const resultOverlayCloseBtn = document.getElementById('resultOverlayCloseBtn'); 
         const overlayUnassignedParticipants = document.getElementById('overlayUnassignedParticipants');
-
         const mainResultActionsTop = document.getElementById('mainResultActionsTop');
         const reopenOverlayBtn = document.getElementById('reopenOverlayBtn');
         const mainCopyBtn = document.getElementById('mainCopyBtn'); 
         const overlayCopyBtn = document.getElementById('overlayCopyBtn');
-
         const helpBtn = document.getElementById('helpBtn');
         const shareBtn = document.getElementById('shareBtn');
         const helpOverlay = document.getElementById('helpOverlay');
@@ -681,16 +715,76 @@
         const shareOverlayCloseBtn = document.getElementById('shareOverlayCloseBtn');
         const qrCodeContainer = document.getElementById('qrCodeContainer');
         const shareableLink = document.getElementById('shareableLink');
-        const appURL = "https://stevoxa.github.io/bjorklunds-kortlek/"; 
-
         const installAppBtn = document.getElementById('installAppBtn');
+        
+        // --- GLOBALA VARIABLER ---
+        let participants = [];
+        let customPasses = [];
+        let currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
         let deferredPrompt;
-
+        const appURL = "https://stevoxa.github.io/bjorklunds-kortlek/"; 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition;
-        
-        console.log("SpeechRecognition API:", SpeechRecognition ? "Available" : "Not Available");
 
+        // --- OMEDELBAR DÖLJNING AV OVERLAYS OCH KONTROLLER VID LADDNING ---
+        document.addEventListener('DOMContentLoaded', () => {
+            if (resultOverlay) resultOverlay.style.display = 'none';
+            if (helpOverlay) helpOverlay.style.display = 'none';
+            if (shareOverlay) shareOverlay.style.display = 'none';
+            if (installAppBtn) installAppBtn.style.display = 'none';
+            if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
+            if (overlayCopyBtn) overlayCopyBtn.style.display = 'none';
+            document.body.classList.remove('overlay-open');
+
+            // Applicera initialt tema EFTER att DOM är laddad så vi kan läsa CSS-variabler
+            if (currentTheme) {
+                applyTheme(currentTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                applyTheme('dark'); 
+            } else {
+                applyTheme('light'); 
+            }
+        });
+
+
+        // --- TEMA HANTERING ---
+        function applyTheme(theme) {
+            const newTheme = theme === 'dark' ? 'dark' : 'light'; 
+            document.body.setAttribute('data-theme', newTheme);
+            if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none';
+            if (themeIconMoon) themeIconMoon.style.display = newTheme === 'dark' ? 'none' : 'block';
+            localStorage.setItem('theme', newTheme);
+            if (themeToggleBtn) themeToggleBtn.title = newTheme === 'dark' ? "Växla till ljust tema" : "Växla till mörkt tema";
+            
+            const metaThemeColor = document.querySelector("meta[name=theme-color]");
+            if (metaThemeColor) {
+                // För att tillförlitligt få CSS-variabeln, se till att temat är applicerat på body först
+                let colorForMeta;
+                if (newTheme === 'dark') {
+                    // Temporärt applicera temat om det inte redan är det för att läsa variabeln
+                    const wasLight = !document.body.getAttribute('data-theme') || document.body.getAttribute('data-theme') === 'light';
+                    if(wasLight) document.body.setAttribute('data-theme', 'dark');
+                    colorForMeta = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+                    if(wasLight) document.body.removeAttribute('data-theme'); // Återställ om det var temporärt
+                } else {
+                     // För ljust tema, använd antingen hårdkodat eller läs från :root om det är säkrare
+                    colorForMeta = '#344a34'; // Fallback
+                    try { // Försök läsa från root om möjligt
+                         const rootPrimary = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+                         if(rootPrimary) colorForMeta = rootPrimary;
+                    } catch(e){}
+                }
+                metaThemeColor.setAttribute("content", colorForMeta);
+            }
+        }
+        function toggleTheme() {
+            currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+        }
+        if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+
+        // --- RÖSTIGENKÄNNING ---
+        console.log("SpeechRecognition API:", SpeechRecognition ? "Available" : "Not Available");
         if (SpeechRecognition && speakNameBtn) {
              if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
                 console.warn("Web Speech API (microphone access) requires HTTPS or localhost. Speech input might not work.");
@@ -772,12 +866,13 @@
             }
         }
 
+        // --- PWA INSTALLATION ---
         window.addEventListener('beforeinstallprompt', (e) => {
+            console.log("'beforeinstallprompt' event fångat.");
             e.preventDefault();
             deferredPrompt = e;
             if (installAppBtn) {
-                installAppBtn.style.display = 'inline-flex';
-                console.log("'beforeinstallprompt' event fångat.");
+                installAppBtn.style.display = 'inline-flex'; // Använd inline-flex för ikonknappar
             }
         });
 
@@ -810,7 +905,7 @@
             deferredPrompt = null;
         });
 
-
+        // --- KÄRNFUNKTIONER ---
         function addNameToParticipantsList(nameToAdd) {
             const name = nameToAdd.trim();
             if (!name) { return false; }
@@ -853,6 +948,11 @@
             if (overlayUnassignedParticipants) overlayUnassignedParticipants.style.display = 'none';
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none'; 
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none'; 
+            // Explicit döljning av alla overlays
+            if (resultOverlay) resultOverlay.style.display = 'none';
+            if (helpOverlay) helpOverlay.style.display = 'none';
+            if (shareOverlay) shareOverlay.style.display = 'none';
+            document.body.classList.remove('overlay-open');
         }
 
         function addName() { if (nameInput && addNameToParticipantsList(nameInput.value.trim())) { renderNameList(); nameInput.value = ''; } if (nameInput) nameInput.focus(); }
@@ -862,7 +962,7 @@
             if (participants.length === 0) { alert('Lägg till deltagare först!'); return; }
             if (!resultsList || !noResultsInfo || !unassignedParticipantsList || !overlayResultsList || !overlayUnassignedParticipants || !mainResultActionsTop || !overlayCopyBtn) return;
 
-            clearResults();
+            clearResults(); 
             noResultsInfo.style.display = 'none';
             const shuffledParticipants = shuffleArray(participants);
             let unassignedP = [];
@@ -909,10 +1009,11 @@
         
         function showResultOverlay() {
              if (resultOverlay && resultsList.hasChildNodes()) { 
+                closeAllOverlays();
                 resultOverlay.style.display = 'flex';
                 document.body.classList.add('overlay-open');
             } else if (resultOverlay) { 
-                alert("Inga resultat att visa i helskärm. Slumpa passen först.");
+                // Undvik alert om inga resultat, noResultsInfo hanterar det.
             }
         }
 
@@ -924,6 +1025,7 @@
         }
         function openHelpOverlay() {
             if (helpOverlay) {
+                closeAllOverlays();
                 helpOverlay.style.display = 'flex';
                 document.body.classList.add('overlay-open');
             }
@@ -955,6 +1057,7 @@
 
         function openShareOverlay() {
             if (shareOverlay) {
+                closeAllOverlays();
                 generateQRCode();
                 shareOverlay.style.display = 'flex';
                 document.body.classList.add('overlay-open');
@@ -966,6 +1069,13 @@
                 document.body.classList.remove('overlay-open');
             }
         }
+        function closeAllOverlays() { // Hjälpfunktion
+            if (resultOverlay) resultOverlay.style.display = 'none';
+            if (helpOverlay) helpOverlay.style.display = 'none';
+            if (shareOverlay) shareOverlay.style.display = 'none';
+            document.body.classList.remove('overlay-open');
+        }
+
 
         function loadParticipantNamesFromFile(event) {
             const file = event.target.files[0];
@@ -1067,11 +1177,10 @@
         if(helpBtn) helpBtn.addEventListener('click', openHelpOverlay);
         if(shareBtn) shareBtn.addEventListener('click', openShareOverlay);
 
-
+        // Initiera UI
         renderNameList();
-        updateCustomPassesUI();
-        clearResults(); 
-        if (installAppBtn) installAppBtn.style.display = 'none';
+        updateCustomPassesUI(); // Detta anropar clearResults() som döljer alla overlays
+        // installAppBtn döljs också via DOMContentLoaded-eventet
     </script>
 </body>
 </html>
