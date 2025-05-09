@@ -322,13 +322,13 @@
             line-height: 1.2; 
          }
 
-        #nameList ul, #resultsList ul, #overlayResultsList ul, #customPassDisplayList ul { /* Lade till #customPassDisplayList ul */
+        #nameList ul, #resultsList ul, #overlayResultsList ul, #customPassDisplayList ul { 
             list-style-type: none;
             padding: 0;
             margin: 0; 
         }
 
-        #nameList li, #resultsList li, #overlayResultsList li, #customPassDisplayList li { /* Lade till #customPassDisplayList li */
+        #nameList li, #resultsList li, #overlayResultsList li, #customPassDisplayList li { 
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -344,7 +344,7 @@
         }
 
         #nameList li:last-child, #resultsList li:last-child, 
-        #overlayResultsList li:last-child, #customPassDisplayList li:last-child { /* Lade till #customPassDisplayList li:last-child */
+        #overlayResultsList li:last-child, #customPassDisplayList li:last-child { 
             border-bottom: none;
         }
 
@@ -382,15 +382,14 @@
         .info-text {
             color: var(--secondary-text-color); 
         }
-        #customPassesInfo, #noResultsInfo, #noCustomPassesInfo { /* Lade till #noCustomPassesInfo */
+        #customPassesInfo, #noResultsInfo, #noCustomPassesInfo {
             font-size: inherit;
             line-height: inherit;
         }
-         #noCustomPassesInfo { /* Kan behöva centreras om den ser konstig ut */
+         #noCustomPassesInfo { 
             text-align: center; 
             padding: 10px 0;
          }
-
 
         #advancedPassSettings {
             border: 1px solid var(--border-color); 
@@ -407,7 +406,8 @@
             text-align: center; 
         }
         #advancedPassSettings .action-buttons { 
-            margin-bottom: 0; 
+            /* margin-bottom är 0 redan, men vi kan lägga till margin-top här om det behövs */
+            margin-top: 10px; /* Lite utrymme efter passlistan och innan knapparna */
         }
         #advancedPassSettings .action-buttons > button,
         #advancedPassSettings .action-buttons > .file-input-wrapper {
@@ -427,8 +427,8 @@
 
         #customPassesInfo {
             color: var(--primary-color); 
-            margin-top: 8px; 
-            text-align: center; /* Centrera summeringstexten */
+            margin-top: 15px; /* Lite mer utrymme efter action-knapparna */
+            text-align: center; 
         }
         #unassignedParticipantsList {
             color: var(--danger-color); 
@@ -654,6 +654,7 @@
                     <button id="savePassListBtn" class="button-secondary">Spara passlista</button>
                     <button id="clearCustomPassesBtn" class="button-secondary">Rensa hela listan</button> 
                 </div>
+                
                 <p id="customPassesInfo" class="info-text"></p> 
             </div>
 
@@ -674,6 +675,7 @@
         <button id="randomizeBtn" style="width: 100%; margin-top: 20px; padding: 15px; font-size: 1.2em;">Slumpa Pass</button>
     </div>
 
+    <!-- Resten av Overlays och Script är oförändrat från föregående version -->
     <div id="resultOverlay" class="content-overlay" style="display: none;">
         <div class="overlay-content-box">
             <div class="overlay-header">
@@ -754,7 +756,7 @@
             overlayCopyBtn, helpBtn, shareBtn, helpOverlay, helpOverlayCloseBtn, shareOverlay,
             shareOverlayCloseBtn, qrCodeContainer, shareableLink, installAppBtn,
             passNameInput, addPassNameBtn, speakPassNameBtn, 
-            customPassDisplayList, noCustomPassesInfo; // Nya för pass-lista
+            customPassDisplayList, noCustomPassesInfo; 
 
         // --- GLOBALA VARIABLER ---
         let participants = [];
@@ -824,7 +826,7 @@
             
             applyTheme(currentTheme); 
             renderNameList(); 
-            updateCustomPassesUI(); // Detta anropar renderCustomPassList och clearResults
+            updateCustomPassesUI();
 
             if (addNameBtn) addNameBtn.addEventListener('click', addName);
             if (nameInput) nameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addName(); });
@@ -1047,7 +1049,6 @@
                 return false;
             }
             customPasses.push(passId);
-            // renderCustomPassList(); // Ritas om via updateCustomPassesUI
             updateCustomPassesUI(); 
             return true;
         }
@@ -1105,7 +1106,6 @@
             const idx = customPasses.indexOf(passIdToDelete);
             if (idx > -1) {
                 customPasses.splice(idx, 1);
-                // renderCustomPassList(); // Ritas om via updateCustomPassesUI
                 updateCustomPassesUI(); 
             }
         }
@@ -1277,7 +1277,6 @@
                 }
             }
             renderCustomPassList(); 
-            // updateCustomPassesSummary(); // Anropas nu från renderCustomPassList
             clearResults(); 
         }
 
