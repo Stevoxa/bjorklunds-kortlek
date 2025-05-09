@@ -375,14 +375,8 @@
             overflow: hidden !important; 
         }
         
-        .info-text {
+        .info-text { /* KORRIGERAD TILLBAKA TILL ENKEL VERSION */
             color: var(--secondary-text-color); 
-            font-family: 'Georgia', serif; /* Explicitly defined */
-            font-size: 1em;                 /* Explicitly defined */
-            line-height: 1.6;               /* Explicitly defined */
-            font-weight: normal;            /* Explicitly defined */
-            font-style: normal;             /* Explicitly defined */
-            text-align: left;               /* Explicitly defined */
         }
 
         #advancedPassSettings {
@@ -391,6 +385,7 @@
             padding: 12px; 
             margin-top: 10px;
             margin-bottom: 15px; 
+            display: none; /* Säkerställ att den är dold initialt, detta är korrekt i din fil */
         }
         #advancedPassSettings > p:first-of-type { 
             margin-top:0;
@@ -418,9 +413,8 @@
         }
 
         #customPassesInfo {
-            color: var(--primary-color); /* Overrides .info-text color */
+            color: var(--primary-color); 
             margin-top: 8px; 
-            /* Inherits font-family, font-size, etc. from .info-text */
         }
         #unassignedParticipantsList {
             color: var(--danger-color); 
@@ -773,18 +767,124 @@
 
         // --- INITIERING VID LADDNING AV SIDAN ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Initiera alla DOM-element-referenser inuti DOMContentLoaded
+            // för att säkerställa att elementen finns när skriptet körs.
+            // Detta är redan gjort ovanför denna funktion.
+
             if (resultOverlay) resultOverlay.style.display = 'none';
             if (helpOverlay) helpOverlay.style.display = 'none';
             if (shareOverlay) shareOverlay.style.display = 'none';
             if (installAppBtn) installAppBtn.style.display = 'none'; 
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
             if (overlayCopyBtn) overlayCopyBtn.style.display = 'none';
+            
+            // Säkerställ att advancedPassSettings är dolt initialt, både via CSS och JS för säkerhets skull
+            if (advancedPassSettings) advancedPassSettings.style.display = 'none';
+
+
             document.body.classList.remove('overlay-open'); 
             applyTheme(currentTheme); 
             renderNameList(); 
-            updateCustomPassesUI(); 
-        });
+            updateCustomPassesUI(); // Denna kommer att anropa clearResults(), som sätter noResultsInfo till 'block'
 
+            // Koppla alla event listeners HÄR, efter att allt annat är initierat
+            if (addNameBtn) addNameBtn.addEventListener('click', addName);
+            if (nameInput) nameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addName(); });
+            if (randomizeBtn) randomizeBtn.addEventListener('click', randomizePasses);
+            if (fileInput) fileInput.addEventListener('change', loadParticipantNamesFromFile);
+            if (saveNamesBtn) saveNamesBtn.addEventListener('click', saveParticipantNamesToFile);
+            
+            if (toggleAdvancedPassBtn) toggleAdvancedPassBtn.addEventListener('click', toggleAdvancedPassSettings);
+            if (passFileInput) passFileInput.addEventListener('change', loadCustomPassesFromFile);
+            if (savePassListBtn) savePassListBtn.addEventListener('click', saveCustomPassesToFile);
+            if (clearCustomPassesBtn) clearCustomPassesBtn.addEventListener('click', clearLoadedCustomPasses);
+
+            if (resultOverlayCloseBtn) resultOverlayCloseBtn.addEventListener('click', closeResultOverlay);
+            if (helpOverlayCloseBtn) helpOverlayCloseBtn.addEventListener('click', closeHelpOverlay);
+            if (shareOverlayCloseBtn) shareOverlayCloseBtn.addEventListener('click', closeShareOverlay);
+            
+            if(reopenOverlayBtn) reopenOverlayBtn.addEventListener('click', showResultOverlay);
+            if(mainCopyBtn) mainCopyBtn.addEventListener('click', copyResultsToClipboard);
+            if(overlayCopyBtn) overlayCopyBtn.addEventListener('click', copyResultsToClipboard);
+            if(helpBtn) helpBtn.addEventListener('click', openHelpOverlay);
+            if(shareBtn) shareBtn.addEventListener('click', openShareOverlay);
+            if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+            
+            // Röstigenkänning setup (event listener för speakNameBtn sätts inuti denna if-sats)
+            if (SpeechRecognition && speakNameBtn) {
+                if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                    console.warn("Web Speech API (microphone access) requires HTTPS or localhost.");
+                }
+                try {
+                    recognition = new SpeechRecognition();
+                    recognition.lang = 'sv-SE';
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+                    recognition.onresult = (event) => { 
+                        const spokenName = event.results[0][0].transcript.trim();
+                        if (addNameToParticipantsList(spokenName)) renderNameList(); 
+                    };
+                    recognition.onerror = (event) => {
+                        console.error('Fel vid röstigenkänning:', event.error, event.message);
+                        if (speakNameBtn) {
+                            speakNameBtn.title = "Fel vid röstinmatning"; 
+                            speakNameBtn.classList.remove('is-listening'); 
+                            speakNameBtn.disabled = false;
+                        }
+                    };
+                    recognition.onstart = () => { 
+                        if (speakNameBtn) {
+                            speakNameBtn.classList.add('is-listening'); 
+                            speakNameBtn.disabled = true; 
+                            speakNameBtn.title = "Lyssnar..."; 
+                        }
+                    };
+                    recognition.onend = () => { 
+                        if (speakNameBtn) {
+                            speakNameBtn.classList.remove('is-listening'); 
+                            speakNameBtn.disabled = false; 
+                            speakNameBtn.title = "Tala in namn"; 
+                        }
+                    };
+                    speakNameBtn.addEventListener('click', () => { 
+                        try { 
+                            if (recognition) recognition.start(); 
+                            else console.error("Röstigenkänning är inte korrekt initierad.");
+                        } catch (e) { 
+                            console.error("Kunde inte starta röstigenkänning (catch): ", e);
+                            if (speakNameBtn) { /* Återställ knapp */ }
+                        }
+                    });
+                } catch (e) { 
+                    console.error("Kunde inte initiera SpeechRecognition objektet:", e);
+                    if (speakNameBtn) { speakNameBtn.disabled = true; speakNameBtn.title = 'Röstigenkänning initiering misslyckades.'; }
+                }
+            } else { 
+                if (speakNameBtn) { speakNameBtn.disabled = true; speakNameBtn.title = 'Röstinmatning stöds ej.'; }
+            }
+
+            // PWA installation (event listener för installAppBtn sätts här om deferredPrompt finns)
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                if (installAppBtn) {
+                    installAppBtn.style.display = 'inline-flex'; 
+                    installAppBtn.onclick = async () => { // Använd onclick här för att säkerställa att det bara är en listener
+                        if (deferredPrompt) {
+                            deferredPrompt.prompt();
+                            await deferredPrompt.userChoice;
+                            deferredPrompt = null;
+                            installAppBtn.style.display = 'none';
+                        } else { /* iOS/annan fallback logik */ }
+                    };
+                }
+            });
+            window.addEventListener('appinstalled', () => {
+                if (installAppBtn) installAppBtn.style.display = 'none';
+                deferredPrompt = null;
+            });
+
+        }); // Slut på DOMContentLoaded
 
         // --- TEMA HANTERING ---
         function applyTheme(theme) {
@@ -808,24 +908,241 @@
                 metaThemeColor.setAttribute("content", colorForMeta);
             }
         }
-        function toggleTheme() {
+        function toggleTheme() { // Denna anropas av event listener som sätts i DOMContentLoaded
             currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             applyTheme(currentTheme);
         }
-        if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+        // Flyttade if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme); till DOMContentLoaded
 
-        // --- RÖSTIGENKÄNNING (oförändrad) ---
-        // ... (samma som tidigare)
+        // --- KÄRNFUNKTIONER ---
+        function addNameToParticipantsList(nameToAdd) {
+            const name = nameToAdd.trim();
+            if (!name) { return false; }
+            const nameLower = name.toLowerCase();
+            if (participants.some(existingName => existingName.toLowerCase() === nameLower)) {
+                console.warn('Namnet "' + name + '" finns redan.');
+                return false;
+            }
+            participants.push(name); return true;
+        }
 
-        // --- PWA INSTALLATION (oförändrad) ---
-        // ... (samma som tidigare)
-
-        // --- KÄRNFUNKTIONER (oförändrade) ---
-        // ... (samma som tidigare)
+        function renderNameList() {
+            if (!nameList || !noNamesInfo) return;
+            nameList.innerHTML = '';
+            participants.sort((a, b) => a.localeCompare(b, 'sv', { sensitivity: 'base' }));
+            noNamesInfo.style.display = participants.length === 0 ? 'block' : 'none';
+            participants.forEach((name) => {
+                const li = document.createElement('li'); li.textContent = name;
+                const deleteBtn = document.createElement('button'); deleteBtn.classList.add('delete-btn');
+                deleteBtn.setAttribute('aria-label', 'Ta bort ' + name); deleteBtn.title = 'Ta bort ' + name;
+                const svgNS = "http://www.w3.org/2000/svg"; const svgIcon = document.createElementNS(svgNS, "svg");
+                svgIcon.setAttributeNS(null, "viewBox", "0 0 24 24");
+                const p1 = document.createElementNS(svgNS, "path"); p1.setAttributeNS(null, "d", "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z");
+                const p2 = document.createElementNS(svgNS, "path"); p2.setAttributeNS(null, "d", "M17 11H7v2h10v-2z");
+                svgIcon.appendChild(p1); svgIcon.appendChild(p2); deleteBtn.appendChild(svgIcon);
+                deleteBtn.onclick = () => deleteNameByValue(name); li.appendChild(deleteBtn); nameList.appendChild(li);
+            });
+        }
         
-        // --- EVENT LISTENERS (oförändrade) ---
-        // ... (samma som tidigare)
+        function deleteNameByValue(nameToDelete) {
+            const idx = participants.indexOf(nameToDelete);
+            if (idx > -1) { participants.splice(idx, 1); renderNameList(); clearResults(); }
+        }
 
+        function clearResults() {
+            if (resultsList) resultsList.innerHTML = '';
+            if (overlayResultsList) overlayResultsList.innerHTML = '';
+            if (noResultsInfo) noResultsInfo.style.display = 'block'; // Standard när resultat rensas
+            if (unassignedParticipantsList) unassignedParticipantsList.style.display = 'none';
+            if (overlayUnassignedParticipants) overlayUnassignedParticipants.style.display = 'none';
+            if (mainResultActionsTop) mainResultActionsTop.style.display = 'none'; 
+            if (overlayCopyBtn) overlayCopyBtn.style.display = 'none'; 
+            if (resultOverlay && resultOverlay.style.display === 'flex') {
+                resultOverlay.style.display = 'none';
+                document.body.classList.remove('overlay-open');
+            }
+        }
+
+        function addName() { 
+            if (nameInput && addNameToParticipantsList(nameInput.value.trim())) { 
+                renderNameList(); 
+                nameInput.value = ''; 
+            } 
+            if (nameInput) nameInput.focus(); 
+        }
+        function shuffleArray(array) { 
+            const newArray = [...array]; 
+            for (let i = newArray.length - 1; i > 0; i--) { 
+                const j = Math.floor(Math.random() * (i + 1)); 
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; 
+            } 
+            return newArray; 
+        }
+
+        function randomizePasses() {
+            if (participants.length === 0) { alert('Lägg till deltagare först!'); return; }
+            // clearResults() kommer att visa noResultsInfo, så vi döljer den direkt efter om vi har deltagare
+            clearResults();
+            if (noResultsInfo) noResultsInfo.style.display = 'none'; 
+
+            const shuffledParticipants = shuffleArray(participants);
+            let unassignedP = [];
+
+            function createResultListItem(passIdentifier, assignedPerson) {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${passIdentifier}:</span> ${assignedPerson}`;
+                return li;
+            }
+
+            if (customPasses.length > 0) {
+                const availableParticipants = [...shuffledParticipants];
+                customPasses.forEach(passId => {
+                    const assignedParticipant = availableParticipants.length > 0 ? availableParticipants.shift() : "<i>Ledigt</i>";
+                    if(resultsList) resultsList.appendChild(createResultListItem(passId, assignedParticipant));
+                    if(overlayResultsList) overlayResultsList.appendChild(createResultListItem(passId, assignedParticipant));
+                });
+                unassignedP = availableParticipants;
+            } else {
+                shuffledParticipants.forEach((name, index) => {
+                    const passIdentifier = `Pass ${index + 1}`;
+                    if(resultsList) resultsList.appendChild(createResultListItem(passIdentifier, name));
+                    if(overlayResultsList) overlayResultsList.appendChild(createResultListItem(passIdentifier, name));
+                });
+            }
+
+            if (unassignedP.length > 0) {
+                const unassignedText = `<strong>Oplacerade deltagare:</strong> ${unassignedP.join(', ')}`;
+                if(unassignedParticipantsList) { unassignedParticipantsList.innerHTML = unassignedText; unassignedParticipantsList.style.display = 'block'; }
+                if(overlayUnassignedParticipants) { overlayUnassignedParticipants.innerHTML = unassignedText; overlayUnassignedParticipants.style.display = 'block'; }
+            } else {
+                if(unassignedParticipantsList) unassignedParticipantsList.style.display = 'none';
+                if(overlayUnassignedParticipants) overlayUnassignedParticipants.style.display = 'none';
+            }
+
+            if (resultsList && resultsList.hasChildNodes()) {
+                 if(mainResultActionsTop) mainResultActionsTop.style.display = 'flex'; 
+                 if(overlayCopyBtn) overlayCopyBtn.style.display = 'inline-flex'; 
+            }
+            showResultOverlay(); 
+        }
+        
+        function showResultOverlay() {
+             if (resultOverlay && resultsList && resultsList.hasChildNodes()) { 
+                closeAllOverlays(); 
+                resultOverlay.style.display = 'flex';
+                document.body.classList.add('overlay-open');
+            }
+        }
+
+        function closeResultOverlay() { if (resultOverlay) { resultOverlay.style.display = 'none'; document.body.classList.remove('overlay-open'); } }
+        function openHelpOverlay() { if (helpOverlay) { closeAllOverlays(); helpOverlay.style.display = 'flex'; document.body.classList.add('overlay-open'); } }
+        function closeHelpOverlay() { if (helpOverlay) { helpOverlay.style.display = 'none'; document.body.classList.remove('overlay-open'); } }
+
+        function generateQRCode() {
+            if (!qrCodeContainer || typeof QRious === 'undefined') return;
+            try {
+                qrCodeContainer.innerHTML = ''; 
+                const canvasElement = document.createElement('canvas'); 
+                new QRious({ element: canvasElement, value: appURL, size: 188, padding: 5, level: 'H', background: 'white', foreground: 'black' });
+                if (canvasElement.width > 0) qrCodeContainer.appendChild(canvasElement);
+                if(shareableLink) { shareableLink.href = appURL; shareableLink.textContent = appURL; }
+            } catch (error) { console.error("Error QR:", error); }
+        }
+
+        function openShareOverlay() { if (shareOverlay) { closeAllOverlays(); generateQRCode(); shareOverlay.style.display = 'flex'; document.body.classList.add('overlay-open'); } }
+        function closeShareOverlay() { if (shareOverlay) { shareOverlay.style.display = 'none'; document.body.classList.remove('overlay-open'); } }
+        
+        function closeAllOverlays() { 
+            if (resultOverlay) resultOverlay.style.display = 'none';
+            if (helpOverlay) helpOverlay.style.display = 'none';
+            if (shareOverlay) shareOverlay.style.display = 'none';
+            document.body.classList.remove('overlay-open');
+        }
+
+        function loadParticipantNamesFromFile(event) {
+            const file = event.target.files[0];
+            if (file && fileInput) {
+                const reader = new FileReader();
+                reader.onload = (e) => { 
+                    let added = 0; e.target.result.split(/\r\n|\n/).forEach(line => { if (addNameToParticipantsList(line.trim())) added++; }); 
+                    if (added > 0) renderNameList(); 
+                    fileInput.value = ''; 
+                };
+                reader.onerror = () => alert("Kunde inte läsa deltagarfilen."); reader.readAsText(file);
+            }
+        }
+        function saveParticipantNamesToFile() {
+            if (participants.length === 0) { alert('Inga deltagare att spara.'); return; }
+            const text = participants.join('\n'); const blob = new Blob([text], { type: 'text/plain' });
+            const a = document.createElement('a'); a.download = 'deltagarlista.txt'; a.href = URL.createObjectURL(blob); a.click(); URL.revokeObjectURL(a.href);
+        }
+
+        function toggleAdvancedPassSettings() {
+            if (advancedPassSettings) {
+                const isOpen = advancedPassSettings.style.display === 'block';
+                advancedPassSettings.style.display = isOpen ? 'none' : 'block';
+                if (toggleAdvancedPassBtn) toggleAdvancedPassBtn.classList.toggle('open', !isOpen);
+            }
+        }
+
+        function updateCustomPassesUI() {
+            if (customPassesInfo && passDistributionTitle) {
+                if (customPasses.length > 0) {
+                    customPassesInfo.textContent = `Avancerad är aktiv (${customPasses.length} pass).`;
+                    passDistributionTitle.textContent = 'Passfördelning (Avancerad)';
+                } else {
+                    customPassesInfo.textContent = 'Inga avancerade inställningar. Standardnumrering (1-n) kommer användas.';
+                    passDistributionTitle.textContent = 'Passfördelning (1-n)';
+                }
+            }
+            clearResults(); 
+        }
+
+        function loadCustomPassesFromFile(event) {
+            const file = event.target.files[0];
+            if (file && passFileInput) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    customPasses = e.target.result.split(/\r\n|\n/).map(line => line.trim()).filter(line => line !== '');
+                    updateCustomPassesUI();
+                    passFileInput.value = '';
+                    alert(`${customPasses.length} pass laddades från filen.`);
+                };
+                reader.onerror = () => alert("Kunde inte läsa passfilen.");
+                reader.readAsText(file);
+            }
+        }
+
+        function saveCustomPassesToFile() {
+            if (customPasses.length === 0) { alert('Ingen avancerad lista att spara.'); return; } 
+            const text = customPasses.join('\n'); const blob = new Blob([text], { type: 'text/plain' });
+            const a = document.createElement('a'); a.download = 'passlista.txt'; a.href = URL.createObjectURL(blob); a.click(); URL.revokeObjectURL(a.href);
+        }
+
+        function clearLoadedCustomPasses() {
+            if (confirm("Är du säker på att du vill rensa avancerad och återgå till standardnumrering?")) {
+                customPasses = [];
+                updateCustomPassesUI();
+            }
+        }
+        
+        function copyResultsToClipboard() {
+            if (!resultsList) return; let txt = `${passDistributionTitle.textContent}:\n`;
+            const items = resultsList.getElementsByTagName('li'); 
+            if (items.length === 0) { alert('Inga resultat att kopiera.'); return; }
+            for (let i = 0; i < items.length; i++) { txt += items[i].textContent.replace(/<\/?i>/g, '') + '\n'; }
+            if (unassignedParticipantsList && unassignedParticipantsList.style.display === 'block' && unassignedParticipantsList.textContent) {
+                txt += `\n${unassignedParticipantsList.textContent}\n`;
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(txt.trim()).then(() => alert('Resultaten kopierade!')).catch(() => alert('Kopiering misslyckades.'));
+            } else { 
+                const ta = document.createElement("textarea"); ta.value = txt.trim(); document.body.appendChild(ta); ta.select(); 
+                try { document.execCommand('copy'); alert('Resultaten kopierade!'); } 
+                catch (e) { alert('Kopiering misslyckades.'); } 
+                document.body.removeChild(ta); 
+            }
+        }
     </script>
 </body>
 </html>
