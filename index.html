@@ -375,14 +375,8 @@
             overflow: hidden !important; 
         }
         
-        .info-text {
+        .info-text { /* ÅTERSTÄLLD */
             color: var(--secondary-text-color); 
-            font-family: 'Georgia', serif; /* Explicitly defined */
-            font-size: 1em;                 /* Explicitly defined */
-            line-height: 1.6;               /* Explicitly defined */
-            font-weight: normal;            /* Explicitly defined */
-            font-style: normal;             /* Explicitly defined */
-            text-align: left;               /* Explicitly defined */
         }
 
         #advancedPassSettings {
@@ -418,9 +412,8 @@
         }
 
         #customPassesInfo {
-            color: var(--primary-color); /* Overrides .info-text color */
+            color: var(--primary-color); 
             margin-top: 8px; 
-            /* Inherits font-family, font-size, etc. from .info-text */
         }
         #unassignedParticipantsList {
             color: var(--danger-color); 
@@ -589,6 +582,7 @@
 
         <h1>Björklunds Kortlek</h1>
 
+        <!-- Resten av HTML är oförändrad -->
         <div class="input-group">
             <input type="text" id="nameInput" placeholder="Ange namn...">
             <button id="addNameBtn">Lägg till</button>
