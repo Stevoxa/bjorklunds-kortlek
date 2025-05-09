@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bjorklunds-kortlek-cache-v2'; // Öka version om du gör ändringar i cachade filer
+const CACHE_NAME = 'bjorklunds-kortlek-cache-v2';
 const urlsToCache = [
     './', 
     './index.html', 
@@ -20,26 +20,19 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-    // Vi vill inte cacha API-anrop eller externa resurser om de skulle finnas
-    // Denna app har inga just nu, men bra att ha i åtanke.
-    // Röstigenkänning är ett webbläsar-API, inte ett nätverksanrop som cachas här.
     event.respondWith(
         caches.match(event.request)
             .then(response => {
                 if (response) {
-                    return response; // Return from cache
+                    return response; 
                 }
-                // Viktigt: Klona request. En request är en stream och kan bara konsumeras en gång.
-                // Vi behöver en för cachen och en för webbläsaren att skicka.
                 let fetchRequest = event.request.clone();
 
                 return fetch(fetchRequest).then(
                     networkResponse => {
                         if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-                            return networkResponse; // Return non-cacheable response
+                            return networkResponse; 
                         }
-
-                        // Viktigt: Klona response. En response är en stream och kan bara konsumeras en gång.
                         let responseToCache = networkResponse.clone();
 
                         caches.open(CACHE_NAME)
@@ -50,16 +43,14 @@ self.addEventListener('fetch', event => {
                         return networkResponse;
                     }
                 ).catch(error => {
-                    console.log('ServiceWorker: Fetch failed, returning offline page or error for:', event.request.url, error);
-                    // Här skulle man kunna returnera en fallback offline-sida om man hade en
-                    // return caches.match('./offline.html'); 
+                    console.log('ServiceWorker: Fetch failed for:', event.request.url, error);
                 });
             })
     );
 });
 
 self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME]; // Behåll bara den nuvarande cachen
+  const cacheWhitelist = [CACHE_NAME]; 
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(

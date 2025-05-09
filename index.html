@@ -7,6 +7,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#344a34">
     <link rel="apple-touch-icon" href="icon-192x192.png"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         :root {
             --primary-color: #344a34;
@@ -39,15 +40,29 @@
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
+            padding-top: 50px; /* Lite mer utrymme upptill för header-ikoner */
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative; /* För .app-header-actions positionering */
         }
+        
+        .app-header-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        /* Återanvänd .icon-button för dessa */
+
 
         h1 {
             color: var(--primary-color);
             text-align: center;
             margin-bottom: 20px;
             font-size: 1.8em;
+            margin-top: 0; /* Om .app-header-actions är ovanför */
         }
         h2 {
             color: var(--primary-color);
@@ -63,11 +78,6 @@
             position: relative; 
         }
         
-        .h2-title-text {
-            flex-grow: 1; 
-            text-align: center; 
-        }
-
         .input-group {
             display: flex;
             margin-bottom: 15px;
@@ -152,12 +162,16 @@
             fill: var(--primary-color); 
             transition: fill 0.3s ease;
         }
-        #speakNameBtn.button-secondary.icon-button svg {
+        #speakNameBtn.button-secondary.icon-button svg { /* Mikrofonknappen har sin bakgrund, så dess ikon bör matcha den */
              fill: var(--primary-color);
         }
-        #speakNameBtn.icon-button:not(.button-secondary) svg { 
-             fill: var(--light-text-color); 
+        /* För .app-header-actions, som inte har .button-secondary, så får ikonerna sin färg från .icon-button svg */
+        .app-header-actions .icon-button svg {
+            fill: var(--primary-color); /* Eller --text-color om det passar bättre */
         }
+         .app-header-actions .icon-button:hover svg {
+             fill: #000;
+         }
 
 
         .icon-button.is-listening svg {
@@ -166,7 +180,7 @@
         .icon-button:disabled svg {
             fill: #bbb !important; 
         }
-        .icon-button:hover:not(:disabled) svg {
+        .icon-button:hover:not(:disabled) svg { /* Generell hover för ikoner som inte är i .app-header-actions */
             fill: #000; 
         }
 
@@ -196,28 +210,25 @@
             margin-bottom: 10px; 
             flex-wrap: wrap; 
         }
-        /* Gäller för både direkta button-barn och .file-input-wrapper */
          .action-buttons > button, 
          .action-buttons > .file-input-wrapper {
             font-size: 0.9em; 
-            height: auto; /* Låt höjden bestämmas av innehållet (knapp + text) */
+            height: auto; 
             flex-basis: calc(50% - 5px); 
-            min-width: 130px; /* Justera vid behov */
-            display: flex; /* För .file-input-wrapper */
-            flex-direction: column; /* För .file-input-wrapper */
-            align-items: stretch; /* För .file-input-wrapper, så label tar bredd */
+            min-width: 130px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: stretch; 
          }
-         /* Specifik stil för knappar som är direkta barn (Spara-knapparna) */
          .action-buttons > button {
             padding: 8px 12px; 
-            height: 38px; /* Behåll fast höjd för rena knappar */
-            align-items: center; /* Centrera text i rena knappar */
+            height: 38px; 
+            align-items: center; 
             justify-content: center;
          }
-         /* Stil för label inuti wrapper */
          .action-buttons .file-input-wrapper .button-like {
-            width: 100%; /* Se till att labeln fyller wrapperns bredd */
-            font-size: 1em; /* Återställ till standard knapp-fontstorlek */
+            width: 100%; 
+            font-size: 1em; 
             padding: 8px 10px; 
             height: 38px;
          }
@@ -307,17 +318,17 @@
             border-radius: 4px;
             background-color: #f9f9f9; 
         }
-        #advancedPassSettings p:first-child { /* Första p-taggen (instruktionen) */
+        #advancedPassSettings p:first-child { 
             margin-top:0;
-            margin-bottom: 15px; /* Lite mer utrymme till knapparna */
+            margin-bottom: 15px; 
         }
-        #advancedPassSettings .action-buttons { /* Justera specifikt för knapparna inuti advanced */
+        #advancedPassSettings .action-buttons { 
             margin-bottom: 5px;
         }
         #customPassesInfo {
             font-size: 0.9em;
             color: var(--primary-color);
-            margin-top: 10px; /* Lite mer space om texten visas */
+            margin-top: 10px; 
             text-align: center;
         }
         #unassignedParticipantsList {
@@ -329,7 +340,8 @@
             color: var(--text-color);
         }
 
-        #resultOverlay {
+        /* --- OVERLAY STYLES (Result, Help, Share) --- */
+        .content-overlay, #resultOverlay { /* #resultOverlay var specifik, .content-overlay är mer generell */
             display: none; 
             position: fixed;
             top: 0;
@@ -370,14 +382,71 @@
             font-size: 1.6em;
             flex-grow: 1; 
         }
+        /* Kopieringsikonen i overlay återanvänder .icon-button */
+        .overlay-header .icon-button {
+            width: 30px; /* Lite mindre i overlay header */
+            height: 30px;
+            padding: 5px;
+        }
+         .overlay-header .icon-button svg {
+            width: 18px;
+            height: 18px;
+         }
 
-        .overlay-results-list-container {
+        .overlay-scrollable-content, .overlay-results-list-container { /* Kombinerad stil */
             overflow-y: auto; 
             flex-grow: 1; 
             margin-bottom: 20px; 
+            padding-right: 5px; /* Lite space för scrollbar om den syns */
+        }
+        .overlay-results-list-container { /* Specifik för resultatlistan om den behöver egen ram */
             border: 1px solid var(--border-color);
             padding: 10px;
             border-radius: 4px;
+        }
+
+        .overlay-scrollable-content h4 {
+            margin-top: 20px;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+        .overlay-scrollable-content h4:first-child {
+            margin-top: 0;
+        }
+        .overlay-scrollable-content h5 {
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+        .overlay-scrollable-content p, .overlay-scrollable-content ol {
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        .overlay-scrollable-content ol {
+            padding-left: 20px;
+        }
+        .overlay-scrollable-content li { /* Gäller <li> inuti <ol> i hjälptexten */
+            margin-bottom: 5px;
+        }
+
+
+        #qrCodeContainer {
+            margin: 20px auto; 
+            width: 200px; 
+            height: 200px; 
+            border:1px solid var(--border-color); 
+            padding:5px; background:white;
+            display: flex; /* För att centrera canvas */
+            align-items: center;
+            justify-content: center;
+        }
+        #qrCodeContainer canvas { 
+            display: block;
+            max-width: 100%; /* Se till att canvas inte blir större än containern */
+            max-height: 100%;
+            /* QRious sätter width/height på canvas, dessa är för fallback */
         }
 
         .overlay-close-btn {
@@ -393,11 +462,29 @@
             margin-bottom: 8px; 
             gap: 5px; 
         }
+         #installAppBtn { /* Stil för installationsknappen */
+            margin-top: 10px; /* Om den är i .action-buttons */
+            flex-basis: 100%; /* Ta full bredd om den är ensam på en rad */
+         }
+         #installAppBtn svg {
+            width:18px; height:18px; margin-right: 8px;
+            fill: currentColor; /* Ärva färg från knapptexten */
+         }
+
 
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="app-header-actions">
+            <button id="helpBtn" class="icon-button" title="Hjälp">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>
+            </button>
+            <button id="shareBtn" class="icon-button" title="Dela appen">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </button>
+        </div>
+
         <h1>Björklunds Kortlek</h1>
 
         <div class="input-group">
@@ -415,6 +502,11 @@
                 <p class="file-format-info">Förväntat filformat: .txt (ett namn per rad)</p>
             </div>
             <button id="saveNamesBtn" class="button-secondary">Spara deltagarlista</button>
+            
+            <button id="installAppBtn" class="button-secondary" style="display: none; margin-top: 5px; flex-basis: 100%;">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                Installera App
+            </button>
         </div>
 
         <section id="nameListSection">
@@ -448,10 +540,10 @@
 
             <div class="result-actions-top" id="mainResultActionsTop">
                 <button id="reopenOverlayBtn" class="icon-button" title="Visa resultat i helskärm">
-                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
                 </button>
                 <button id="mainCopyBtn" class="icon-button" title="Kopiera resultat">
-                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                 </button>
             </div>
 
@@ -463,12 +555,12 @@
         <button id="randomizeBtn" style="width: 100%; margin-top: 20px; padding: 15px; font-size: 1.2em;">Slumpa Pass</button>
     </div>
 
-    <div id="resultOverlay">
+    <div id="resultOverlay" class="content-overlay">
         <div class="overlay-content-box">
             <div class="overlay-header">
                 <h3>Slumpat Resultat</h3>
                 <button id="overlayCopyBtn" class="icon-button" title="Kopiera resultat" style="display: none;">
-                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    <svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                 </button>
             </div>
             <div class="overlay-results-list-container">
@@ -479,7 +571,61 @@
         </div>
     </div>
 
+    <div id="helpOverlay" class="content-overlay" style="display: none;">
+        <div class="overlay-content-box">
+            <div class="overlay-header">
+                <h3>Hjälp & Information</h3>
+            </div>
+            <div class="overlay-scrollable-content">
+                <h4>Installera Appen på Din Hemskärm</h4>
+                <p>För enklare åtkomst kan du lägga till Björklunds Kortlek på din mobils hemskärm. Den kommer då att fungera mer som en vanlig app.</p>
+                
+                <h5>Android (t.ex. Chrome):</h5>
+                <ol>
+                    <li>Öppna appen i din Chrome-webbläsare.</li>
+                    <li>Tryck på menyknappen (ofta tre prickar uppe till höger).</li>
+                    <li>Välj "Installera appen" eller "Lägg till på startskärmen".</li>
+                    <li>Följ instruktionerna.</li>
+                </ol>
+                <p><em>Alternativt kan en "Installera App"-knapp dyka upp automatiskt i appens meny när du använt sidan ett tag.</em></p>
+
+                <h5>iOS (iPhone/iPad - Safari):</h5>
+                <ol>
+                    <li>Öppna appen i Safari-webbläsaren.</li>
+                    <li>Tryck på Dela-ikonen (en ruta med en pil som pekar uppåt) längst ner (eller uppe) i webbläsaren.</li>
+                    <li>Skrolla ner i delningsmenyn och välj "Lägg till på hemskärmen".</li>
+                    <li>Bekräfta namnet och tryck "Lägg till".</li>
+                </ol>
+                
+                <h4>Grundläggande Användning</h4>
+                <p><strong>1. Lägg till Deltagare:</strong> Skriv namn i fältet och klicka "Lägg till" eller tala in namn med mikrofonikonen.</p>
+                <p><strong>2. (Avancerat) Anpassad Passlista:</strong> Klicka på kugghjulet bredvid "Passfördelning" för att ladda in en egen lista med passnamn/nummer från en .txt-fil (ett pass per rad).</p>
+                <p><strong>3. Slumpa Pass:</strong> Klicka på den stora "Slumpa Pass"-knappen. Resultatet visas både i huvudvyn och i ett helskärmsläge.</p>
+                <p><strong>4. Återöppna Resultat:</strong> Använd ögon-ikonen ovanför resultatlistan i huvudvyn för att återöppna helskärmsresultatet.</p>
+                <p><strong>5. Kopiera/Dela:</strong> Använd kopieringsikonen för att kopiera resultatlistan. Använd dela-ikonen högst upp för att dela en länk till appen via en QR-kod.</p>
+            </div>
+            <button id="helpOverlayCloseBtn" class="overlay-close-btn">Stäng</button>
+        </div>
+    </div>
+
+    <div id="shareOverlay" class="content-overlay" style="display: none;">
+        <div class="overlay-content-box">
+            <div class="overlay-header">
+                <h3>Dela Björklunds Kortlek</h3>
+            </div>
+            <div class="overlay-scrollable-content" style="text-align: center;">
+                <p>Skanna QR-koden nedan med en annan enhet, eller dela länken:</p>
+                <div id="qrCodeContainer">
+                    <!-- QR-kod kommer här -->
+                </div>
+                <p style="word-break: break-all;"><strong>Länk:</strong> <a id="shareableLink" href="https://stevoxa.github.io/bjorklunds-kortlek/" target="_blank" rel="noopener noreferrer">https://stevoxa.github.io/bjorklunds-kortlek/</a></p>
+            </div>
+            <button id="shareOverlayCloseBtn" class="overlay-close-btn">Stäng</button>
+        </div>
+    </div>
+
     <script>
+        // JavaScript-kod (ingen ändring från föregående svar, men hela inkluderas här)
         let participants = [];
         let customPasses = [];
         const nameInput = document.getElementById('nameInput');
@@ -511,6 +657,20 @@
         const reopenOverlayBtn = document.getElementById('reopenOverlayBtn');
         const mainCopyBtn = document.getElementById('mainCopyBtn'); 
         const overlayCopyBtn = document.getElementById('overlayCopyBtn');
+
+        const helpBtn = document.getElementById('helpBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const helpOverlay = document.getElementById('helpOverlay');
+        const helpOverlayCloseBtn = document.getElementById('helpOverlayCloseBtn');
+        const shareOverlay = document.getElementById('shareOverlay');
+        const shareOverlayCloseBtn = document.getElementById('shareOverlayCloseBtn');
+        const qrCodeContainer = document.getElementById('qrCodeContainer');
+        const shareableLink = document.getElementById('shareableLink');
+        const appURL = "https://stevoxa.github.io/bjorklunds-kortlek/"; 
+
+        const installAppBtn = document.getElementById('installAppBtn');
+        let deferredPrompt;
+
 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition;
@@ -597,6 +757,45 @@
                  console.warn('Web Speech API (SpeechRecognition) stöds inte av denna webbläsare.');
             }
         }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (installAppBtn) {
+                installAppBtn.style.display = 'inline-flex';
+                console.log("'beforeinstallprompt' event fångat.");
+            }
+        });
+
+        if (installAppBtn) {
+            installAppBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`User response to the install prompt: ${outcome}`);
+                    if (outcome === 'accepted') console.log('User accepted the A2HS prompt');
+                    else console.log('User dismissed the A2HS prompt');
+                    deferredPrompt = null;
+                    installAppBtn.style.display = 'none';
+                } else {
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                    if (isIOS) {
+                        alert("För att installera appen på din iPhone/iPad:\n1. Klicka på Dela-ikonen i Safari.\n2. Skrolla ner och välj 'Lägg till på hemskärmen'.");
+                    } else if (navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) {
+                        alert("Appen är redan installerad!");
+                    } else {
+                        alert("Installationsprompten är inte tillgänglig. På iOS, använd 'Dela' -> 'Lägg till på hemskärmen'.");
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('App installerad!', evt);
+            if (installAppBtn) installAppBtn.style.display = 'none';
+            deferredPrompt = null;
+        });
+
 
         function addNameToParticipantsList(nameToAdd) {
             const name = nameToAdd.trim();
@@ -709,6 +908,50 @@
                 document.body.classList.remove('overlay-open');
             }
         }
+        function openHelpOverlay() {
+            if (helpOverlay) {
+                helpOverlay.style.display = 'flex';
+                document.body.classList.add('overlay-open');
+            }
+        }
+        function closeHelpOverlay() {
+            if (helpOverlay) {
+                helpOverlay.style.display = 'none';
+                document.body.classList.remove('overlay-open');
+            }
+        }
+
+        function generateQRCode() {
+            if (qrCodeContainer && typeof QRious !== 'undefined') {
+                qrCodeContainer.innerHTML = ''; 
+                new QRious({
+                    element: qrCodeContainer,
+                    value: appURL,
+                    size: 200, 
+                    background: 'white',
+                    foreground: 'black',
+                    level: 'H' 
+                });
+                if(shareableLink) {shareableLink.href = appURL; shareableLink.textContent = appURL;}
+            } else if (typeof QRious === 'undefined'){
+                console.error("QRious library not loaded.");
+                if(qrCodeContainer) qrCodeContainer.textContent = "Kunde inte ladda QR-kod.";
+            }
+        }
+
+        function openShareOverlay() {
+            if (shareOverlay) {
+                generateQRCode();
+                shareOverlay.style.display = 'flex';
+                document.body.classList.add('overlay-open');
+            }
+        }
+        function closeShareOverlay() {
+            if (shareOverlay) {
+                shareOverlay.style.display = 'none';
+                document.body.classList.remove('overlay-open');
+            }
+        }
 
         function loadParticipantNamesFromFile(event) {
             const file = event.target.files[0];
@@ -801,14 +1044,20 @@
         if (clearCustomPassesBtn) clearCustomPassesBtn.addEventListener('click', clearLoadedCustomPasses);
 
         if (overlayCloseBtn) overlayCloseBtn.addEventListener('click', closeResultOverlay);
-
+        if (helpOverlayCloseBtn) helpOverlayCloseBtn.addEventListener('click', closeHelpOverlay);
+        if (shareOverlayCloseBtn) shareOverlayCloseBtn.addEventListener('click', closeShareOverlay);
+        
         if(reopenOverlayBtn) reopenOverlayBtn.addEventListener('click', showResultOverlay);
         if(mainCopyBtn) mainCopyBtn.addEventListener('click', copyResultsToClipboard);
         if(overlayCopyBtn) overlayCopyBtn.addEventListener('click', copyResultsToClipboard);
+        if(helpBtn) helpBtn.addEventListener('click', openHelpOverlay);
+        if(shareBtn) shareBtn.addEventListener('click', openShareOverlay);
+
 
         renderNameList();
         updateCustomPassesUI();
         clearResults(); 
+        if (installAppBtn) installAppBtn.style.display = 'none'; // Säkerställ att den är dold vid start
     </script>
 </body>
 </html>
