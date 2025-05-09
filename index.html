@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Björklunds Kortlek</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#344a34"> 
+    <meta name="theme-color" content="#344a34"> <!-- Startfärg för ljust tema -->
     <link rel="apple-touch-icon" href="icon-192x192.png"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
@@ -44,23 +44,23 @@
 
         body[data-theme="dark"] {
             /* Dark Theme */
-            --bg-color: #1e1e1e;
-            --surface-bg-color: #2c2c2c; 
+            --bg-color: #121212; /* Ännu mörkare för bättre kontrast */
+            --surface-bg-color: #1e1e1e;  /* Mörkare yta */
             --text-color: #e0e0e0;
             --secondary-text-color: #a0a0a0;
-            --primary-color: #6faa6f; 
-            --primary-color-rgb: 111, 170, 111;
-            --primary-text-color: #1e1e1e; 
+            --primary-color: #76c776; /* Ljusare, mer levande grön */
+            --primary-color-rgb: 118, 199, 118;
+            --primary-text-color: #121212; 
             
-            --secondary-button-bg-color: #4a4a4a;
+            --secondary-button-bg-color: #333; /* Mörkgrå */
             --secondary-button-text-color: var(--text-color); 
-            --secondary-button-border-color: #5c5c5c; 
+            --secondary-button-border-color: #555; 
             
-            --border-color: #444;
-            --subtle-border-color: #3a3a3a;
+            --border-color: #3a3a3a; /* Mörkare ramar */
+            --subtle-border-color: #2c2c2c; 
             
-            --danger-color: #ef9a9a; 
-            --danger-secondary-bg: #4e2222; 
+            --danger-color: #ff8a80; /* Ljusare röd för mörkt tema */
+            --danger-secondary-bg: #4d2222; 
             --danger-secondary-text-color: var(--danger-color);
             
             --listening-color: #FFEB3B; 
@@ -106,18 +106,23 @@
             top: 15px;
             right: 15px;
             display: flex;
-            gap: 8px;
+            gap: 5px; /* Minskad gap lite */
             z-index: 10;
         }
         .app-header-actions .icon-button { 
-            background: none;
-            border: none;
+            background: none !important; /* Tvinga transparent bakgrund */
+            border: none !important;    /* Tvinga ingen ram */
+            padding: 6px; /* Justerad padding */
+            width: 36px;  /* Justerad storlek */
+            height: 36px;
         }
         .app-header-actions .icon-button svg {
-            fill: var(--icon-fill-color); 
+            fill: var(--icon-fill-color) !important; 
+            width: 22px; /* Justerad storlek på SVG */
+            height: 22px;
         }
          .app-header-actions .icon-button:hover svg {
-             fill: var(--icon-hover-fill-color); 
+             fill: var(--icon-hover-fill-color) !important; 
          }
 
 
@@ -217,7 +222,7 @@
             border: none;
             flex-shrink: 0;
         }
-        #speakNameBtn.icon-button.button-secondary { /* Mikrofonknappen har specifik styling */
+        #speakNameBtn.icon-button.button-secondary { 
              background-color: var(--secondary-button-bg-color); 
              border: 1px solid var(--secondary-button-border-color); 
         }
@@ -225,16 +230,16 @@
              background-color: color-mix(in srgb, var(--secondary-button-bg-color) 90%, #000000 10%);
          }
          #speakNameBtn.icon-button.button-secondary svg { 
-             fill: var(--secondary-button-text-color); 
+             fill: var(--secondary-button-text-color) !important; /* Tvinga färg för denna specifika knapp */
         }
 
-        .icon-button svg { 
+        /* Generell fill för ikoner inuti .icon-button som inte är i header eller mikrofonen */
+        .icon-button:not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):not(#speakNameBtn) svg {
             width: 20px;
             height: 20px;
-            fill: var(--icon-fill-color); 
+            fill: var(--primary-color); 
             transition: fill 0.3s ease;
         }
-
 
         .icon-button.is-listening svg { 
             fill: var(--listening-color) !important; 
@@ -242,18 +247,25 @@
         .icon-button:disabled svg {
             fill: var(--secondary-text-color) !important;  
         }
-        /* Generell hover för ikoner som inte är i .app-header-actions, och inte heller mikrofonen */
         .icon-button:not(.button-secondary):not(#themeToggleBtn):not(#helpBtn):not(#shareBtn):not(#installAppBtn):hover:not(:disabled) svg, 
         .overlay-header .icon-button:hover:not(:disabled) svg {
             fill: var(--icon-hover-fill-color); 
         }
 
 
+        .settings-toggle-btn { /* Kugghjulet */
+            background: none !important; /* Tvinga transparent */
+            border: none !important;
+            padding: 0 5px 0 10px; 
+        }
         .settings-toggle-btn svg {
             width: 20px;
             height: 20px;
-            fill: var(--primary-color); 
-            transition: transform 0.3s ease;
+            fill: var(--primary-color) !important; /* Styrs av temat, inte icon-fill-color som de i headern */
+            transition: transform 0.3s ease, fill 0.3s ease;
+        }
+        .settings-toggle-btn:hover svg {
+            fill: var(--icon-hover-fill-color) !important;
         }
         .settings-toggle-btn.open svg {
             transform: rotate(90deg);
@@ -275,14 +287,13 @@
             flex-direction: column; 
             align-items: stretch; 
          }
-         .action-buttons > button:not(#installAppBtn) { /* Alla knappar utom install */
+         .action-buttons > button:not(#installAppBtn) { 
             padding: 8px 12px; 
             height: 38px; 
             align-items: center; 
             justify-content: center;
          }
-         #installAppBtn { /* Speciell styling för installationsknappen om den skulle vara här */
-             /* Den är nu i header, så denna regel kanske inte behövs strikt, men skadar inte */
+         #installAppBtn { 
             flex-basis: 100%; 
             margin-top: 5px; 
          }
@@ -330,11 +341,18 @@
             border-bottom: none;
         }
 
+        .delete-btn { /* Radera-ikonen */
+            background: none !important; /* Tvinga transparent */
+            border: none !important;
+        }
         .delete-btn svg {
-            fill: var(--danger-color); 
+            fill: var(--danger-color) !important; 
+            width: 18px; 
+            height: 18px;
+            transition: fill 0.2s ease-in-out;
         }
         .delete-btn:hover svg {
-            fill: color-mix(in srgb, var(--danger-color) 80%, black); 
+            fill: color-mix(in srgb, var(--danger-color) 80%, black) !important; 
         }
 
         hr {
@@ -344,8 +362,18 @@
             margin: 20px 0; 
         }
 
-        input[type="file"] { 
-            display: none !important; 
+        /* input[type="file"] { 
+             display: none !important; 
+        } */
+        /* Mer aggressiv döljning för filinputen för att undvika "Välj fil..." texten */
+        input[type="file"] {
+            position: absolute !important;
+            left: -9999px !important;
+            width: 1px !important;
+            height: 1px !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            overflow: hidden !important; /* Extra säkerhet */
         }
         
         .info-text {
@@ -384,9 +412,13 @@
         .overlay-header h3 {
             color: var(--overlay-header-text-color); 
         }
-        .overlay-header .icon-button svg { /* För kopieringsikonen i overlay-headern */
+        .overlay-header .icon-button svg { 
             fill: var(--icon-fill-color); 
         }
+        .overlay-header .icon-button:hover svg {
+            fill: var(--icon-hover-fill-color);
+        }
+
 
         .overlay-scrollable-content, .overlay-results-list-container {
              color: var(--overlay-text-color); 
@@ -410,6 +442,9 @@
             color: var(--overlay-link-color); 
         }
         
+         #installAppBtn svg {
+            fill: currentColor; 
+         }
     </style>
 </head>
 <body>
@@ -447,7 +482,6 @@
                 <p class="file-format-info">Förväntat filformat: .txt (ett namn per rad)</p>
             </div>
             <button id="saveNamesBtn" class="button-secondary">Spara deltagarlista</button>
-            <!-- Installationsknappen är flyttad till .app-header-actions -->
         </div>
 
         <section id="nameListSection">
@@ -566,7 +600,6 @@
     </div>
 
     <script>
-        // JavaScript-kod (ingen ändring från föregående svar, men hela inkluderas här)
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeIconSun = document.getElementById('themeIconSun');
         const themeIconMoon = document.getElementById('themeIconMoon');
@@ -582,8 +615,10 @@
             
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
             if (metaThemeColor) {
-                const rootStyle = getComputedStyle(document.documentElement);
-                const primaryColorForMeta = newTheme === 'dark' ? rootStyle.getPropertyValue('--primary-color').trim() : '#344a34'; 
+                const rootStyle = getComputedStyle(document.documentElement); // Läs från det faktiska elementet
+                const primaryColorForMeta = newTheme === 'dark' 
+                    ? rootStyle.getPropertyValue('--primary-color').trim() // Läs aktuell mörk primärfärg
+                    : '#344a34'; // Hårdkodad fallback för ljus (eller läs --primary-color från light)
                 metaThemeColor.setAttribute("content", primaryColorForMeta);
             }
         }
@@ -593,12 +628,15 @@
             applyTheme(currentTheme);
         }
         
-        if (currentTheme) {
-            applyTheme(currentTheme);
-        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // Applicera initialt tema
+        if (currentTheme === 'dark') {
             applyTheme('dark');
+        } else if (currentTheme === 'light') {
+            applyTheme('light');
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            applyTheme('dark'); // Systemet föredrar mörkt
         } else {
-            applyTheme('light'); 
+            applyTheme('light'); // Fallback till ljust tema
         }
         if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
 
