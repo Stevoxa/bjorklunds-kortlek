@@ -65,7 +65,7 @@
             /* NYTT MÖRKT TEMA enligt din specifikation */
             --primary-color: #365537;                     
             --primary-color-rgb: 54, 85, 55;
-            --primary-text-color: #e6e1d6; /* JUSTERAD från #121212 för kontrast */
+            --primary-text-color: #e6e1d6; 
 
             --accent-color: #b65407;                      
             --accent-color-rgb: 182, 84, 7;
@@ -110,7 +110,7 @@
             --radio-checked-color: var(--primary-color);
             --radio-label-color: var(--text-color);
 
-            --input-bg-color: #3a372f; /* Justerad för att matcha sekundära knappar */
+            --input-bg-color: #3a372f; 
         }
 
         *, *::before, *::after { box-sizing: border-box; }
@@ -588,7 +588,7 @@
             padding: 15px 0; 
          }
          #participantsCountInfo { 
-            color: var(--secondary-text-color); /* ÄNDRAD HÄR */
+            color: var(--secondary-text-color); 
             font-weight: 500; 
          }
          #passDistributionMethodInfo { 
@@ -820,6 +820,12 @@
         .result-actions-top .icon-button svg {
             width: 20px; height: 20px;
         }
+        body[data-theme="dark"] .result-actions-top #reopenOverlayBtn svg {
+            fill: var(--accent-color) !important;
+        }
+        body[data-theme="dark"] .result-actions-top #reopenOverlayBtn:hover svg {
+            fill: color-mix(in srgb, var(--accent-color) 85%, white) !important;
+        }
         
         .overlay-content-box > button.overlay-close-btn:last-child:not(.icon-button) {
              margin-top: auto; width: 100%;
@@ -928,8 +934,8 @@
                 <p id="passDistributionMethodInfo" class="info-text"></p> 
 
                 <div class="result-actions-top" id="mainResultActionsTop">
-                    <button id="reopenOverlayBtn" class="icon-button" title="Visa resultat i helskärm"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></button>
                     <button id="mainCopyBtn" class="icon-button" title="Kopiera resultat"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
+                    <button id="reopenOverlayBtn" class="icon-button" title="Visa resultat i helskärm"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></button>
                 </div>
 
                 <ul id="resultsList"></ul>
@@ -1473,12 +1479,15 @@
                 customPassElementsContainer.classList.toggle('disabled-look', !isAdvanced);
             }
             if (passDistributionMethodInfo) {
-                if(passDistributionConfigMode==='standard'){passDistributionMethodInfo.textContent=participants.length>0?`Passkyttarna (${participants.length}st) fördelas över pass 1-${participants.length}.`:"Lägg till passkyttar för att se info.";}
-                else{if(customPasses.length>0){if(participants.length<=0){passDistributionMethodInfo.textContent="Lägg till passkyttar för att se info.";}
-                else{passDistributionMethodInfo.textContent=`Passkyttarna (${participants.length}st) fördelas över de ${customPasses.length} specificerade passen.`+ (customPasses.length < participants.length ? ` (${participants.length - customPasses.length} blir oplacerade)` : '');}}
-                else{passDistributionMethodInfo.textContent="Avancerad vald, men inga pass definierade. Öppna ⚙️ för att lägga till pass.";}}
-                passDistributionMethodInfo.style.display = (participants.length > 0 || passDistributionConfigMode === 'advanced') ? 'block' : 'none';
-            }
+                if(passDistributionConfigMode==='standard'){passDistributionMethodInfo.textContent=participants.length>0?`Passkyttarna (${participants.length}st) fördelas över pass 1-${participants.length}.`:"Lägg till passkyttar.";}
+                else{
+			if(customPasses.length>0){
+				if(participants.length<1){passDistributionMethodInfo.textContent="Lägg till passkyttar.";}
+                     		else{passDistributionMethodInfo.textContent=`Passkyttarna (${participants.length}st) fördelas över de ${customPasses.length} specificerade passen.`+ (customPasses.length < participants.length ? ` (${participants.length - customPasses.length} blir oplacerade)` : '');}
+			}
+                        else{passDistributionMethodInfo.textContent="Avancerad vald, men inga pass definierade. Öppna ⚙️ för att lägga till pass.";}}
+                	passDistributionMethodInfo.style.display = (participants.length > 0 || passDistributionConfigMode === 'advanced') ? 'block' : 'none';
+            	}
             renderCustomPassListInOverlay_overlay(); 
             updateCustomPassesSummaryInOverlay_overlay(); 
         }
@@ -1599,8 +1608,8 @@
             if(resultsList)resultsList.innerHTML='';if(overlayResultsList)overlayResultsList.innerHTML='';
             if(noResultsInfo){
                 if(participants.length>0||(passDistributionConfigMode==='advanced'&&customPasses.length>0)){noResultsInfo.textContent="Klicka på \"Slumpa Pass\" för resultat.";}
-                else if(passDistributionConfigMode==='advanced'&&customPasses.length===0){noResultsInfo.textContent="Lägg till egna pass i Passinställningar (⚙️) eller välj Standard.";}
-                else{noResultsInfo.textContent="Lägg till passkyttar för att kunna slumpa pass.";}
+                else if(participants.length>0 && passDistributionConfigMode==='advanced'&&customPasses.length===0){noResultsInfo.textContent="Lägg till egna pass i Passinställningar (⚙️) eller välj Standard.";}
+                else{noResultsInfo.textContent="Lägg till passkyttar för att kunna fördela pass.";}
                 noResultsInfo.style.display='block';
             }
             if(unassignedParticipantsList)unassignedParticipantsList.style.display='none';
