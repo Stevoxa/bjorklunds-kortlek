@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <style>
         :root {
-            /* Nytt Ljust Tema baserat på färgtema_v001.png */
+            /* Ljust Tema (Behåller färgtema_v001.png) */
             --primary-color: #284027;                     
             --primary-color-rgb: 40, 64, 39;
             --primary-text-color: #FBF5E9;              
@@ -32,8 +32,8 @@
             --subtle-border-color: #E0D5C0;           
             
             --danger-color: #A52A2A;                      
-            --danger-secondary-bg: #e4b9b9; 
-            --danger-secondary-text-color: #601010; 
+            --danger-secondary-bg: #F8D7DA; 
+            --danger-secondary-text-color: #721C24; 
             
             --listening-color: #FFC107; 
             --icon-fill-color: var(--primary-color);      
@@ -46,14 +46,13 @@
             --overlay-subtle-text-color: var(--secondary-text-color);
             --overlay-link-color: var(--primary-color);
 
-            /* Flikar */
             --tab-inactive-bg: #EFE4CF;                  
             --tab-inactive-text: var(--primary-color);    
             --tab-inactive-hover-bg: #E0D5C0;           
             --tab-inactive-hover-text: var(--primary-color);
             --tab-active-bg: var(--surface-bg-color);     
             --tab-active-text: var(--primary-color);      
-            --tab-active-border-accent: #CC9849; /* Används för den lilla orangea linjen */       
+            --tab-active-border-accent: #CC9849;      
 
             --radio-border-color: var(--border-color);
             --radio-checked-color: var(--primary-color);
@@ -63,55 +62,55 @@
         }
 
         body[data-theme="dark"] {
-            /* Dark Theme (ORÖRD enligt instruktion) */
-            --primary-color: #76c776; 
-            --primary-color-rgb: 118, 199, 118;
-            --primary-text-color: #121212; 
+            /* NYTT MÖRKT TEMA enligt din specifikation */
+            --primary-color: #365537;                     
+            --primary-color-rgb: 54, 85, 55;
+            --primary-text-color: #e6e1d6; /* JUSTERAD från #121212 för kontrast */
 
-            --accent-color: #E68A00; 
-            --accent-color-rgb: 230, 138, 0;
-            --accent-text-color: #FFFFFF;
+            --accent-color: #b65407;                      
+            --accent-color-rgb: 182, 84, 7;
+            --accent-text-color: #FFFFFF;                 
 
-            --bg-color: #1A1A1A; 
-            --surface-bg-color: #2C2C2C;  
-            --text-color: #E0E0E0;
-            --secondary-text-color: #A0A0A0;
+            --bg-color: #1e1d1a;                          
+            --surface-bg-color: #2b2a26;                  
+            --text-color: #e6e1d6;                        
+            --secondary-text-color: #b6b0a2;              
             
-            --secondary-button-bg-color: #383838; 
+            --secondary-button-bg-color: #3a372f;        
             --secondary-button-text-color: var(--text-color); 
-            --secondary-button-border-color: #555; 
+            --secondary-button-border-color: #555;        
             
-            --border-color: #4A4A4A; 
-            --subtle-border-color: #383838; 
+            --border-color: #4A4A4A;                      
+            --subtle-border-color: #383838;               
             
-            --danger-color: #FF8A80; 
+            --danger-color: #FF8A80;                      
             --danger-secondary-bg: #5C2B2B; 
             --danger-secondary-text-color: #FFCDD2; 
             
-            --listening-color: #FFEB3B; 
-            --icon-fill-color: var(--text-color); 
-            --icon-hover-fill-color: #fff;
+            --listening-color: #FFEB3B;                   
+            --icon-fill-color: var(--text-color);         
+            --icon-hover-fill-color: #fff;                
 
-            --overlay-bg-color: rgba(26, 26, 26, 0.9); 
-            --overlay-content-bg: var(--surface-bg-color);
-            --overlay-header-text-color: var(--primary-color);
-            --overlay-text-color: var(--text-color);
-            --overlay-subtle-text-color: var(--secondary-text-color);
-            --overlay-link-color: var(--primary-color);
+            --overlay-bg-color: rgba(30, 29, 26, 0.9);    
+            --overlay-content-bg: var(--surface-bg-color); 
+            --overlay-header-text-color: var(--primary-color); 
+            --overlay-text-color: var(--text-color);      
+            --overlay-subtle-text-color: var(--secondary-text-color); 
+            --overlay-link-color: var(--primary-color);   
 
-            --tab-inactive-bg: #222222;
-            --tab-inactive-text: var(--secondary-text-color);
-            --tab-inactive-hover-bg: #4A4A4A;
-            --tab-inactive-hover-text: var(--text-color);
-            --tab-active-bg: var(--surface-bg-color);
-            --tab-active-text: var(--text-color); 
-            --tab-active-border-accent: var(--accent-color); 
-            
+            --tab-inactive-bg: #222222;                  
+            --tab-inactive-text: var(--secondary-text-color); 
+            --tab-inactive-hover-bg: #4A4A4A;           
+            --tab-inactive-hover-text: var(--text-color); 
+            --tab-active-bg: var(--surface-bg-color);     
+            --tab-active-text: var(--text-color);         
+            --tab-active-border-accent: var(--accent-color);     
+
             --radio-border-color: var(--border-color);
             --radio-checked-color: var(--primary-color);
             --radio-label-color: var(--text-color);
-            
-            --input-bg-color: var(--surface-bg-color); 
+
+            --input-bg-color: #3a372f; /* Justerad för att matcha sekundära knappar */
         }
 
         *, *::before, *::after { box-sizing: border-box; }
@@ -205,7 +204,7 @@
         .tabs-nav {
             display: flex;
             background-color: var(--tab-inactive-bg); 
-            border-bottom: 1px solid var(--subtle-border-color); /* ÄNDRAD TILL SUBTLE-BORDER */
+            border-bottom: 1px solid var(--subtle-border-color); 
             position: relative;
             padding: 0 5px; 
             flex-shrink: 0; 
@@ -375,6 +374,27 @@
              outline-offset: 2px;
         }
         
+        .button-danger {
+            background-color: var(--danger-secondary-bg); 
+            color: var(--danger-secondary-text-color);   
+            border: 1px solid var(--danger-color);         
+        }
+        .button-danger:hover:not(:disabled) {
+            background-color: color-mix(in srgb, var(--danger-secondary-bg) 85%, var(--danger-color) 15%); 
+            color: var(--danger-secondary-text-color);
+            border-color: color-mix(in srgb, var(--danger-color) 80%, black);
+        }
+        body[data-theme="dark"] .button-danger {
+            background-color: var(--danger-secondary-bg); 
+            color: var(--danger-secondary-text-color);   
+            border: 1px solid var(--danger-color);         
+        }
+        body[data-theme="dark"] .button-danger:hover:not(:disabled) {
+            background-color: color-mix(in srgb, var(--danger-secondary-bg) 85%, var(--danger-color) 15%);
+            border-color: color-mix(in srgb, var(--danger-color) 80%, white); 
+        }
+
+
         .icon-button { 
             padding: 8px;
             width: 40px; 
@@ -822,12 +842,12 @@
         </div>
 
         <nav class="tabs-nav">
-            <button class="tab-button active" data-tab="participantsTab">Hantera passkyttar</button>
+            <button class="tab-button active" data-tab="participantsTab">Passkyttar</button>
             <button class="tab-button" data-tab="distributionTab">Passfördelning</button>
         </nav>
 
         <section id="participantsTab" class="tab-content">
-            <h2>Passkyttar</h2>
+            <h2>Passkyttar</h2> 
             <div class="input-group">
                 <input type="text" id="nameInput" placeholder="Ange passkytt...">
                 <button id="addNameBtn">Lägg till</button>
@@ -846,6 +866,7 @@
                 <p id="participantsCountInfo" class="info-text"></p>
                 <p id="noNamesInfo" class="info-text" style="display: none;">Inga passkyttar tillagda.</p>
             </section>
+            <!-- Rensa-knapp BORTTAGEN -->
         </section>
 
         <section id="distributionTab" class="tab-content" style="display: none;">
@@ -1007,6 +1028,7 @@
             qrCodeContainer, shareableLink, installAppBtn,
             participantsCountInfo,
             passDistributionMethodInfo; 
+            // clearAllParticipantsBtn; // BORTTAGEN
         
         let openAdvancedSettingsBtn, advancedSettingsOverlay, passModeStandardRadio, 
             passModeAdvancedRadio, customPassElementsContainer, customPassesInfoInOverlay, 
@@ -1062,6 +1084,7 @@
             installAppBtn = document.getElementById('installAppBtn');
             participantsCountInfo = document.getElementById('participantsCountInfo');
             passDistributionMethodInfo = document.getElementById('passDistributionMethodInfo');
+            // clearAllParticipantsBtn = document.getElementById('clearAllParticipantsBtn'); // BORTTAGEN
 
             openAdvancedSettingsBtn = document.getElementById('openAdvancedSettingsBtn');
             advancedSettingsOverlay = document.getElementById('advancedSettingsOverlay');
@@ -1107,6 +1130,7 @@
             if (passFileInput_overlay) passFileInput_overlay.addEventListener('change', loadCustomPassesFromFile_overlay);
             if (savePassListBtn_overlay) savePassListBtn_overlay.addEventListener('click', saveCustomPassesToFile_overlay);
             if (clearCustomPassesBtn_overlay) clearCustomPassesBtn_overlay.addEventListener('click', clearLoadedCustomPasses_overlay);
+            // if (clearAllParticipantsBtn) clearAllParticipantsBtn.addEventListener('click', confirmClearAllParticipants); // BORTTAGEN
             
             document.querySelectorAll('.overlay-close-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -1194,7 +1218,6 @@
             localStorage.setItem('theme', newTheme);
             if (themeToggleBtn) themeToggleBtn.title = newTheme === 'dark' ? "Ljust tema" : "Mörkt tema";
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
-            // Alltid uppdatera meta theme-color baserat på --primary-color för det valda temat
             if (metaThemeColor) metaThemeColor.setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim());
         }
         function toggleTheme() { currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; applyTheme(currentTheme); }
@@ -1295,9 +1318,21 @@
             const file=event.target.files[0];if(file&&fileInput){const reader=new FileReader();reader.onload=(e)=>{let added=0;e.target.result.split(/\r\n|\n/).forEach(line=>{if(addNameToParticipantsList(line.trim()))added++;});if(added>0){saveParticipantsToLocalStorage();renderNameList();clearResults();}alert(`${added} passkyttar tillagda.`);event.target.value='';};reader.readAsText(file);}
         }
         function saveParticipantNamesToFile() { if(participants.length===0){alert('Inga passkyttar att spara.');return;}const txt=participants.join('\n');const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.download='passkyttlista.txt';a.href=URL.createObjectURL(blob);a.click();URL.revokeObjectURL(a.href); }
+        
+        /* BORTTAGEN: confirmClearAllParticipants funktionen togs bort
+        function confirmClearAllParticipants() {
+            // ...
+        }
+        */
+
         function clearResults() {
             if(resultsList)resultsList.innerHTML='';if(overlayResultsList)overlayResultsList.innerHTML='';
-            if(noResultsInfo)noResultsInfo.textContent="Klicka på \"Slumpa Pass\" för resultat.",noResultsInfo.style.display='block';
+            if(noResultsInfo){
+                if(participants.length>0||(passDistributionConfigMode==='advanced'&&customPasses.length>0)){noResultsInfo.textContent="Klicka på \"Slumpa Pass\" för resultat.";}
+                else if(passDistributionConfigMode==='advanced'&&customPasses.length===0){noResultsInfo.textContent="Lägg till egna pass i Passinställningar (⚙️) eller välj Standard.";}
+                else{noResultsInfo.textContent="Lägg till passkyttar för att kunna slumpa pass.";}
+                noResultsInfo.style.display='block';
+            }
             if(unassignedParticipantsList)unassignedParticipantsList.style.display='none';
             if(overlayUnassignedParticipants)overlayUnassignedParticipants.style.display='none';
             if(mainResultActionsTop)mainResultActionsTop.style.display='none';

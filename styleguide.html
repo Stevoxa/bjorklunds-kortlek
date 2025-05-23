@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Style Guide - Björklunds Kortlek</title>
     <style>
-        /* CSS-variabler från din applikation (Baseline v2) */
+        /* CSS-variabler från din applikation (index.html med NYTT MÖRKT TEMA) */
         :root {
-            /* Ljust Tema */
+            /* Ljust Tema (Behåller färgtema_v001.png) */
             --primary-color: #284027;                     
             --primary-color-rgb: 40, 64, 39;
             --primary-text-color: #FBF5E9;              
@@ -29,8 +29,8 @@
             --subtle-border-color: #E0D5C0;           
             
             --danger-color: #A52A2A;                      
-            --danger-secondary-bg: #e4b9b9; 
-            --danger-secondary-text-color: #601010; 
+            --danger-secondary-bg: #F8D7DA; 
+            --danger-secondary-text-color: #721C24; 
             
             --listening-color: #FFC107; 
             --icon-fill-color: var(--primary-color);      
@@ -59,55 +59,55 @@
         }
 
         body[data-theme="dark"] {
-            /* Dark Theme (EXAKT från din index.html baseline v2) */
-            --primary-color: #76c776; 
-            --primary-color-rgb: 118, 199, 118;
-            --primary-text-color: #121212; 
+            /* === NYTT MÖRKT TEMA (från din senaste index.html) === */
+            --primary-color: #365537;                     
+            --primary-color-rgb: 54, 85, 55;
+            --primary-text-color: #e6e1d6; 
 
-            --accent-color: #E68A00; 
-            --accent-color-rgb: 230, 138, 0;
-            --accent-text-color: #FFFFFF;
+            --accent-color: #b65407;                      
+            --accent-color-rgb: 182, 84, 7;
+            --accent-text-color: #FFFFFF;                 
 
-            --bg-color: #1A1A1A; 
-            --surface-bg-color: #2C2C2C;  
-            --text-color: #E0E0E0;
-            --secondary-text-color: #A0A0A0;
+            --bg-color: #1e1d1a;                          
+            --surface-bg-color: #2b2a26;                  
+            --text-color: #e6e1d6;                        
+            --secondary-text-color: #b6b0a2;              
             
-            --secondary-button-bg-color: #383838; 
+            --secondary-button-bg-color: #3a372f;        
             --secondary-button-text-color: var(--text-color); 
-            --secondary-button-border-color: #555; 
+            --secondary-button-border-color: #555;        
             
-            --border-color: #4A4A4A; 
-            --subtle-border-color: #383838; 
+            --border-color: #4A4A4A;                      
+            --subtle-border-color: #383838;               
             
-            --danger-color: #FF8A80; 
+            --danger-color: #FF8A80;                      
             --danger-secondary-bg: #5C2B2B; 
             --danger-secondary-text-color: #FFCDD2; 
             
-            --listening-color: #FFEB3B; 
-            --icon-fill-color: var(--text-color); 
-            --icon-hover-fill-color: #fff;
+            --listening-color: #FFEB3B;                   
+            --icon-fill-color: var(--text-color);         
+            --icon-hover-fill-color: #fff;                
 
-            --overlay-bg-color: rgba(26, 26, 26, 0.9); 
-            --overlay-content-bg: var(--surface-bg-color);
-            --overlay-header-text-color: var(--primary-color);
-            --overlay-text-color: var(--text-color);
-            --overlay-subtle-text-color: var(--secondary-text-color);
-            --overlay-link-color: var(--primary-color);
+            --overlay-bg-color: rgba(30, 29, 26, 0.9);    
+            --overlay-content-bg: var(--surface-bg-color); 
+            --overlay-header-text-color: var(--primary-color); 
+            --overlay-text-color: var(--text-color);      
+            --overlay-subtle-text-color: var(--secondary-text-color); 
+            --overlay-link-color: var(--primary-color);   
 
-            --tab-inactive-bg: #222222;
-            --tab-inactive-text: var(--secondary-text-color);
-            --tab-inactive-hover-bg: #4A4A4A;
-            --tab-inactive-hover-text: var(--text-color);
-            --tab-active-bg: var(--surface-bg-color);
-            --tab-active-text: var(--text-color); 
-            --tab-active-border-accent: var(--accent-color); 
-            
+            --tab-inactive-bg: #222222;                  
+            --tab-inactive-text: var(--secondary-text-color); 
+            --tab-inactive-hover-bg: #4A4A4A;           
+            --tab-inactive-hover-text: var(--text-color); 
+            --tab-active-bg: var(--surface-bg-color);     
+            --tab-active-text: var(--text-color);         
+            --tab-active-border-accent: var(--accent-color);     
+
             --radio-border-color: var(--border-color);
             --radio-checked-color: var(--primary-color);
             --radio-label-color: var(--text-color);
-            
-            --input-bg-color: var(--surface-bg-color); 
+
+            --input-bg-color: #3a372f; 
         }
 
         /* Grundläggande styling för style guiden själv */
@@ -183,35 +183,33 @@
 
         /* Mörkt Tema Sektion */
         .dark-theme-section[data-theme="dark"] { 
-            background-color: var(--surface-bg-color); /* Plockar från [data-theme="dark"] variabler: #2C2C2C */
-            color: var(--text-color); /* Plockar från [data-theme="dark"] variabler: #E0E0E0 */
+            background-color: var(--surface-bg-color); 
+            color: var(--text-color); 
         }
         .dark-theme-section[data-theme="dark"] h1,
         .dark-theme-section[data-theme="dark"] h2,
         .dark-theme-section[data-theme="dark"] h3,
         .dark-theme-section[data-theme="dark"] h4 { 
-            color: var(--primary-color); /* #76c776 */
-            border-bottom-color: var(--border-color); /* #4A4A4A */
+            color: var(--primary-color); 
+            border-bottom-color: var(--border-color);
         }
          .dark-theme-section[data-theme="dark"] .color-item {
-            border: 1px solid var(--subtle-border-color); /* #383838 */
-            background-color: var(--surface-bg-color); /* #2C2C2C */
+            border: 1px solid var(--subtle-border-color); 
+            background-color: var(--surface-bg-color); 
          }
          .dark-theme-section[data-theme="dark"] .color-item p,
          .dark-theme-section[data-theme="dark"] .color-item strong {
-            color: var(--text-color); /* #E0E0E0 */
+            color: var(--text-color); 
          }
         .dark-theme-section[data-theme="dark"] code {
-            background-color: color-mix(in srgb, var(--surface-bg-color) 80%, black 20%); /* Mörkare än ytan */
+            background-color: color-mix(in srgb, var(--surface-bg-color) 80%, black 20%); 
             color: var(--text-color); 
             border: 1px solid var(--subtle-border-color);
         }
-        /* Textfärgen för span-elementen som visar text på bakgrund */
-        /* Dessa behöver inte !important om de är specifika nog */
-        .dark-theme-section[data-theme="dark"] .color-item span.text-on-primary { color: var(--primary-text-color); }
-        .dark-theme-section[data-theme="dark"] .color-item span.text-on-accent { color: var(--accent-text-color); }
-        .dark-theme-section[data-theme="dark"] .color-item span.text-on-surface { color: var(--text-color); }
-        .dark-theme-section[data-theme="dark"] .color-item span.secondary-text-on-surface { color: var(--secondary-text-color); }
+        .dark-theme-section[data-theme="dark"] .color-item span.text-on-primary { color: var(--primary-text-color) !important; }
+        .dark-theme-section[data-theme="dark"] .color-item span.text-on-accent { color: var(--accent-text-color) !important; }
+        .dark-theme-section[data-theme="dark"] .color-item span.text-on-surface { color: var(--text-color) !important; }
+        .dark-theme-section[data-theme="dark"] .color-item span.secondary-text-on-surface { color: var(--secondary-text-color) !important; }
         
         .theme-section .example-input {
             background-color: var(--input-bg-color); 
@@ -227,7 +225,6 @@
         h2 { font-size: 1.5em; border-bottom-width: 1px;}
         h3 { font-size: 1.2em; border-bottom: none; margin-top: 1.2em;}
         h4 { font-size: 1.1em; margin-top: 1em; margin-bottom: 0.5em; }
-
 
         .color-swatch {
             display: inline-block;
@@ -256,13 +253,22 @@
             border-width: 1px; 
             border-style: solid;
         }
+        /* Komponentexempel - stilarna appliceras baserat på :root eller [data-theme="dark"] */
         .button-primary-example { background-color: var(--primary-color); color: var(--primary-text-color); border-color: var(--primary-color); }
         .button-secondary-example { background-color: var(--secondary-button-bg-color); color: var(--secondary-button-text-color); border-color: var(--secondary-button-border-color); }
         .button-accent-example { background-color: var(--accent-color); color: var(--accent-text-color); border-color: var(--accent-color); }
-        .button-danger-example { background-color: var(--danger-color); color: white; border-color: var(--danger-color); }
-        .dark-theme-section[data-theme="dark"] .button-danger-example { 
-            color: var(--text-color); /* Använd ljus text från mörkt tema för röd knapp */
+        
+        /* Justerad Faroknapp */
+        .button-danger-example { 
+            background-color: var(--danger-secondary-bg); /* Använder secondary för bakgrund */
+            color: var(--danger-secondary-text-color);   /* Använder secondary för text */
+            border-color: var(--danger-color);             /* Huvud-danger för kant */
         }
+        /* Ljust tema specifik textfärg för danger-knapp om --danger-secondary-text-color är för ljus */
+        .light-theme-section .button-danger-example {
+             color: #721C24; /* Återgår till den mörkare röda texten för ljust tema */
+        }
+
         
         .example-tab-nav { background-color: var(--tab-inactive-bg); border-bottom-color: var(--subtle-border-color); display: flex; margin-bottom: 5px;}
         .example-tab { padding: 8px 12px; border-top-left-radius: 5px; border-top-right-radius: 5px; border: 1px solid var(--subtle-border-color); border-bottom: none; margin-right: 2px; margin-top:1px;}
@@ -284,57 +290,55 @@
     <div class="styleguide-wrapper">
         <div class="theme-section light-theme-section"> 
             <h2>Ljust Tema</h2>
-            <p>Baserat på din "färgtema_v001.png" och diskussioner.</p>
-
             <h3>1. Färgpalett (Ljust Tema)</h3>
             <h4>1.1 Primärfärger</h4>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--primary-color);"></div>
+                <div class="color-swatch" style="background-color: #284027;"></div>
                 <strong>Mörk Skogsgrön (Primary Color)</strong>
                 <p>HEX: <code>#284027</code> | Variabel: <code>var(--primary-color)</code></p>
             </div>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--primary-text-color); border: 1px solid #ccc;"></div>
+                <div class="color-swatch" style="background-color: #FBF5E9; border: 1px solid #ccc;"></div>
                 <strong>Ljusaste Beige/Kräm (Primary Text on Dark / Surface BG)</strong>
                 <p>HEX: <code>#FBF5E9</code> | Variabel: <code>var(--primary-text-color)</code>, <code>var(--surface-bg-color)</code></p>
             </div>
 
             <h4>1.2 Accentfärger</h4>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--accent-color);"></div>
+                <div class="color-swatch" style="background-color: #d65d0b;"></div>
                 <strong>Orange (Accent Color 1)</strong>
                 <p>HEX: <code>#d65d0b</code> | Variabel: <code>var(--accent-color)</code></p>
             </div>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--border-color);"></div>
+                <div class="color-swatch" style="background-color: #CC9849;"></div>
                 <strong>Ljus Guld/Beige (Accent Color 2 / Border)</strong>
                 <p>HEX: <code>#CC9849</code> | Variabel: <code>var(--border-color)</code>, <code>var(--tab-active-border-accent)</code></p>
             </div>
             
             <h4>1.3 Neutrala och Bakgrundsfärger</h4>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--bg-color);"></div>
+                <div class="color-swatch" style="background-color: #284027;"></div>
                 <strong>Mörkgrön Kroppsbakgrund</strong>
                 <p>HEX: <code>#284027</code> | Variabel: <code>var(--bg-color)</code></p>
             </div>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--secondary-button-bg-color); border: 1px solid #ccc;"></div>
+                <div class="color-swatch" style="background-color: #EFE4CF; border: 1px solid #ccc;"></div>
                 <strong>Beige (Sekundära element)</strong>
                 <p>HEX: <code>#EFE4CF</code> | Variabel: <code>var(--secondary-button-bg-color)</code>, <code>var(--tab-inactive-bg)</code></p>
             </div>
              <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--input-bg-color); border: 1px solid #ccc;"></div>
+                <div class="color-swatch" style="background-color: #FFFFFF; border: 1px solid #ccc;"></div>
                 <strong>Vit (Inputfält)</strong>
                 <p>HEX: <code>#FFFFFF</code> | Variabel: <code>var(--input-bg-color)</code></p>
             </div>
 
             <h4>1.4 Statusfärger</h4>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--danger-color);"></div>
+                <div class="color-swatch" style="background-color: #A52A2A;"></div>
                 <strong>Vinröd (Danger)</strong> <p>HEX: <code>#A52A2A</code> | Variabel: <code>var(--danger-color)</code></p>
             </div>
              <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--listening-color);"></div>
+                <div class="color-swatch" style="background-color: #FFC107;"></div>
                 <strong>Gul/Orange (Listening)</strong> <p>HEX: <code>#FFC107</code> | Variabel: <code>var(--listening-color)</code></p>
             </div>
 
@@ -365,7 +369,7 @@
                 <div class="example-button button-primary-example">Primär Knapp</div>
                 <div class="example-button button-secondary-example">Sekundär Knapp</div>
                 <div class="example-button button-accent-example">Accentknapp</div>
-                <div class="example-button button-danger-example">Faroknapp</div>
+                <div class="example-button button-danger-example">Varningsknapp</div>
             </div>
             <h4>Flikar</h4>
             <div class="example-tab-nav">
@@ -378,81 +382,85 @@
 
         <div class="theme-section dark-theme-section" data-theme="dark"> 
             <h2>Mörkt Tema</h2>
-            <p>Baserat på variabler från appens "baseline v2".</p>
-
             <h3>1. Färgpalett (Mörkt Tema)</h3>
 
             <h4>1.1 Primärfärger</h4>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: #76c776;"></div> <!-- HÅRDKODAD FÖR VISNING -->
-                <strong>Ljus Grön (Primary Color)</strong>
-                <p>HEX: <code>#76c776</code> | Variabel: <code>var(--primary-color)</code></p>
+                <div class="color-swatch" style="background-color: #365537;"></div>
+                <strong>Dämpad Grön (Primary)</strong>
+                <p>HEX: <code>#365537</code> | Variabel: <code>var(--primary-color)</code></p>
             </div>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: #121212; border: 1px solid #555;"></div> <!-- HÅRDKODAD FÖR VISNING -->
-                <strong>Mörk Text (Primary Text on Light)</strong>
-                <p>HEX: <code>#121212</code> | Variabel: <code>var(--primary-text-color)</code></p>
+                <div class="color-swatch" style="background-color: #e6e1d6; border:1px solid #555;"></div> 
+                <strong>Ljus Beige (Primary Text)</strong>
+                <p>HEX: <code>#e6e1d6</code> | Variabel: <code>var(--primary-text-color)</code></p>
             </div>
              <div class="color-item">
-                <div class="color-swatch" style="background-color: #2C2C2C;"></div> <!-- HÅRDKODAD FÖR VISNING -->
-                <strong>Mörk Yta (Surface Background)</strong>
-                <p>HEX: <code>#2C2C2C</code> | Variabel: <code>var(--surface-bg-color)</code></p>
+                <div class="color-swatch" style="background-color: #2b2a26;"></div> 
+                <strong>Mörkbrun/Grå Yta (Surface)</strong>
+                <p>HEX: <code>#2b2a26</code> | Variabel: <code>var(--surface-bg-color)</code></p>
             </div>
 
             <h4>1.2 Accentfärger</h4>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: #E68A00;"></div> <!-- HÅRDKODAD FÖR VISNING -->
-                <strong>Mörkare Orange (Accent Color)</strong>
-                <p>HEX: <code>#E68A00</code> | Variabel: <code>var(--accent-color)</code></p>
+                <div class="color-swatch" style="background-color: #b65407;"></div> 
+                <strong>Dämpad Orange/Rost (Accent)</strong>
+                <p>HEX: <code>#b65407</code> | Variabel: <code>var(--accent-color)</code></p>
+            </div>
+             <div class="color-item">
+                <div class="color-swatch" style="background-color: #FFFFFF; border:1px solid #555;"></div> 
+                <strong>Vit (Accent Text)</strong>
+                <p>HEX: <code>#FFFFFF</code> | Variabel: <code>var(--accent-text-color)</code></p>
             </div>
             
             <h4>1.3 Neutrala och Bakgrundsfärger</h4>
              <div class="color-item">
-                <div class="color-swatch" style="background-color: #1A1A1A;"></div> <!-- HÅRDKODAD FÖR VISNING -->
-                <strong>Mörkaste Bakgrund (Body Background)</strong>
-                <p>HEX: <code>#1A1A1A</code> | Variabel: <code>var(--bg-color)</code></p>
+                <div class="color-swatch" style="background-color: #1e1d1a;"></div> 
+                <strong>Mörkaste Bakgrund (Body)</strong>
+                <p>HEX: <code>#1e1d1a</code> | Variabel: <code>var(--bg-color)</code></p>
             </div>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: #383838;"></div> <!-- HÅRDKODAD FÖR VISNING -->
-                <strong>Mörkgrå (Sekundära element)</strong>
-                <p>HEX: <code>#383838</code> | Variabel: <code>var(--secondary-button-bg-color)</code>, <code>var(--tab-inactive-bg)</code></p>
+                <div class="color-swatch" style="background-color: #3a372f;"></div> 
+                <strong>Mörkare Brun/Grå (Sekundära Knappar)</strong>
+                <p>HEX: <code>#3a372f</code> | Variabel: <code>var(--secondary-button-bg-color)</code></p>
             </div>
              <div class="color-item">
-                <div class="color-swatch" style="background-color: var(--input-bg-color);"></div> <!-- Använder variabel då den är satt korrekt för dark -->
+                <div class="color-swatch" style="background-color: #3a372f;"></div> 
                 <strong>Input Bakgrund</strong>
-                <p>HEX: (från <code>var(--surface-bg-color)</code> = #2C2C2C) | Variabel: <code>var(--input-bg-color)</code></p>
+                <p>HEX: <code>#3a372f</code> | Variabel: <code>var(--input-bg-color)</code></p>
             </div>
+             <div class="color-item">
+                <div class="color-swatch" style="background-color: #222222;"></div> 
+                <strong>Mycket Mörkgrå (Inaktiv Flik)</strong>
+                <p>HEX: <code>#222222</code> | Variabel: <code>var(--tab-inactive-bg)</code></p>
+            </div>
+
 
             <h4>1.4 Statusfärger</h4>
             <div class="color-item">
-                <div class="color-swatch" style="background-color: #FF8A80;"></div> <!-- HÅRDKODAD FÖR VISNING -->
+                <div class="color-swatch" style="background-color: #FF8A80;"></div> 
                 <strong>Ljusare Röd (Danger)</strong> 
                 <p>HEX: <code>#FF8A80</code> | Variabel: <code>var(--danger-color)</code></p>
             </div>
              <div class="color-item">
-                <div class="color-swatch" style="background-color: #FFEB3B;"></div> <!-- HÅRDKODAD FÖR VISNING -->
+                <div class="color-swatch" style="background-color: #FFEB3B;"></div> 
                 <strong>Gul/Orange (Listening)</strong> 
                 <p>HEX: <code>#FFEB3B</code> | Variabel: <code>var(--listening-color)</code></p>
             </div>
 
             <h4>1.5 Textfärger</h4>
              <div class="color-item">
-                <span class="text-on-surface" style="background-color: #2C2C2C; padding: 2px 4px; border: 1px solid #4A4A4A;">Ljus Text</span>
-                <p>HEX: <code>#E0E0E0</code> | Variabel: <code>var(--text-color)</code></p>
+                <span class="text-on-surface" style="background-color: #2b2a26; padding: 2px 4px; border: 1px solid #4A4A4A;">Ljus Beige Text</span>
+                <p>HEX: <code>#e6e1d6</code> | Variabel: <code>var(--text-color)</code></p>
             </div>
              <div class="color-item">
-                <span class="secondary-text-on-surface" style="background-color: #2C2C2C; padding: 2px 4px; border: 1px solid #4A4A4A;">Sekundär Ljus Text</span>
-                <p>HEX: <code>#A0A0A0</code> | Variabel: <code>var(--secondary-text-color)</code></p>
+                <span class="secondary-text-on-surface" style="background-color: #2b2a26; padding: 2px 4px; border: 1px solid #4A4A4A;">Ljusare Dämpad Beige Text</span>
+                <p>HEX: <code>#b6b0a2</code> | Variabel: <code>var(--secondary-text-color)</code></p>
             </div>
-            <div class="color-item">
-                <span class="text-on-primary" style="background-color: #76c776; padding: 2px 4px;">Mörk Text på Primär</span>
-                <p>HEX: <code>#121212</code> | Variabel: <code>var(--primary-text-color)</code></p>
+             <div class="color-item"> <!-- Nytt exempel för primär text på primär bakgrund i mörkt tema -->
+                <span class="text-on-primary" style="background-color: #365537; padding: 2px 4px; border: 1px solid #4A4A4A;">Ljus Beige på Primär</span>
+                <p>HEX: <code>#e6e1d6</code> | Variabel: <code>var(--primary-text-color)</code></p>
             </div>
-            <div class="color-item">
-                <span class="text-on-accent" style="background-color: #E68A00; padding: 2px 4px;">Vit Text på Accent</span>
-                <p>HEX: <code>#FFFFFF</code> | Variabel: <code>var(--accent-text-color)</code></p>
-            </div>
-
 
             <h3>Typografi</h3>
             <p><strong>Primärt Typsnitt:</strong> Systemets standard UI-typsnitt.</p>
@@ -463,7 +471,7 @@
                 <div class="example-button button-primary-example">Primär Knapp</div>
                 <div class="example-button button-secondary-example">Sekundär Knapp</div>
                 <div class="example-button button-accent-example">Accentknapp</div>
-                <div class="example-button button-danger-example">Faroknapp</div>
+                <div class="example-button button-danger-example">Varningsknapp</div>
             </div>
             <h4>Flikar</h4>
             <div class="example-tab-nav">
