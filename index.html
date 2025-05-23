@@ -588,7 +588,7 @@
             padding: 15px 0; 
          }
          #participantsCountInfo { 
-            color: var(--primary-color); 
+            color: var(--secondary-text-color); /* ÄNDRAD HÄR */
             font-weight: 500; 
          }
          #passDistributionMethodInfo { 
@@ -1322,15 +1322,15 @@
 
             if (parentOverlayElement && parentOverlayElement.id) {
                 customAlertModal.dataset.parentOverlayId = parentOverlayElement.id;
-                 if(parentOverlayElement) parentOverlayElement.style.display = 'none'; // Stäng föräldern tillfälligt
+                 if(parentOverlayElement) parentOverlayElement.style.display = 'none'; 
             } else {
                 customAlertModal.removeAttribute('data-parent-overlay-id');
             }
 
-            closeAllOverlays(customAlertModal); // Stäng andra, orelaterade överlägg
+            closeAllOverlays(customAlertModal); 
 
             customAlertModal.style.display = 'flex';
-            if (!document.body.classList.contains('overlay-open')) { // Lägg bara till om inte redan där
+            if (!document.body.classList.contains('overlay-open')) { 
                  document.body.classList.add('overlay-open');
             }
             if(customAlertOkBtn) customAlertOkBtn.focus();
@@ -1354,15 +1354,15 @@
 
             if (parentOverlayElement && parentOverlayElement.id) {
                 customConfirmModal.dataset.parentOverlayId = parentOverlayElement.id;
-                if(parentOverlayElement) parentOverlayElement.style.display = 'none'; // Stäng föräldern tillfälligt
+                if(parentOverlayElement) parentOverlayElement.style.display = 'none'; 
             } else {
                 customConfirmModal.removeAttribute('data-parent-overlay-id');
             }
             
-            closeAllOverlays(customConfirmModal); // Stäng andra, orelaterade överlägg
+            closeAllOverlays(customConfirmModal); 
 
             customConfirmModal.style.display = 'flex';
-             if (!document.body.classList.contains('overlay-open')) { // Lägg bara till om inte redan där
+             if (!document.body.classList.contains('overlay-open')) { 
                 document.body.classList.add('overlay-open');
             }
             if(customConfirmOkBtn) customConfirmOkBtn.focus();
@@ -1661,7 +1661,7 @@
         
         function closeAllOverlays(keepOpenOverlay = null) {
             document.querySelectorAll('.content-overlay').forEach(o => {
-                if (o && o !== keepOpenOverlay) { // Se till att o existerar
+                if (o && o !== keepOpenOverlay) { 
                      o.style.display = 'none';
                 }
             });
