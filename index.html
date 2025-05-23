@@ -824,6 +824,51 @@
         .overlay-content-box > button.overlay-close-btn:last-child:not(.icon-button) {
              margin-top: auto; width: 100%;
         }
+
+        /* Custom Alert & Confirm Modals Styling */
+        #customAlertModal .overlay-content-box,
+        #customConfirmModal .overlay-content-box {
+            max-width: 400px;
+        }
+        #customAlertModal .overlay-header,
+        #customConfirmModal .overlay-header {
+            margin-bottom: 10px;
+            padding-bottom: 8px; /* Lättare padding */
+        }
+        #customAlertModal .overlay-header h3,
+        #customConfirmModal .overlay-header h3 {
+            font-size: 1.25em; /* Något mindre titel */
+        }
+        #customAlertModal .overlay-scrollable-content,
+        #customConfirmModal .overlay-scrollable-content {
+            margin-bottom: 15px; /* Mindre marginal */
+            padding: 0 15px; /* Padding för innehåll */
+            text-align: center;
+        }
+        #customAlertModal #customAlertMessage,
+        #customConfirmModal #customConfirmMessage {
+            font-size: 1em;
+            line-height: 1.4;
+            margin: 10px 0;
+        }
+        #customAlertModal .overlay-content-box > div:last-child, /* Knappcontainer */
+        #customConfirmModal .overlay-content-box > div:last-child { /* Knappcontainer */
+            display: flex;
+            justify-content: center; /* Centrera OK-knapp i alert */
+            gap: 10px;
+            margin-top: auto; /* Tryck ner i botten */
+            padding-top: 10px; /* Lite luft ovanför knapparna */
+        }
+        #customConfirmModal .overlay-content-box > div:last-child {
+            justify-content: space-around; /* Behåll space-around för confirm */
+        }
+        #customAlertOkBtn, #customConfirmOkBtn, #customConfirmCancelBtn {
+            flex-grow: 1; /* Låt knappar i confirm växa */
+            min-width: 100px; /* Minimumbredd */
+        }
+        #customAlertOkBtn {
+            flex-grow: 0; /* Låt inte OK-knappen i alert växa för mycket */
+        }
     </style>
 </head>
 <body>
@@ -875,7 +920,7 @@
                     <div id="passDistributionTitleContainer">
                         <span id="passDistributionTitle">Passfördelning</span> 
                         <button id="openAdvancedSettingsBtn" class="icon-button" title="Passinställningar"> 
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
                         </button>
                     </div>
                 </h2>
@@ -995,7 +1040,7 @@
                 </ul>
                 <p><strong>Fliken "Passfördelning":</strong></p>
                  <ul>
-                    <li><strong>Passinställningar (Kugghjulet <svg style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>):</strong> Öppnar ett fönster där du kan välja mellan "Standardnumrering 1-n" eller "Använd en egen lista med passnamn/nummer". Om du väljer "Avancerad", visas ytterligare kontroller för att mata in pass-ID manuellt (eller via röst), ladda från/spara till fil, samt rensa listan. Den definierade listan och antalet pass i den visas i detta fönster.</li>
+                    <li><strong>Passinställningar (Kugghjulet <svg style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>):</strong> Öppnar ett fönster där du kan välja mellan "Standardnumrering 1-n" eller "Använd en egen lista med passnamn/nummer". Om du väljer "Avancerad", visas ytterligare kontroller för att mata in pass-ID manuellt (eller via röst), ladda från/spara till fil, samt rensa listan. Den definierade listan och antalet pass i den visas i detta fönster.</li>
                     <li><strong>Slumpa Pass:</strong> Klicka på den stora orangea "Slumpa Pass"-knappen. Resultatet visas både i huvudvyn och i ett helskärmsläge. En informationstext under passfördelningsrubriken i huvudvyn anger hur passen kommer att fördelas.</li>
                     <li><strong>Återöppna Resultat:</strong> Använd ögon-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>) ovanför resultatlistan i huvudvyn för att återöppna helskärmsresultatet.</li>
                     <li><strong>Kopiera/Dela:</strong> Använd kopieringsikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>) för att kopiera resultatlistan. Använd dela-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>) högst upp för att dela en länk till appen via en QR-kod.</li>
@@ -1018,6 +1063,38 @@
         </div>
     </div>
 
+    <!-- Custom Alert Modal -->
+    <div id="customAlertModal" class="content-overlay" style="display: none;">
+        <div class="overlay-content-box">
+            <div class="overlay-header" id="customAlertHeader">
+                <h3 id="customAlertTitle">Meddelande</h3>
+            </div>
+            <div class="overlay-scrollable-content">
+                <p id="customAlertMessage"></p>
+            </div>
+            <div>
+                <button id="customAlertOkBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="customConfirmModal" class="content-overlay" style="display: none;">
+        <div class="overlay-content-box">
+            <div class="overlay-header" id="customConfirmHeader">
+                <h3 id="customConfirmTitle">Bekräfta åtgärd</h3>
+            </div>
+            <div class="overlay-scrollable-content">
+                <p id="customConfirmMessage"></p>
+            </div>
+            <div>
+                <button id="customConfirmCancelBtn" class="button-secondary">Avbryt</button>
+                <button id="customConfirmOkBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         // --- DOM ELEMENT REFERENSER ---
         let themeToggleBtn, themeIconSun, themeIconMoon, nameInput, addNameBtn, nameList,
@@ -1028,7 +1105,6 @@
             qrCodeContainer, shareableLink, installAppBtn,
             participantsCountInfo,
             passDistributionMethodInfo; 
-            // clearAllParticipantsBtn; // BORTTAGEN
         
         let openAdvancedSettingsBtn, advancedSettingsOverlay, passModeStandardRadio, 
             passModeAdvancedRadio, customPassElementsContainer, customPassesInfoInOverlay, 
@@ -1051,6 +1127,13 @@
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition; 
         let passRecognition;  
+
+        // Custom Alert & Confirm Modal DOM elements
+        let customAlertModal, customAlertTitle, customAlertHeader, customAlertMessage, customAlertOkBtn;
+        let customConfirmModal, customConfirmTitle, customConfirmHeader, customConfirmMessage, customConfirmOkBtn, customConfirmCancelBtn;
+        let currentConfirmCallback = null;
+        let currentCancelCallback = null;
+
 
         document.addEventListener('DOMContentLoaded', () => {
             themeToggleBtn = document.getElementById('themeToggleBtn');
@@ -1084,8 +1167,7 @@
             installAppBtn = document.getElementById('installAppBtn');
             participantsCountInfo = document.getElementById('participantsCountInfo');
             passDistributionMethodInfo = document.getElementById('passDistributionMethodInfo');
-            // clearAllParticipantsBtn = document.getElementById('clearAllParticipantsBtn'); // BORTTAGEN
-
+            
             openAdvancedSettingsBtn = document.getElementById('openAdvancedSettingsBtn');
             advancedSettingsOverlay = document.getElementById('advancedSettingsOverlay');
             passModeStandardRadio = document.getElementById('passModeStandard');
@@ -1104,6 +1186,21 @@
             
             tabButtons = document.querySelectorAll('.tab-button');
             tabContents = document.querySelectorAll('.tab-content');
+
+            // Custom Alert & Confirm Modal elements
+            customAlertModal = document.getElementById('customAlertModal');
+            customAlertTitle = document.getElementById('customAlertTitle');
+            customAlertHeader = document.getElementById('customAlertHeader');
+            customAlertMessage = document.getElementById('customAlertMessage');
+            customAlertOkBtn = document.getElementById('customAlertOkBtn');
+
+            customConfirmModal = document.getElementById('customConfirmModal');
+            customConfirmTitle = document.getElementById('customConfirmTitle');
+            customConfirmHeader = document.getElementById('customConfirmHeader');
+            customConfirmMessage = document.getElementById('customConfirmMessage');
+            customConfirmOkBtn = document.getElementById('customConfirmOkBtn');
+            customConfirmCancelBtn = document.getElementById('customConfirmCancelBtn');
+
 
             document.querySelectorAll('.content-overlay').forEach(o => o.style.display = 'none');
             if (installAppBtn) installAppBtn.style.display = 'none'; 
@@ -1129,8 +1226,7 @@
             if (passNameInput_overlay) passNameInput_overlay.addEventListener('keypress', (event) => { if (event.key === 'Enter') addPassManually_overlay(); });
             if (passFileInput_overlay) passFileInput_overlay.addEventListener('change', loadCustomPassesFromFile_overlay);
             if (savePassListBtn_overlay) savePassListBtn_overlay.addEventListener('click', saveCustomPassesToFile_overlay);
-            if (clearCustomPassesBtn_overlay) clearCustomPassesBtn_overlay.addEventListener('click', clearLoadedCustomPasses_overlay);
-            // if (clearAllParticipantsBtn) clearAllParticipantsBtn.addEventListener('click', confirmClearAllParticipants); // BORTTAGEN
+            if (clearCustomPassesBtn_overlay) clearCustomPassesBtn_overlay.addEventListener('click', confirmClearLoadedCustomPasses_overlay);
             
             document.querySelectorAll('.overlay-close-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -1138,6 +1234,68 @@
                     if (overlay) { overlay.style.display = 'none'; checkAndCloseBodyOverlay(); }
                 });
             });
+
+            // Event Listeners for Custom Modals
+            if (customAlertOkBtn) {
+                customAlertOkBtn.addEventListener('click', () => {
+                    if (customAlertModal) customAlertModal.style.display = 'none';
+                    const parentToReopen = customAlertModal.dataset.parentOverlayId;
+                    if (parentToReopen && document.getElementById(parentToReopen)) {
+                        document.getElementById(parentToReopen).style.display = 'flex';
+                        if (!document.body.classList.contains('overlay-open')) {
+                             document.body.classList.add('overlay-open');
+                        }
+                    } else {
+                        checkAndCloseBodyOverlay();
+                    }
+                    customAlertModal.removeAttribute('data-parent-overlay-id');
+                });
+            }
+            if (customConfirmOkBtn) {
+                customConfirmOkBtn.addEventListener('click', () => {
+                    if (customConfirmModal) customConfirmModal.style.display = 'none';
+                    const parentToReopen = customConfirmModal.dataset.parentOverlayId;
+                    
+                    if (typeof currentConfirmCallback === 'function') {
+                        currentConfirmCallback();
+                    }
+                    currentConfirmCallback = null;
+                    currentCancelCallback = null;
+
+                    if (parentToReopen && document.getElementById(parentToReopen)) {
+                        document.getElementById(parentToReopen).style.display = 'flex';
+                        if (!document.body.classList.contains('overlay-open')) {
+                             document.body.classList.add('overlay-open');
+                        }
+                    } else {
+                        checkAndCloseBodyOverlay();
+                    }
+                    customConfirmModal.removeAttribute('data-parent-overlay-id');
+                });
+            }
+            if (customConfirmCancelBtn) {
+                customConfirmCancelBtn.addEventListener('click', () => {
+                    if (customConfirmModal) customConfirmModal.style.display = 'none';
+                    const parentToReopen = customConfirmModal.dataset.parentOverlayId;
+
+                    if (typeof currentCancelCallback === 'function') {
+                        currentCancelCallback();
+                    }
+                    currentConfirmCallback = null;
+                    currentCancelCallback = null;
+
+                    if (parentToReopen && document.getElementById(parentToReopen)) {
+                        document.getElementById(parentToReopen).style.display = 'flex';
+                        if (!document.body.classList.contains('overlay-open')) {
+                             document.body.classList.add('overlay-open');
+                        }
+                    } else {
+                        checkAndCloseBodyOverlay();
+                    }
+                    customConfirmModal.removeAttribute('data-parent-overlay-id');
+                });
+            }
+
 
             if (reopenOverlayBtn) reopenOverlayBtn.addEventListener('click', showResultOverlay);
             if (mainCopyBtn) mainCopyBtn.addEventListener('click', copyResultsToClipboard);
@@ -1150,6 +1308,66 @@
             setupPassSpeechRecognition_overlay(); 
             setupPWAInstallation();
         });
+        
+        // --- Custom Alert & Confirm ---
+        function showCustomAlert(message, title = "Meddelande", parentOverlayElement = null) {
+            if (!customAlertModal || !customAlertTitle || !customAlertMessage || !customAlertHeader) {
+                console.error("Custom alert DOM elements missing. Falling back to native alert.");
+                alert((title ? title + "\n\n" : "") + message); // Fallback
+                return;
+            }
+            customAlertTitle.textContent = title;
+            customAlertMessage.innerHTML = message; 
+            customAlertHeader.style.display = 'flex';
+
+            if (parentOverlayElement && parentOverlayElement.id) {
+                customAlertModal.dataset.parentOverlayId = parentOverlayElement.id;
+                 if(parentOverlayElement) parentOverlayElement.style.display = 'none'; // Stäng föräldern tillfälligt
+            } else {
+                customAlertModal.removeAttribute('data-parent-overlay-id');
+            }
+
+            closeAllOverlays(customAlertModal); // Stäng andra, orelaterade överlägg
+
+            customAlertModal.style.display = 'flex';
+            if (!document.body.classList.contains('overlay-open')) { // Lägg bara till om inte redan där
+                 document.body.classList.add('overlay-open');
+            }
+            if(customAlertOkBtn) customAlertOkBtn.focus();
+        }
+
+        function showCustomConfirm(message, title = "Bekräfta åtgärd", onConfirm, onCancel, parentOverlayElement = null) {
+            if (!customConfirmModal || !customConfirmTitle || !customConfirmMessage || !customConfirmOkBtn || !customConfirmCancelBtn || !customConfirmHeader) {
+                console.error("Custom confirm DOM elements missing. Falling back to native confirm.");
+                if (confirm((title ? title + "\n\n" : "") + message)) { // Fallback
+                    if (onConfirm) onConfirm();
+                } else {
+                    if (onCancel) onCancel();
+                }
+                return;
+            }
+            customConfirmTitle.textContent = title;
+            customConfirmMessage.innerHTML = message; 
+            currentConfirmCallback = onConfirm;
+            currentCancelCallback = onCancel;
+            customConfirmHeader.style.display = 'flex';
+
+            if (parentOverlayElement && parentOverlayElement.id) {
+                customConfirmModal.dataset.parentOverlayId = parentOverlayElement.id;
+                if(parentOverlayElement) parentOverlayElement.style.display = 'none'; // Stäng föräldern tillfälligt
+            } else {
+                customConfirmModal.removeAttribute('data-parent-overlay-id');
+            }
+            
+            closeAllOverlays(customConfirmModal); // Stäng andra, orelaterade överlägg
+
+            customConfirmModal.style.display = 'flex';
+             if (!document.body.classList.contains('overlay-open')) { // Lägg bara till om inte redan där
+                document.body.classList.add('overlay-open');
+            }
+            if(customConfirmOkBtn) customConfirmOkBtn.focus();
+        }
+
 
         function saveParticipantsToLocalStorage() { localStorage.setItem(PARTICIPANTS_KEY, JSON.stringify(participants)); }
         function saveCustomPassesToLocalStorage() { localStorage.setItem(CUSTOM_PASSES_KEY, JSON.stringify(customPasses)); }
@@ -1204,7 +1422,12 @@
                         if (deferredPrompt) {
                             deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null;
                             if (installAppBtn) installAppBtn.style.display = 'none';
-                        } else { alert(/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream ? "För iOS: Dela-ikonen > Lägg till på hemskärmen." : (navigator.standalone || window.matchMedia('(display-mode: standalone)').matches ? "Redan installerad!" : "Prompt ej tillgänglig.")); }
+                        } else { 
+                            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                            if (isIOS) showCustomAlert("För iOS: Använd Dela-ikonen i Safari och välj 'Lägg till på hemskärmen'.", "Installationsguide");
+                            else if (navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) showCustomAlert("Appen är redan installerad!", "Information");
+                            else showCustomAlert("Installationsprompt ej tillgänglig för tillfället. Försök igen senare eller följ webbläsarens anvisningar för att lägga till på hemskärmen.", "Information");
+                        }
                     };
                 }
             });
@@ -1273,7 +1496,10 @@
         }
         function addPassNameToList(passIdToAdd) { 
             const passId = passIdToAdd.trim(); if (!passId) return false; 
-            if (customPasses.some(p => p.toLowerCase() === passId.toLowerCase())) { alert(`Pass-ID "${passId}" finns redan.`); return false; }
+            if (customPasses.some(p => p.toLowerCase() === passId.toLowerCase())) { 
+                showCustomAlert(`Pass-ID "${passId}" finns redan.`, "Dublett", advancedSettingsOverlay);
+                return false; 
+            }
             customPasses.push(passId); customPasses.sort(smartSortPasses); 
             saveCustomPassesToLocalStorage(); updatePassDistributionConfigUI(); clearResults(); return true;
         }
@@ -1288,16 +1514,57 @@
         function loadCustomPassesFromFile_overlay(event) {
             const file = event.target.files[0];
             if (file && passFileInput_overlay) {
-                const reader=new FileReader();reader.onload=(e)=>{let added=0;const currentLower=customPasses.map(p=>p.toLowerCase());e.target.result.split(/\r\n|\n/).map(l=>l.trim()).filter(l=>l).forEach(nP=>{if(!currentLower.includes(nP.toLowerCase())){customPasses.push(nP);added++;}});if(added>0){customPasses.sort(smartSortPasses);saveCustomPassesToLocalStorage();updatePassDistributionConfigUI();clearResults();}alert(`${added} nya unika pass-ID tillagda.`);event.target.value='';};reader.readAsText(file);
+                const reader=new FileReader();reader.onload=(e)=>{
+                    let added=0;
+                    const currentLower=customPasses.map(p=>p.toLowerCase());
+                    e.target.result.split(/\r\n|\n/).map(l=>l.trim()).filter(l=>l).forEach(nP=>{
+                        if(!currentLower.includes(nP.toLowerCase())){
+                            customPasses.push(nP);
+                            added++;
+                        }
+                    });
+                    if(added>0){
+                        customPasses.sort(smartSortPasses);
+                        saveCustomPassesToLocalStorage();
+                        updatePassDistributionConfigUI();
+                        clearResults();
+                    } 
+                    showCustomAlert(`${added} nya unika pass-ID tillagda.`, "Fil Inläst", advancedSettingsOverlay);
+                    event.target.value='';
+                };
+                reader.readAsText(file);
             }
         }
         function saveCustomPassesToFile_overlay() {
-            if(customPasses.length===0){alert('Ingen lista att spara.');return;}const txt=customPasses.join('\n');const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.download='passlista_egen.txt';a.href=URL.createObjectURL(blob);a.click();URL.revokeObjectURL(a.href);
+            if(customPasses.length===0){ 
+                showCustomAlert('Ingen lista med egna pass att spara.', "Information", advancedSettingsOverlay);
+                return;
+            }
+            const txt=customPasses.join('\n');const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.download='passlista_egen.txt';a.href=URL.createObjectURL(blob);a.click();URL.revokeObjectURL(a.href);
         }
-        function clearLoadedCustomPasses_overlay() {
-            if (confirm("Rensa hela egna passlistan?")) { customPasses = []; if(passNameInput_overlay) passNameInput_overlay.value = ''; saveCustomPassesToLocalStorage(); updatePassDistributionConfigUI(); clearResults(); }
+        function confirmClearLoadedCustomPasses_overlay() {
+            showCustomConfirm("Är du säker på att du vill rensa hela listan med egna pass?", "Bekräfta Rensa", 
+            () => { 
+                customPasses = []; 
+                if(passNameInput_overlay) passNameInput_overlay.value = ''; 
+                saveCustomPassesToLocalStorage(); 
+                updatePassDistributionConfigUI(); 
+                clearResults(); 
+            }, 
+            null, 
+            advancedSettingsOverlay
+            );
         }
-        function addNameToParticipantsList(nameToAdd) { const name=nameToAdd.trim();if(!name)return!1;if(participants.some(p=>p.toLowerCase()===name.toLowerCase())){alert('Passkytt finns redan.');return!1;}participants.push(name);return!0; }
+        function addNameToParticipantsList(nameToAdd) { 
+            const name=nameToAdd.trim();
+            if(!name) return false;
+            if(participants.some(p=>p.toLowerCase()===name.toLowerCase())){
+                showCustomAlert(`Passkytten "${name}" finns redan i listan.`, "Dublett");
+                return false;
+            }
+            participants.push(name);
+            return true; 
+        }
         function updateParticipantsCount() { 
             if (participantsCountInfo) {
                 participantsCountInfo.textContent = participants.length > 0 ? `(${participants.length} passkyttar)` : '';
@@ -1314,17 +1581,20 @@
         }
         function deleteNameByValue(nameToDelete) { participants = participants.filter(p => p !== nameToDelete); saveParticipantsToLocalStorage(); renderNameList(); clearResults(); }
         function addName() { if (nameInput && addNameToParticipantsList(nameInput.value.trim())) { saveParticipantsToLocalStorage(); renderNameList(); clearResults(); nameInput.value = ''; } if (nameInput) nameInput.focus(); }
-        function loadParticipantNamesFromFile(event) {
-            const file=event.target.files[0];if(file&&fileInput){const reader=new FileReader();reader.onload=(e)=>{let added=0;e.target.result.split(/\r\n|\n/).forEach(line=>{if(addNameToParticipantsList(line.trim()))added++;});if(added>0){saveParticipantsToLocalStorage();renderNameList();clearResults();}alert(`${added} passkyttar tillagda.`);event.target.value='';};reader.readAsText(file);}
-        }
-        function saveParticipantNamesToFile() { if(participants.length===0){alert('Inga passkyttar att spara.');return;}const txt=participants.join('\n');const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.download='passkyttlista.txt';a.href=URL.createObjectURL(blob);a.click();URL.revokeObjectURL(a.href); }
         
-        /* BORTTAGEN: confirmClearAllParticipants funktionen togs bort
-        function confirmClearAllParticipants() {
-            // ...
+        function loadParticipantNamesFromFile(event) {
+            const file=event.target.files[0];if(file&&fileInput){const reader=new FileReader();reader.onload=(e)=>{let added=0;e.target.result.split(/\r\n|\n/).forEach(line=>{if(addNameToParticipantsList(line.trim()))added++;});if(added>0){saveParticipantsToLocalStorage();renderNameList();clearResults();} 
+            showCustomAlert(`${added} nya unika passkyttar tillagda från fil.`, "Fil Inläst");
+            event.target.value='';};reader.readAsText(file);}
         }
-        */
-
+        function saveParticipantNamesToFile() { 
+            if(participants.length===0){ 
+                showCustomAlert('Inga passkyttar att spara.', "Information");
+                return;
+            }
+            const txt=participants.join('\n');const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.download='passkyttlista.txt';a.href=URL.createObjectURL(blob);a.click();URL.revokeObjectURL(a.href); 
+        }
+        
         function clearResults() {
             if(resultsList)resultsList.innerHTML='';if(overlayResultsList)overlayResultsList.innerHTML='';
             if(noResultsInfo){
@@ -1340,10 +1610,31 @@
             if(resultOverlay&&resultOverlay.style.display==='flex'){resultOverlay.style.display='none';checkAndCloseBodyOverlay();}
         }
         function shuffleArray(arr){const newArr=[...arr];for(let i=newArr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[newArr[i],newArr[j]]=[newArr[j],newArr[i]];}return newArr}
+        
         function randomizePasses() {
-            if(participants.length===0){alert('Lägg till passkyttar först!');return;}
-            if(passDistributionConfigMode==='advanced'&&customPasses.length===0){alert('Avancerad vald, men inga egna pass finns. Öppna ⚙️ för att lägga till pass eller välj Standard.');openAdvancedSettingsModal();return;}
-            if(passDistributionConfigMode==='advanced'&&customPasses.length<participants.length&&!confirm(`Det finns ${customPasses.length} pass men ${participants.length} skyttar. ${participants.length-customPasses.length} skytt(ar) blir oplacerade. Fortsätta?`))return;
+            if(participants.length===0){ 
+                showCustomAlert('Lägg till passkyttar först!', "Information");
+                return;
+            }
+            if(passDistributionConfigMode==='advanced'&&customPasses.length===0){
+                showCustomAlert('Avancerad passfördelning är vald, men inga egna pass har lagts till.<br>Öppna Passinställningar (⚙️) för att lägga till pass eller välj Standardnumrering.', "Information");
+                openAdvancedSettingsModal();
+                return;
+            }
+            if(passDistributionConfigMode==='advanced'&&customPasses.length<participants.length) {
+                 showCustomConfirm(
+                    `Det finns ${customPasses.length} egna pass men ${participants.length} passkyttar.<br>Detta innebär att ${participants.length-customPasses.length} skytt(ar) kommer att bli oplacerade.<br><br>Vill du fortsätta ändå?`, 
+                    "Varning: Antal Pass",
+                    () => { // onConfirm
+                        proceedWithRandomization();
+                    } 
+                 );
+            } else {
+                proceedWithRandomization();
+            }
+        }
+
+        function proceedWithRandomization() {
             clearResults();if(noResultsInfo)noResultsInfo.style.display='none';
             const shuffled=shuffleArray(participants);let unassigned=[];const items=[];
             const createLi=(id,p)=>{const li=document.createElement('li');li.innerHTML=`<span>${id}:</span> ${p}`;return li;};
@@ -1354,13 +1645,56 @@
             else{if(unassignedParticipantsList)unassignedParticipantsList.style.display='none';if(overlayUnassignedParticipants)overlayUnassignedParticipants.style.display='none';}
             if(items.length>0){if(mainResultActionsTop)mainResultActionsTop.style.display='flex';if(overlayCopyBtn)overlayCopyBtn.style.display='inline-flex';}showResultOverlay();
         }
+
+
         function showResultOverlay(){if(resultOverlay&&((resultsList&&resultsList.hasChildNodes())||(overlayResultsList&&overlayResultsList.hasChildNodes()))){closeAllOverlays(resultOverlay);resultOverlay.style.display='flex';document.body.classList.add('overlay-open');}}
-        function openHelpOverlay(){if(helpOverlay){closeAllOverlays(helpOverlay);helpOverlay.style.display='flex';document.body.classList.add('overlay-open');}}
+        function openHelpOverlay(){
+            if(helpOverlay){
+                const helpContent = helpOverlay.querySelector('.overlay-scrollable-content');
+                if(helpContent) helpContent.scrollTop = 0; 
+                closeAllOverlays(helpOverlay);
+                helpOverlay.style.display='flex';
+                document.body.classList.add('overlay-open');
+            }
+        }
         function openShareOverlay(){if(shareOverlay){closeAllOverlays(shareOverlay);generateQRCode();shareOverlay.style.display='flex';document.body.classList.add('overlay-open');}}
-        function closeAllOverlays(keepOpen=null){document.querySelectorAll('.content-overlay').forEach(o=>{if(o!==keepOpen)o.style.display='none';});if(!keepOpen)checkAndCloseBodyOverlay();else if(keepOpen&&!document.body.classList.contains('overlay-open'))document.body.classList.add('overlay-open');}
-        function checkAndCloseBodyOverlay(){const isOpen=Array.from(document.querySelectorAll('.content-overlay')).some(o=>o.style.display==='flex');if(!isOpen&&document.body.classList.contains('overlay-open'))document.body.classList.remove('overlay-open');}
+        
+        function closeAllOverlays(keepOpenOverlay = null) {
+            document.querySelectorAll('.content-overlay').forEach(o => {
+                if (o && o !== keepOpenOverlay) { // Se till att o existerar
+                     o.style.display = 'none';
+                }
+            });
+        }
+
+        function checkAndCloseBodyOverlay(){
+            const isOpen=Array.from(document.querySelectorAll('.content-overlay')).some(o=>o.style.display==='flex');
+            if(!isOpen&&document.body.classList.contains('overlay-open'))document.body.classList.remove('overlay-open');
+             else if (isOpen && !document.body.classList.contains('overlay-open')) {
+                document.body.classList.add('overlay-open');
+            }
+        }
         function generateQRCode(){if(!qrCodeContainer||typeof QRious==='undefined')return;qrCodeContainer.innerHTML='';const canvas=document.createElement('canvas');try{let size=qrCodeContainer.offsetWidth>0?Math.min(180,qrCodeContainer.offsetWidth-20):180;new QRious({element:canvas,value:appURL,size:size,padding:5,level:'H',background:'white',foreground:'black'});if(canvas.width>0)qrCodeContainer.appendChild(canvas);}catch(e){console.error("QR fel:",e);}if(shareableLink){shareableLink.href=appURL;shareableLink.textContent=appURL;}}
-        function copyResultsToClipboard(){const list=resultsList;if(!list||list.children.length===0){alert('Inga resultat att kopiera.');return;}let txt=`${passDistributionTitle.textContent}:\n`;Array.from(list.children).forEach(li=>txt+=li.textContent.replace(/<\/?i>/g,'')+'\n');if(unassignedParticipantsList&&unassignedParticipantsList.style.display==='block'&&unassignedParticipantsList.textContent){const div=document.createElement('div');div.innerHTML=unassignedParticipantsList.innerHTML;txt+=`\n${div.textContent||div.innerText||""}\n`;}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt.trim()).then(()=>alert('Resultat kopierade!')).catch(()=>alert('Kopiering misslyckades.'));}else{const ta=document.createElement("textarea");ta.value=txt.trim();document.body.appendChild(ta);ta.select();try{document.execCommand('copy');alert('Resultat kopierade! (fallback)');}catch(e){alert('Kopiering misslyckades (fallback).');}document.body.removeChild(ta);}}
+        
+        function copyResultsToClipboard(){
+            const list=resultsList;
+            if(!list||list.children.length===0){ 
+                showCustomAlert('Inga resultat att kopiera.', "Information");
+                return;
+            }
+            let txt=`${passDistributionTitle.textContent}:\n`;Array.from(list.children).forEach(li=>txt+=li.textContent.replace(/<\/?i>/g,'')+'\n');
+            if(unassignedParticipantsList&&unassignedParticipantsList.style.display==='block'&&unassignedParticipantsList.textContent){
+                const div=document.createElement('div');div.innerHTML=unassignedParticipantsList.innerHTML;txt+=`\n${div.textContent||div.innerText||""}\n`;
+            }
+            if(navigator.clipboard&&navigator.clipboard.writeText){
+                navigator.clipboard.writeText(txt.trim()).then(()=> showCustomAlert('Resultat kopierade till urklipp!', "Kopierat")).catch(()=> showCustomAlert('Kopiering misslyckades.', "Fel"));
+            } else {
+                const ta=document.createElement("textarea");ta.value=txt.trim();document.body.appendChild(ta);ta.select();
+                try{document.execCommand('copy'); showCustomAlert('Resultat kopierade! (fallback)', "Kopierat");}
+                catch(e){ showCustomAlert('Kopiering misslyckades (fallback).', "Fel");}
+                document.body.removeChild(ta);
+            }
+        }
     </script>
 </body>
 </html>
