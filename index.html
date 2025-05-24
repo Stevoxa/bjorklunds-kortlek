@@ -8,44 +8,50 @@
     <meta name="theme-color" content="#284027"> 
     <link rel="apple-touch-icon" href="icon-192x192.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NSGEXFY0PK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NSGEXFY0PK', {
+        'send_page_view': false // Viktigt för SPA/PWA
+      });
+      console.log('GA4 Initialized with ID: G-NSGEXFY0PK. send_page_view set to false.');
+    </script>
+
     <style>
         :root {
-            /* Ljust Tema (Behåller färgtema_v001.png) */
+            /* Ljust Tema */
             --primary-color: #284027;                     
             --primary-color-rgb: 40, 64, 39;
             --primary-text-color: #FBF5E9;              
-
             --accent-color: #d65d0b;                      
             --accent-color-rgb: 214, 93, 11;
             --accent-text-color: #FFFFFF; 
-
             --bg-color: #284027; 
             --surface-bg-color: #FBF5E9;                  
             --text-color: #284027;                        
             --secondary-text-color: #5a7d58; 
-            
             --secondary-button-bg-color: #EFE4CF;       
             --secondary-button-text-color: var(--primary-color); 
             --secondary-button-border-color: #DCD0B9;    
-            
             --border-color: #CC9849;                      
             --subtle-border-color: #E0D5C0;           
-            
             --danger-color: #A52A2A;                      
             --danger-secondary-bg: #F8D7DA; 
             --danger-secondary-text-color: #721C24; 
-            
             --listening-color: #FFC107; 
             --icon-fill-color: var(--primary-color);      
             --icon-hover-fill-color: #000000; 
-
             --overlay-bg-color: rgba(var(--primary-color-rgb), 0.75); 
             --overlay-content-bg: var(--surface-bg-color); 
             --overlay-header-text-color: var(--primary-color);
             --overlay-text-color: var(--text-color);
             --overlay-subtle-text-color: var(--secondary-text-color);
             --overlay-link-color: var(--primary-color);
-
             --tab-inactive-bg: #EFE4CF;                  
             --tab-inactive-text: var(--primary-color);    
             --tab-inactive-hover-bg: #E0D5C0;           
@@ -53,51 +59,41 @@
             --tab-active-bg: var(--surface-bg-color);     
             --tab-active-text: var(--primary-color);      
             --tab-active-border-accent: #CC9849;      
-
             --radio-border-color: var(--border-color);
             --radio-checked-color: var(--primary-color);
             --radio-label-color: var(--text-color);
-
             --input-bg-color: #FFFFFF; 
         }
 
         body[data-theme="dark"] {
-            /* NYTT MÖRKT TEMA enligt din specifikation */
+            /* Mörkt Tema */
             --primary-color: #365537;                     
             --primary-color-rgb: 54, 85, 55;
             --primary-text-color: #e6e1d6; 
-
             --accent-color: #b65407;                      
             --accent-color-rgb: 182, 84, 7;
             --accent-text-color: #FFFFFF;                 
-
             --bg-color: #1e1d1a;                          
             --surface-bg-color: #2b2a26;                  
             --text-color: #e6e1d6;                        
             --secondary-text-color: #b6b0a2;              
-            
             --secondary-button-bg-color: #3a372f;        
             --secondary-button-text-color: var(--text-color); 
             --secondary-button-border-color: #555;        
-            
             --border-color: #4A4A4A;                      
             --subtle-border-color: #383838;               
-            
             --danger-color: #FF8A80;                      
             --danger-secondary-bg: #5C2B2B; 
             --danger-secondary-text-color: #FFCDD2; 
-            
             --listening-color: #FFEB3B;                   
             --icon-fill-color: var(--text-color);         
             --icon-hover-fill-color: #fff;                
-
             --overlay-bg-color: rgba(30, 29, 26, 0.9);    
             --overlay-content-bg: var(--surface-bg-color); 
             --overlay-header-text-color: var(--primary-color); 
             --overlay-text-color: var(--text-color);      
             --overlay-subtle-text-color: var(--secondary-text-color); 
             --overlay-link-color: var(--primary-color);   
-
             --tab-inactive-bg: #222222;                  
             --tab-inactive-text: var(--secondary-text-color); 
             --tab-inactive-hover-bg: #4A4A4A;           
@@ -105,11 +101,9 @@
             --tab-active-bg: var(--surface-bg-color);     
             --tab-active-text: var(--text-color);         
             --tab-active-border-accent: var(--accent-color);     
-
             --radio-border-color: var(--border-color);
             --radio-checked-color: var(--primary-color);
             --radio-label-color: var(--text-color);
-
             --input-bg-color: #3a372f; 
         }
 
@@ -393,7 +387,6 @@
             background-color: color-mix(in srgb, var(--danger-secondary-bg) 85%, var(--danger-color) 15%);
             border-color: color-mix(in srgb, var(--danger-color) 80%, white); 
         }
-
 
         .icon-button { 
             padding: 8px;
@@ -839,16 +832,16 @@
         #customAlertModal .overlay-header,
         #customConfirmModal .overlay-header {
             margin-bottom: 10px;
-            padding-bottom: 8px; /* Lättare padding */
+            padding-bottom: 8px; 
         }
         #customAlertModal .overlay-header h3,
         #customConfirmModal .overlay-header h3 {
-            font-size: 1.25em; /* Något mindre titel */
+            font-size: 1.25em; 
         }
         #customAlertModal .overlay-scrollable-content,
         #customConfirmModal .overlay-scrollable-content {
-            margin-bottom: 15px; /* Mindre marginal */
-            padding: 0 15px; /* Padding för innehåll */
+            margin-bottom: 15px; 
+            padding: 0 15px; 
             text-align: center;
         }
         #customAlertModal #customAlertMessage,
@@ -857,23 +850,23 @@
             line-height: 1.4;
             margin: 10px 0;
         }
-        #customAlertModal .overlay-content-box > div:last-child, /* Knappcontainer */
-        #customConfirmModal .overlay-content-box > div:last-child { /* Knappcontainer */
+        #customAlertModal .overlay-content-box > div:last-child, 
+        #customConfirmModal .overlay-content-box > div:last-child { 
             display: flex;
-            justify-content: center; /* Centrera OK-knapp i alert */
+            justify-content: center; 
             gap: 10px;
-            margin-top: auto; /* Tryck ner i botten */
-            padding-top: 10px; /* Lite luft ovanför knapparna */
+            margin-top: auto; 
+            padding-top: 10px; 
         }
         #customConfirmModal .overlay-content-box > div:last-child {
-            justify-content: space-around; /* Behåll space-around för confirm */
+            justify-content: space-around; 
         }
         #customAlertOkBtn, #customConfirmOkBtn, #customConfirmCancelBtn {
-            flex-grow: 1; /* Låt knappar i confirm växa */
-            min-width: 100px; /* Minimumbredd */
+            flex-grow: 1; 
+            min-width: 100px; 
         }
         #customAlertOkBtn {
-            flex-grow: 0; /* Låt inte OK-knappen i alert växa för mycket */
+            flex-grow: 0; 
         }
     </style>
 </head>
@@ -917,7 +910,6 @@
                 <p id="participantsCountInfo" class="info-text"></p>
                 <p id="noNamesInfo" class="info-text" style="display: none;">Inga passkyttar tillagda.</p>
             </section>
-            <!-- Rensa-knapp BORTTAGEN -->
         </section>
 
         <section id="distributionTab" class="tab-content" style="display: none;">
@@ -1100,7 +1092,6 @@
         </div>
     </div>
 
-
     <script>
         // --- DOM ELEMENT REFERENSER ---
         let themeToggleBtn, themeIconSun, themeIconMoon, nameInput, addNameBtn, nameList,
@@ -1119,15 +1110,32 @@
             customPassDisplayList_overlay, noCustomPassesInfo_overlay;
 
         let tabButtons, tabContents;
+        
+        // --- GLOBALA VARIABLER ---
         const LAST_ACTIVE_TAB_KEY = 'bjorklundsKortlekLastActiveTab_v1';
         const PASS_DISTRIBUTION_CONFIG_MODE_KEY = 'bjorklundsKortlekPassConfigMode_v1';
         const CUSTOM_PASSES_KEY = 'bjorklundsKortlekCustomPasses_v1'; 
         const PARTICIPANTS_KEY = 'bjorklundsKortlekParticipants_v1';
+        const LAUNCHED_OFFLINE_KEY = 'bjorklundsKortlekLaunchedOffline';
 
         let participants = JSON.parse(localStorage.getItem(PARTICIPANTS_KEY)) || [];
         let customPasses = JSON.parse(localStorage.getItem(CUSTOM_PASSES_KEY)) || [];
         let passDistributionConfigMode = localStorage.getItem(PASS_DISTRIBUTION_CONFIG_MODE_KEY) || 'standard';
-        let currentTheme = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        let currentTheme = 'light'; // Sätt ett standardvärde
+        try {
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme === 'dark' || storedTheme === 'light') { // Kontrollera giltiga värden
+                currentTheme = storedTheme;
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                currentTheme = 'dark';
+            }
+            // console.log('Initial currentTheme set to:', currentTheme); // Felsökningslogg
+        } catch (e) {
+            console.error("Error accessing localStorage or matchMedia for theme, defaulting to light:", e);
+            // currentTheme förblir 'light'
+        }
+        
         let deferredPrompt;
         const appURL = "https://stevoxa.github.io/bjorklunds-kortlek/"; 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1140,8 +1148,21 @@
         let currentConfirmCallback = null;
         let currentCancelCallback = null;
 
+        // --- FUNKTIONER (inklusive GA-anrop där det är relevant) ---
 
+        function applyTheme(theme) {
+            const newTheme = theme === 'dark' ? 'dark' : 'light'; 
+            document.body.setAttribute('data-theme', newTheme);
+            if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none';
+            if (themeIconMoon) themeIconMoon.style.display = newTheme === 'light' ? 'block' : 'none';
+            localStorage.setItem('theme', newTheme);
+            if (themeToggleBtn) themeToggleBtn.title = newTheme === 'dark' ? "Ljust tema" : "Mörkt tema";
+            const metaThemeColor = document.querySelector("meta[name=theme-color]");
+            if (metaThemeColor) metaThemeColor.setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim());
+        }
+        
         document.addEventListener('DOMContentLoaded', () => {
+            // DOM-elementallokering (som tidigare)
             themeToggleBtn = document.getElementById('themeToggleBtn');
             themeIconSun = document.getElementById('themeIconSun');
             themeIconMoon = document.getElementById('themeIconMoon');
@@ -1193,7 +1214,6 @@
             tabButtons = document.querySelectorAll('.tab-button');
             tabContents = document.querySelectorAll('.tab-content');
 
-            // Custom Alert & Confirm Modal elements
             customAlertModal = document.getElementById('customAlertModal');
             customAlertTitle = document.getElementById('customAlertTitle');
             customAlertHeader = document.getElementById('customAlertHeader');
@@ -1207,7 +1227,7 @@
             customConfirmOkBtn = document.getElementById('customConfirmOkBtn');
             customConfirmCancelBtn = document.getElementById('customConfirmCancelBtn');
 
-
+            // Initial setup
             document.querySelectorAll('.content-overlay').forEach(o => o.style.display = 'none');
             if (installAppBtn) installAppBtn.style.display = 'none'; 
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
@@ -1215,11 +1235,14 @@
             if (participantsCountInfo) participantsCountInfo.style.display = 'none';
             document.body.classList.remove('overlay-open'); 
             
-            applyTheme(currentTheme); 
+            applyTheme(currentTheme); // Anropa med den globalt initierade variabeln
+            
             initializeTabs();
             renderNameList(); 
             updatePassDistributionConfigUI(); 
 
+            // Event Listeners (som tidigare)
+            // ... (alla dina event listeners här) ...
             if (addNameBtn) addNameBtn.addEventListener('click', addName);
             if (nameInput) nameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addName(); });
             if (randomizeBtn) randomizeBtn.addEventListener('click', randomizePasses);
@@ -1241,7 +1264,6 @@
                 });
             });
 
-            // Event Listeners for Custom Modals
             if (customAlertOkBtn) {
                 customAlertOkBtn.addEventListener('click', () => {
                     if (customAlertModal) customAlertModal.style.display = 'none';
@@ -1302,7 +1324,6 @@
                 });
             }
 
-
             if (reopenOverlayBtn) reopenOverlayBtn.addEventListener('click', showResultOverlay);
             if (mainCopyBtn) mainCopyBtn.addEventListener('click', copyResultsToClipboard);
             if (overlayCopyBtn) overlayCopyBtn.addEventListener('click', copyResultsToClipboard);
@@ -1313,13 +1334,30 @@
             setupSpeechRecognition(); 
             setupPassSpeechRecognition_overlay(); 
             setupPWAInstallation();
+
+            if (!navigator.onLine) {
+                localStorage.setItem(LAUNCHED_OFFLINE_KEY, 'true');
+            }
+            window.addEventListener('online', () => {
+                if (localStorage.getItem(LAUNCHED_OFFLINE_KEY) === 'true') {
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'app_launched_offline_now_online');
+                    }
+                    localStorage.removeItem(LAUNCHED_OFFLINE_KEY);
+                }
+            });
         });
         
-        // --- Custom Alert & Confirm ---
+        // --- Övriga funktioner (alla dina funktioner som tidigare, inklusive GA-anrop) ---
+        // Se till att alla funktioner som showCustomAlert, showCustomConfirm, initializeTabs, 
+        // activateTab, setupSpeechRecognition, setupPassSpeechRecognition_overlay, 
+        // setupPWAInstallation, toggleTheme, smartSortPasses, openAdvancedSettingsModal, etc.
+        // finns här i sin helhet.
+
         function showCustomAlert(message, title = "Meddelande", parentOverlayElement = null) {
             if (!customAlertModal || !customAlertTitle || !customAlertMessage || !customAlertHeader) {
                 console.error("Custom alert DOM elements missing. Falling back to native alert.");
-                alert((title ? title + "\n\n" : "") + message); // Fallback
+                alert((title ? title + "\n\n" : "") + message); 
                 return;
             }
             customAlertTitle.textContent = title;
@@ -1340,12 +1378,15 @@
                  document.body.classList.add('overlay-open');
             }
             if(customAlertOkBtn) customAlertOkBtn.focus();
+            if (typeof gtag === 'function' && customAlertModal.style.display === 'flex') { 
+                gtag('event', 'open_modal', { 'modal_name': 'custom_alert' });
+            }
         }
 
         function showCustomConfirm(message, title = "Bekräfta åtgärd", onConfirm, onCancel, parentOverlayElement = null) {
             if (!customConfirmModal || !customConfirmTitle || !customConfirmMessage || !customConfirmOkBtn || !customConfirmCancelBtn || !customConfirmHeader) {
                 console.error("Custom confirm DOM elements missing. Falling back to native confirm.");
-                if (confirm((title ? title + "\n\n" : "") + message)) { // Fallback
+                if (confirm((title ? title + "\n\n" : "") + message)) { 
                     if (onConfirm) onConfirm();
                 } else {
                     if (onCancel) onCancel();
@@ -1372,9 +1413,11 @@
                 document.body.classList.add('overlay-open');
             }
             if(customConfirmOkBtn) customConfirmOkBtn.focus();
+            if (typeof gtag === 'function' && customConfirmModal.style.display === 'flex') { 
+                gtag('event', 'open_modal', { 'modal_name': 'custom_confirm' });
+            }
         }
-
-
+        
         function saveParticipantsToLocalStorage() { localStorage.setItem(PARTICIPANTS_KEY, JSON.stringify(participants)); }
         function saveCustomPassesToLocalStorage() { localStorage.setItem(CUSTOM_PASSES_KEY, JSON.stringify(customPasses)); }
 
@@ -1388,17 +1431,34 @@
             const lastActiveTab = localStorage.getItem(LAST_ACTIVE_TAB_KEY);
             activateTab(lastActiveTab && document.getElementById(lastActiveTab) ? lastActiveTab : 'participantsTab');
         }
+
         function activateTab(tabId) {
             tabContents.forEach(content => content.style.display = content.id === tabId ? 'flex' : 'none');
             tabButtons.forEach(button => button.classList.toggle('active', button.dataset.tab === tabId));
+            if (typeof gtag === 'function') {
+                let screenName = '';
+                if (tabId === 'participantsTab') screenName = 'Passkyttar';
+                else if (tabId === 'distributionTab') screenName = 'Passfördelning';
+                if (screenName) {
+                    gtag('event', 'screen_view', {
+                        'screen_name': screenName,
+                        'app_name': 'Björklunds Kortlek'
+                    });
+                    console.log('GA4: screen_view sent for', screenName);
+                }
+            }
         }
+
         function setupSpeechRecognition() { 
              if (SpeechRecognition && speakNameBtn) {
                 try {
                     recognition = new SpeechRecognition(); recognition.lang = 'sv-SE'; recognition.continuous = false; recognition.interimResults = false;
                     recognition.onresult = (event) => { 
                         const spokenName = event.results[0][0].transcript.trim();
-                        if (addNameToParticipantsList(spokenName)) { saveParticipantsToLocalStorage(); renderNameList(); clearResults(); }
+                        if (addNameToParticipantsList(spokenName)) { 
+                            saveParticipantsToLocalStorage(); renderNameList(); clearResults(); 
+                            if(typeof gtag === 'function') gtag('event', 'add_participant', { 'method': 'speech_input' });
+                        }
                     };
                     recognition.onerror = (e) => { console.error('Namn-röstfel:', e.error); if (speakNameBtn) { speakNameBtn.title = "Röstfel"; speakNameBtn.classList.remove('is-listening'); speakNameBtn.disabled = false; } };
                     recognition.onstart = () => { if (speakNameBtn) { speakNameBtn.classList.add('is-listening'); speakNameBtn.disabled = true; speakNameBtn.title = "Lyssnar..."; } };
@@ -1411,7 +1471,11 @@
             if (SpeechRecognition && speakPassNameBtn_overlay) {
                 try {
                     passRecognition = new SpeechRecognition(); passRecognition.lang = 'sv-SE'; passRecognition.continuous = false; passRecognition.interimResults = false;
-                    passRecognition.onresult = (event) => { addPassNameToList(event.results[0][0].transcript.trim()); }; 
+                    passRecognition.onresult = (event) => { 
+                        if (addPassNameToList(event.results[0][0].transcript.trim())) {
+                             if(typeof gtag === 'function') gtag('event', 'add_custom_pass', { 'method': 'speech_input' });
+                        }
+                    }; 
                     passRecognition.onerror = (e) => { console.error('Pass-röstfel:', e.error); if (speakPassNameBtn_overlay) { speakPassNameBtn_overlay.title = "Röstfel"; speakPassNameBtn_overlay.classList.remove('is-listening'); speakPassNameBtn_overlay.disabled = false;} };
                     passRecognition.onstart = () => { if (speakPassNameBtn_overlay) { speakPassNameBtn_overlay.classList.add('is-listening'); speakPassNameBtn_overlay.disabled = true; speakPassNameBtn_overlay.title = "Lyssnar..."; }};
                     passRecognition.onend = () => { if (speakPassNameBtn_overlay) { speakPassNameBtn_overlay.classList.remove('is-listening'); speakPassNameBtn_overlay.disabled = false; speakPassNameBtn_overlay.title = "Tala in pass-ID"; }};
@@ -1424,6 +1488,7 @@
                 e.preventDefault(); deferredPrompt = e;
                 if (installAppBtn) {
                     installAppBtn.style.display = 'inline-flex'; 
+                    if(typeof gtag === 'function') gtag('event', 'pwa_install_prompt_shown');
                     installAppBtn.onclick = async () => { 
                         if (deferredPrompt) {
                             deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null;
@@ -1437,19 +1502,17 @@
                     };
                 }
             });
-            window.addEventListener('appinstalled', () => { if (installAppBtn) installAppBtn.style.display = 'none'; deferredPrompt = null; });
+            window.addEventListener('appinstalled', () => { 
+                if (installAppBtn) installAppBtn.style.display = 'none'; 
+                deferredPrompt = null; 
+                if(typeof gtag === 'function') gtag('event', 'pwa_installed');
+            });
         }
-        function applyTheme(theme) {
-            const newTheme = theme === 'dark' ? 'dark' : 'light'; 
-            document.body.setAttribute('data-theme', newTheme);
-            if (themeIconSun) themeIconSun.style.display = newTheme === 'dark' ? 'block' : 'none';
-            if (themeIconMoon) themeIconMoon.style.display = newTheme === 'light' ? 'block' : 'none';
-            localStorage.setItem('theme', newTheme);
-            if (themeToggleBtn) themeToggleBtn.title = newTheme === 'dark' ? "Ljust tema" : "Mörkt tema";
-            const metaThemeColor = document.querySelector("meta[name=theme-color]");
-            if (metaThemeColor) metaThemeColor.setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim());
+        function toggleTheme() { 
+            currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; 
+            applyTheme(currentTheme); 
+            if(typeof gtag === 'function') gtag('event', 'theme_change', { 'new_theme': currentTheme });
         }
-        function toggleTheme() { currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; applyTheme(currentTheme); }
         
         function smartSortPasses(a,b){const nA=parseFloat(a),nB=parseFloat(b),aN=!isNaN(nA)&&isFinite(a),bN=!isNaN(nB)&&isFinite(b);return aN&&bN?nA-nB:aN?-1:bN?1:a.localeCompare(b,'sv',{numeric:!0,sensitivity:'base'})}
 
@@ -1459,6 +1522,7 @@
                 advancedSettingsOverlay.style.display = 'flex';
                 document.body.classList.add('overlay-open');
                 updatePassDistributionConfigUI(); 
+                if(typeof gtag === 'function') gtag('event', 'open_modal', { 'modal_name': 'advanced_settings' });
             }
         }
         function handlePassDistributionModeChange() {
@@ -1479,15 +1543,12 @@
                 customPassElementsContainer.classList.toggle('disabled-look', !isAdvanced);
             }
             if (passDistributionMethodInfo) {
-                if(passDistributionConfigMode==='standard'){passDistributionMethodInfo.textContent=participants.length>0?`Passkyttarna (${participants.length}st) fördelas över pass 1-${participants.length}.`:"Lägg till passkyttar.";}
-                else{
-			if(customPasses.length>0){
-				if(participants.length<1){passDistributionMethodInfo.textContent="Lägg till passkyttar.";}
-                     		else{passDistributionMethodInfo.textContent=`Passkyttarna (${participants.length}st) fördelas över de ${customPasses.length} specificerade passen.`+ (customPasses.length < participants.length ? ` (${participants.length - customPasses.length} blir oplacerade)` : '');}
-			}
-                        else{passDistributionMethodInfo.textContent="Avancerad vald, men inga pass definierade. Öppna ⚙️ för att lägga till pass.";}}
-                	passDistributionMethodInfo.style.display = (participants.length > 0 || passDistributionConfigMode === 'advanced') ? 'block' : 'none';
-            	}
+                if(passDistributionConfigMode==='standard'){passDistributionMethodInfo.textContent=participants.length>0?`Passkyttarna (${participants.length}st) fördelas över pass 1-${participants.length}.`:"Lägg till passkyttar för att se info.";}
+                else{if(customPasses.length>0){if(participants.length<=0){passDistributionMethodInfo.textContent="Lägg till passkyttar för att se info.";}
+                else{passDistributionMethodInfo.textContent=`Passkyttarna (${participants.length}st) fördelas över de ${customPasses.length} specificerade passen.`+ (customPasses.length < participants.length ? ` (${participants.length - customPasses.length} blir oplacerade)` : '');}}
+                else{passDistributionMethodInfo.textContent="Avancerad vald, men inga pass definierade. Öppna ⚙️ för att lägga till pass.";}}
+                passDistributionMethodInfo.style.display = (participants.length > 0 || passDistributionConfigMode === 'advanced') ? 'block' : 'none';
+            }
             renderCustomPassListInOverlay_overlay(); 
             updateCustomPassesSummaryInOverlay_overlay(); 
         }
@@ -1513,7 +1574,10 @@
             saveCustomPassesToLocalStorage(); updatePassDistributionConfigUI(); clearResults(); return true;
         }
         function addPassManually_overlay() { 
-            if (passNameInput_overlay && addPassNameToList(passNameInput_overlay.value.trim())) { passNameInput_overlay.value = ''; } 
+            if (passNameInput_overlay && addPassNameToList(passNameInput_overlay.value.trim())) { 
+                passNameInput_overlay.value = ''; 
+                if(typeof gtag === 'function') gtag('event', 'add_custom_pass', { 'method': 'manual_input' });
+            } 
             if (passNameInput_overlay) passNameInput_overlay.focus();
         }
         function deleteCustomPassByValue_overlay(passIdToDelete) {
@@ -1537,6 +1601,7 @@
                         saveCustomPassesToLocalStorage();
                         updatePassDistributionConfigUI();
                         clearResults();
+                        if(typeof gtag === 'function') gtag('event', 'add_custom_pass', { 'method': 'file_upload', 'count': added });
                     } 
                     showCustomAlert(`${added} nya unika pass-ID tillagda.`, "Fil Inläst", advancedSettingsOverlay);
                     event.target.value='';
@@ -1550,6 +1615,7 @@
                 return;
             }
             const txt=customPasses.join('\n');const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.download='passlista_egen.txt';a.href=URL.createObjectURL(blob);a.click();URL.revokeObjectURL(a.href);
+            if(typeof gtag === 'function') gtag('event', 'save_custom_pass_list');
         }
         function confirmClearLoadedCustomPasses_overlay() {
             showCustomConfirm("Är du säker på att du vill rensa hela listan med egna pass?", "Bekräfta Rensa", 
@@ -1559,6 +1625,7 @@
                 saveCustomPassesToLocalStorage(); 
                 updatePassDistributionConfigUI(); 
                 clearResults(); 
+                if(typeof gtag === 'function') gtag('event', 'clear_list', { 'list_type': 'custom_passes' });
             }, 
             null, 
             advancedSettingsOverlay
@@ -1589,10 +1656,22 @@
             updateParticipantsCount(); 
         }
         function deleteNameByValue(nameToDelete) { participants = participants.filter(p => p !== nameToDelete); saveParticipantsToLocalStorage(); renderNameList(); clearResults(); }
-        function addName() { if (nameInput && addNameToParticipantsList(nameInput.value.trim())) { saveParticipantsToLocalStorage(); renderNameList(); clearResults(); nameInput.value = ''; } if (nameInput) nameInput.focus(); }
+        function addName() { 
+            if (nameInput && addNameToParticipantsList(nameInput.value.trim())) { 
+                saveParticipantsToLocalStorage(); renderNameList(); clearResults(); nameInput.value = ''; 
+                if(typeof gtag === 'function') gtag('event', 'add_participant', { 'method': 'manual_input' });
+            } 
+            if (nameInput) nameInput.focus(); 
+        }
         
         function loadParticipantNamesFromFile(event) {
-            const file=event.target.files[0];if(file&&fileInput){const reader=new FileReader();reader.onload=(e)=>{let added=0;e.target.result.split(/\r\n|\n/).forEach(line=>{if(addNameToParticipantsList(line.trim()))added++;});if(added>0){saveParticipantsToLocalStorage();renderNameList();clearResults();} 
+            const file=event.target.files[0];if(file&&fileInput){const reader=new FileReader();reader.onload=(e)=>{
+                let added=0;
+                e.target.result.split(/\r\n|\n/).forEach(line=>{if(addNameToParticipantsList(line.trim()))added++;});
+                if(added>0){
+                    saveParticipantsToLocalStorage();renderNameList();clearResults();
+                    if(typeof gtag === 'function') gtag('event', 'add_participant', { 'method': 'file_upload', 'count': added });
+                } 
             showCustomAlert(`${added} nya unika passkyttar tillagda från fil.`, "Fil Inläst");
             event.target.value='';};reader.readAsText(file);}
         }
@@ -1602,14 +1681,15 @@
                 return;
             }
             const txt=participants.join('\n');const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.download='passkyttlista.txt';a.href=URL.createObjectURL(blob);a.click();URL.revokeObjectURL(a.href); 
+            if(typeof gtag === 'function') gtag('event', 'save_participant_list');
         }
         
         function clearResults() {
             if(resultsList)resultsList.innerHTML='';if(overlayResultsList)overlayResultsList.innerHTML='';
             if(noResultsInfo){
                 if(participants.length>0||(passDistributionConfigMode==='advanced'&&customPasses.length>0)){noResultsInfo.textContent="Klicka på \"Slumpa Pass\" för resultat.";}
-                else if(participants.length>0 && passDistributionConfigMode==='advanced'&&customPasses.length===0){noResultsInfo.textContent="Lägg till egna pass i Passinställningar (⚙️) eller välj Standard.";}
-                else{noResultsInfo.textContent="Lägg till passkyttar för att kunna fördela pass.";}
+                else if(passDistributionConfigMode==='advanced'&&customPasses.length===0){noResultsInfo.textContent="Lägg till egna pass i Passinställningar (⚙️) eller välj Standard.";}
+                else{noResultsInfo.textContent="Lägg till passkyttar för att kunna slumpa pass.";}
                 noResultsInfo.style.display='block';
             }
             if(unassignedParticipantsList)unassignedParticipantsList.style.display='none';
@@ -1634,7 +1714,7 @@
                  showCustomConfirm(
                     `Det finns ${customPasses.length} egna pass men ${participants.length} passkyttar.<br>Detta innebär att ${participants.length-customPasses.length} skytt(ar) kommer att bli oplacerade.<br><br>Vill du fortsätta ändå?`, 
                     "Varning: Antal Pass",
-                    () => { // onConfirm
+                    () => { 
                         proceedWithRandomization();
                     } 
                  );
@@ -1652,11 +1732,25 @@
             items.forEach(item=>{if(resultsList)resultsList.appendChild(item.cloneNode(!0));if(overlayResultsList)overlayResultsList.appendChild(item);});
             if(unassigned.length>0){const txt=`<strong>Oplacerade (${unassigned.length}):</strong> ${unassigned.join(', ')}`;if(unassignedParticipantsList){unassignedParticipantsList.innerHTML=txt;unassignedParticipantsList.style.display='block';}if(overlayUnassignedParticipants){overlayUnassignedParticipants.innerHTML=txt;overlayUnassignedParticipants.style.display='block';}}
             else{if(unassignedParticipantsList)unassignedParticipantsList.style.display='none';if(overlayUnassignedParticipants)overlayUnassignedParticipants.style.display='none';}
-            if(items.length>0){if(mainResultActionsTop)mainResultActionsTop.style.display='flex';if(overlayCopyBtn)overlayCopyBtn.style.display='inline-flex';}showResultOverlay();
+            if(items.length>0){if(mainResultActionsTop)mainResultActionsTop.style.display='flex';if(overlayCopyBtn)overlayCopyBtn.style.display='inline-flex';}
+            showResultOverlay();
+            if(typeof gtag === 'function') {
+                gtag('event', 'randomize_passes', {
+                    'distribution_mode': passDistributionConfigMode,
+                    'participant_count': participants.length,
+                    'pass_count': passDistributionConfigMode === 'advanced' ? customPasses.length : participants.length
+                });
+            }
         }
 
-
-        function showResultOverlay(){if(resultOverlay&&((resultsList&&resultsList.hasChildNodes())||(overlayResultsList&&overlayResultsList.hasChildNodes()))){closeAllOverlays(resultOverlay);resultOverlay.style.display='flex';document.body.classList.add('overlay-open');}}
+        function showResultOverlay(){
+            if(resultOverlay&&((resultsList&&resultsList.hasChildNodes())||(overlayResultsList&&overlayResultsList.hasChildNodes()))){
+                closeAllOverlays(resultOverlay);
+                resultOverlay.style.display='flex';
+                document.body.classList.add('overlay-open');
+                if(typeof gtag === 'function') gtag('event', 'open_modal', { 'modal_name': 'results' });
+            }
+        }
         function openHelpOverlay(){
             if(helpOverlay){
                 const helpContent = helpOverlay.querySelector('.overlay-scrollable-content');
@@ -1664,9 +1758,18 @@
                 closeAllOverlays(helpOverlay);
                 helpOverlay.style.display='flex';
                 document.body.classList.add('overlay-open');
+                if(typeof gtag === 'function') gtag('event', 'open_modal', { 'modal_name': 'help' });
             }
         }
-        function openShareOverlay(){if(shareOverlay){closeAllOverlays(shareOverlay);generateQRCode();shareOverlay.style.display='flex';document.body.classList.add('overlay-open');}}
+        function openShareOverlay(){
+            if(shareOverlay){
+                closeAllOverlays(shareOverlay);
+                generateQRCode();
+                shareOverlay.style.display='flex';
+                document.body.classList.add('overlay-open');
+                if(typeof gtag === 'function') gtag('event', 'open_modal', { 'modal_name': 'share' });
+            }
+        }
         
         function closeAllOverlays(keepOpenOverlay = null) {
             document.querySelectorAll('.content-overlay').forEach(o => {
@@ -1696,10 +1799,17 @@
                 const div=document.createElement('div');div.innerHTML=unassignedParticipantsList.innerHTML;txt+=`\n${div.textContent||div.innerText||""}\n`;
             }
             if(navigator.clipboard&&navigator.clipboard.writeText){
-                navigator.clipboard.writeText(txt.trim()).then(()=> showCustomAlert('Resultat kopierade till urklipp!', "Kopierat")).catch(()=> showCustomAlert('Kopiering misslyckades.', "Fel"));
+                navigator.clipboard.writeText(txt.trim()).then(()=> {
+                    showCustomAlert('Resultat kopierade till urklipp!', "Kopierat");
+                    if(typeof gtag === 'function') gtag('event', 'copy_results');
+                }).catch(()=> showCustomAlert('Kopiering misslyckades.', "Fel"));
             } else {
                 const ta=document.createElement("textarea");ta.value=txt.trim();document.body.appendChild(ta);ta.select();
-                try{document.execCommand('copy'); showCustomAlert('Resultat kopierade! (fallback)', "Kopierat");}
+                try{
+                    document.execCommand('copy'); 
+                    showCustomAlert('Resultat kopierade! (fallback)', "Kopierat");
+                    if(typeof gtag === 'function') gtag('event', 'copy_results');
+                }
                 catch(e){ showCustomAlert('Kopiering misslyckades (fallback).', "Fel");}
                 document.body.removeChild(ta);
             }
