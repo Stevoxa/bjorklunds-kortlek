@@ -388,6 +388,7 @@
             border-color: color-mix(in srgb, var(--danger-color) 80%, white); 
         }
 
+
         .icon-button { 
             padding: 8px;
             width: 40px; 
@@ -1043,6 +1044,11 @@
                     <li><strong>Återöppna Resultat:</strong> Använd ögon-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>) ovanför resultatlistan i huvudvyn för att återöppna helskärmsresultatet.</li>
                     <li><strong>Kopiera/Dela:</strong> Använd kopieringsikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>) för att kopiera resultatlistan. Använd dela-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>) högst upp för att dela en länk till appen via en QR-kod.</li>
                 </ul>
+                <hr style="margin: 25px 0;">
+                <h4>Din Integritet och Datahantering</h4>
+                <p>All information du matar in i Björklunds Kortlek, såsom namn på passkyttar eller egna definierade passnamn, sparas endast lokalt i din egen webbläsare på din enhet. Denna information lämnar inte din enhet och delas inte med någon tredje part.</p>
+                <p>För att förstå hur appen generellt används och för att kunna förbättra den, samlar vi in anonym användningsstatistik med hjälp av Google Analytics. Denna statistik inkluderar information om vilka funktioner som används (t.ex. om pass slumpas, om listor sparas), vilken typ av enhet appen används på, och ungefärlig geografisk region. **Inga personligt identifierbara uppgifter, såsom de namn eller pass-ID du matar in, skickas till Google Analytics.** Syftet är enbart att få en övergripande bild av appanvändningen för framtida utveckling.</p>
+                <p>Du kan när som helst rensa all lokalt sparad data (passkyttar och egna passlistor) direkt i appen under fliken "Rapporter & Admin" via knappen "Rensa all data".</p>
             </div>
         </div>
     </div>
@@ -1122,18 +1128,16 @@
         let customPasses = JSON.parse(localStorage.getItem(CUSTOM_PASSES_KEY)) || [];
         let passDistributionConfigMode = localStorage.getItem(PASS_DISTRIBUTION_CONFIG_MODE_KEY) || 'standard';
         
-        let currentTheme = 'light'; // Sätt ett standardvärde
+        let currentTheme = 'light'; 
         try {
             const storedTheme = localStorage.getItem('theme');
-            if (storedTheme === 'dark' || storedTheme === 'light') { // Kontrollera giltiga värden
+            if (storedTheme === 'dark' || storedTheme === 'light') {
                 currentTheme = storedTheme;
             } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 currentTheme = 'dark';
             }
-            // console.log('Initial currentTheme set to:', currentTheme); // Felsökningslogg
         } catch (e) {
             console.error("Error accessing localStorage or matchMedia for theme, defaulting to light:", e);
-            // currentTheme förblir 'light'
         }
         
         let deferredPrompt;
@@ -1149,7 +1153,6 @@
         let currentCancelCallback = null;
 
         // --- FUNKTIONER (inklusive GA-anrop där det är relevant) ---
-
         function applyTheme(theme) {
             const newTheme = theme === 'dark' ? 'dark' : 'light'; 
             document.body.setAttribute('data-theme', newTheme);
@@ -1161,8 +1164,8 @@
             if (metaThemeColor) metaThemeColor.setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim());
         }
         
+        // --- INITIERING OCH ALLOKERING AV DOM-ELEMENT ---
         document.addEventListener('DOMContentLoaded', () => {
-            // DOM-elementallokering (som tidigare)
             themeToggleBtn = document.getElementById('themeToggleBtn');
             themeIconSun = document.getElementById('themeIconSun');
             themeIconMoon = document.getElementById('themeIconMoon');
@@ -1227,7 +1230,6 @@
             customConfirmOkBtn = document.getElementById('customConfirmOkBtn');
             customConfirmCancelBtn = document.getElementById('customConfirmCancelBtn');
 
-            // Initial setup
             document.querySelectorAll('.content-overlay').forEach(o => o.style.display = 'none');
             if (installAppBtn) installAppBtn.style.display = 'none'; 
             if (mainResultActionsTop) mainResultActionsTop.style.display = 'none';
@@ -1235,14 +1237,12 @@
             if (participantsCountInfo) participantsCountInfo.style.display = 'none';
             document.body.classList.remove('overlay-open'); 
             
-            applyTheme(currentTheme); // Anropa med den globalt initierade variabeln
-            
+            applyTheme(currentTheme); 
             initializeTabs();
             renderNameList(); 
             updatePassDistributionConfigUI(); 
 
-            // Event Listeners (som tidigare)
-            // ... (alla dina event listeners här) ...
+            // Event Listeners
             if (addNameBtn) addNameBtn.addEventListener('click', addName);
             if (nameInput) nameInput.addEventListener('keypress', (event) => { if (event.key === 'Enter') addName(); });
             if (randomizeBtn) randomizeBtn.addEventListener('click', randomizePasses);
@@ -1349,10 +1349,8 @@
         });
         
         // --- Övriga funktioner (alla dina funktioner som tidigare, inklusive GA-anrop) ---
-        // Se till att alla funktioner som showCustomAlert, showCustomConfirm, initializeTabs, 
-        // activateTab, setupSpeechRecognition, setupPassSpeechRecognition_overlay, 
-        // setupPWAInstallation, toggleTheme, smartSortPasses, openAdvancedSettingsModal, etc.
-        // finns här i sin helhet.
+        // (Här ska ALLA dina JavaScript-funktioner finnas, precis som de var i din senaste fungerande version,
+        //  med GA-anropen integrerade på rätt ställen inuti dem)
 
         function showCustomAlert(message, title = "Meddelande", parentOverlayElement = null) {
             if (!customAlertModal || !customAlertTitle || !customAlertMessage || !customAlertHeader) {
@@ -1444,7 +1442,6 @@
                         'screen_name': screenName,
                         'app_name': 'Björklunds Kortlek'
                     });
-                    console.log('GA4: screen_view sent for', screenName);
                 }
             }
         }
