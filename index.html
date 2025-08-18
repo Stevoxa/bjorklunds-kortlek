@@ -1064,12 +1064,12 @@
                 <hr style="margin: 15px 0;">
                 <h4>Anpassningar</h4>
                 <p>Du kan anpassa appens namn för ditt jaktlag genom att lägga till en parameter i webbadressen. Om du till exempel lägger till <code>?team=Storskogens Jaktlag</code> i slutet av länken kommer appens rubrik att ändras.</p>
-                <p>Denna anpassning är delbar. När du använder <strong>Dela-knappen</strong> (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"></path></svg>) medan ett anpassat namn är aktivt, kommer den genererade länken och QR-koden automatiskt att inkludera ditt lagnamn. Detta låter dig skicka en personlig version av appen till dina jaktkamrater.</p>
+                <p>Det bästa är att denna anpassning är delbar. När du använder <strong>Dela-knappen</strong> (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"></path></svg>) medan ett anpassat namn är aktivt, kommer den genererade länken och QR-koden automatiskt att inkludera ditt lagnamn. Detta låter dig skicka en personlig version av appen till dina jaktkamrater.</p>
                 <h5>Vad händer om jag har appen installerad på hemskärmen?</h5>
                 <p>Om du har installerat standardversionen och vill byta till en anpassad version för ditt jaktlag, gör så här:</p>
                 <ol>
                     <li><strong>Avinstallera den gamla versionen:</strong> Ta bort appen från din hemskärm precis som du skulle göra med en vanlig app.</li>
-                    <li><strong>Öppna den nya länken:</strong> Gå till webbläsaren och öppna den nya, anpassade länken du vill använda (t.ex. den som slutar med <code>?team=Ditt Jaktlagsnamn</code>).</li>
+                    <li><strong>Öppna den nya länken:</strong> Gå till webbläsaren och öppna den nya, anpassade länken du vill använda (t.ex. den som slutar med <code>?team=Ditt Lagnamn</code>).</li>
                     <li><strong>Installera på nytt:</strong> Använd installationsguiden högst upp i hjälpen för att lägga till den nya, anpassade versionen på din hemskärm.</li>
                 </ol>
                 <hr style="margin: 25px 0;">
@@ -1079,6 +1079,7 @@
                 <p>Du kan när som helst rensa all lokalt sparad data (passkyttar och egna passlistor) direkt i appen under fliken "Rapporter & Admin" via knappen "Rensa all data".</p>
                 <hr style="margin: 25px 0;">
                 <h4>Kontakt</h4>
+                <p>För frågor, feedback eller förslag på förbättringar, kontakta gärna utvecklaren:</p>
                 <p>Stefan Björklund<br>
                 E-post: <a href="mailto:stevoxa@gmail.com">stevoxa@gmail.com</a></p>
             </div>
@@ -1150,6 +1151,7 @@
         let tabButtons, tabContents;
         
         // --- GLOBALA VARIABLER ---
+        const CUSTOM_APP_NAME_KEY = 'bjorklundsKortlekCustomAppName_v1';
         const LAST_ACTIVE_TAB_KEY = 'bjorklundsKortlekLastActiveTab_v1';
         const PASS_DISTRIBUTION_CONFIG_MODE_KEY = 'bjorklundsKortlekPassConfigMode_v1';
         const CUSTOM_PASSES_KEY = 'bjorklundsKortlekCustomPasses_v1'; 
@@ -1385,17 +1387,21 @@
         function applyCustomAppName() {
             const urlParams = new URLSearchParams(window.location.search);
             const teamNameFromUrl = urlParams.get('team');
+            const savedName = localStorage.getItem(CUSTOM_APP_NAME_KEY);
+            let appName = DEFAULT_APP_NAME;
 
-            if (teamNameFromUrl && typeof gtag === 'function') {
-                gtag('event', 'custom_team_name_used', {
-                    'team_name': teamNameFromUrl,
-                    'source': 'url_parameter'
-                });
+            if (teamNameFromUrl) {
+                appName = decodeURIComponent(teamNameFromUrl.replace(/\+/g, ' '));
+                localStorage.setItem(CUSTOM_APP_NAME_KEY, appName); // Spara namnet lokalt
+                if (typeof gtag === 'function') {
+                    gtag('event', 'custom_team_name_used', {
+                        'team_name': appName,
+                        'source': 'url_parameter'
+                    });
+                }
+            } else if (savedName) {
+                appName = savedName;
             }
-
-            const appName = teamNameFromUrl 
-                ? decodeURIComponent(teamNameFromUrl.replace(/\+/g, ' ')) 
-                : DEFAULT_APP_NAME;
 
             const mainTitleElement = document.querySelector('.app-title-bar h1');
             if (mainTitleElement) {
