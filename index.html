@@ -787,9 +787,26 @@
         #helpOverlay .overlay-scrollable-content li { 
             margin-bottom: 5px; border-bottom: none; 
         }
-        #helpOverlay .overlay-scrollable-content p svg {
-            display:inline-block; width:1em; height:1em;
-            vertical-align:-0.125em; fill: currentColor;
+        #helpOverlay .overlay-scrollable-content a {
+            color: var(--overlay-link-color);
+        }
+        #helpOverlay .overlay-scrollable-content p svg,
+        #helpOverlay .overlay-scrollable-content li svg,
+        #helpOverlay .overlay-scrollable-content code {
+            display:inline-block;
+            vertical-align: -0.125em; 
+            fill: currentColor;
+        }
+        #helpOverlay .overlay-scrollable-content p svg,
+        #helpOverlay .overlay-scrollable-content li svg {
+            width:1em; height:1em;
+        }
+        #helpOverlay .overlay-scrollable-content code {
+            font-family: monospace;
+            background-color: var(--secondary-button-bg-color);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.9em;
         }
 
         #qrCodeContainer {
@@ -919,7 +936,7 @@
                     <div id="passDistributionTitleContainer">
                         <span id="passDistributionTitle">Passfördelning</span> 
                         <button id="openAdvancedSettingsBtn" class="icon-button" title="Passinställningar"> 
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24-.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
                         </button>
                     </div>
                 </h2>
@@ -1039,16 +1056,31 @@
                 </ul>
                 <p><strong>Fliken "Passfördelning":</strong></p>
                  <ul>
-                    <li><strong>Passinställningar (Kugghjulet <svg style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>):</strong> Öppnar ett fönster där du kan välja mellan "Standardnumrering 1-n" eller "Använd en egen lista med passnamn/nummer". Om du väljer "Avancerad", visas ytterligare kontroller för att mata in pass-ID manuellt (eller via röst), ladda från/spara till fil, samt rensa listan. Den definierade listan och antalet pass i den visas i detta fönster.</li>
+                    <li><strong>Passinställningar (Kugghjulet <svg style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24-.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>):</strong> Öppnar ett fönster där du kan välja mellan "Standardnumrering 1-n" eller "Använd en egen lista med passnamn/nummer". Om du väljer "Avancerad", visas ytterligare kontroller för att mata in pass-ID manuellt (eller via röst), ladda från/spara till fil, samt rensa listan. Den definierade listan och antalet pass i den visas i detta fönster.</li>
                     <li><strong>Slumpa Pass:</strong> Klicka på den stora orangea "Slumpa Pass"-knappen. Resultatet visas både i huvudvyn och i ett helskärmsläge. En informationstext under passfördelningsrubriken i huvudvyn anger hur passen kommer att fördelas.</li>
                     <li><strong>Återöppna Resultat:</strong> Använd ögon-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>) ovanför resultatlistan i huvudvyn för att återöppna helskärmsresultatet.</li>
                     <li><strong>Kopiera/Dela:</strong> Använd kopieringsikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>) för att kopiera resultatlistan. Använd dela-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>) högst upp för att dela en länk till appen via en QR-kod.</li>
                 </ul>
+                <hr style="margin: 15px 0;">
+                <h4>Anpassningar</h4>
+                <p>Du kan anpassa appens namn för ditt jaktlag genom att lägga till en parameter i webbadressen. Om du till exempel lägger till <code>?team=Storskogens Jaktlag</code> i slutet av länken kommer appens rubrik att ändras.</p>
+                <p>Denna anpassning är delbar. När du använder <strong>Dela-knappen</strong> (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"></path></svg>) medan ett anpassat namn är aktivt, kommer den genererade länken och QR-koden automatiskt att inkludera ditt lagnamn. Detta låter dig skicka en personlig version av appen till dina jaktkamrater.</p>
+                <h5>Vad händer om jag har appen installerad på hemskärmen?</h5>
+                <p>Om du har installerat standardversionen och vill byta till en anpassad version för ditt jaktlag, gör så här:</p>
+                <ol>
+                    <li><strong>Avinstallera den gamla versionen:</strong> Ta bort appen från din hemskärm precis som du skulle göra med en vanlig app.</li>
+                    <li><strong>Öppna den nya länken:</strong> Gå till webbläsaren och öppna den nya, anpassade länken du vill använda (t.ex. den som slutar med <code>?team=Ditt Jaktlagsnamn</code>).</li>
+                    <li><strong>Installera på nytt:</strong> Använd installationsguiden högst upp i hjälpen för att lägga till den nya, anpassade versionen på din hemskärm.</li>
+                </ol>
                 <hr style="margin: 25px 0;">
                 <h4>Din Integritet och Datahantering</h4>
                 <p>All information du matar in i Björklunds Kortlek, såsom namn på passkyttar eller egna definierade passnamn, sparas endast lokalt i din egen webbläsare på din enhet. Denna information lämnar inte din enhet och delas inte med någon tredje part.</p>
                 <p>För att förstå hur appen generellt används och för att kunna förbättra den, samlar vi in anonym användningsstatistik med hjälp av Google Analytics. Denna statistik inkluderar information om vilka funktioner som används (t.ex. om pass slumpas, om listor sparas), vilken typ av enhet appen används på, och ungefärlig geografisk region. **Inga personligt identifierbara uppgifter, såsom de namn eller pass-ID du matar in, skickas till Google Analytics.** Syftet är enbart att få en övergripande bild av appanvändningen för framtida utveckling.</p>
                 <p>Du kan när som helst rensa all lokalt sparad data (passkyttar och egna passlistor) direkt i appen under fliken "Rapporter & Admin" via knappen "Rensa all data".</p>
+                <hr style="margin: 25px 0;">
+                <h4>Kontakt</h4>
+                <p>Stefan Björklund<br>
+                E-post: <a href="mailto:stevoxa@gmail.com">stevoxa@gmail.com</a></p>
             </div>
         </div>
     </div>
@@ -1123,6 +1155,7 @@
         const CUSTOM_PASSES_KEY = 'bjorklundsKortlekCustomPasses_v1'; 
         const PARTICIPANTS_KEY = 'bjorklundsKortlekParticipants_v1';
         const LAUNCHED_OFFLINE_KEY = 'bjorklundsKortlekLaunchedOffline';
+        const DEFAULT_APP_NAME = 'Björklunds Kortlek';
 
         let participants = JSON.parse(localStorage.getItem(PARTICIPANTS_KEY)) || [];
         let customPasses = JSON.parse(localStorage.getItem(CUSTOM_PASSES_KEY)) || [];
@@ -1238,6 +1271,7 @@
             document.body.classList.remove('overlay-open'); 
             
             applyTheme(currentTheme); 
+            applyCustomAppName();
             initializeTabs();
             renderNameList(); 
             updatePassDistributionConfigUI(); 
@@ -1348,9 +1382,27 @@
             });
         });
         
-        // --- Övriga funktioner (alla dina funktioner som tidigare, inklusive GA-anrop) ---
-        // (Här ska ALLA dina JavaScript-funktioner finnas, precis som de var i din senaste fungerande version,
-        //  med GA-anropen integrerade på rätt ställen inuti dem)
+        function applyCustomAppName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const teamNameFromUrl = urlParams.get('team');
+
+            if (teamNameFromUrl && typeof gtag === 'function') {
+                gtag('event', 'custom_team_name_used', {
+                    'team_name': teamNameFromUrl,
+                    'source': 'url_parameter'
+                });
+            }
+
+            const appName = teamNameFromUrl 
+                ? decodeURIComponent(teamNameFromUrl.replace(/\+/g, ' ')) 
+                : DEFAULT_APP_NAME;
+
+            const mainTitleElement = document.querySelector('.app-title-bar h1');
+            if (mainTitleElement) {
+                mainTitleElement.textContent = appName;
+            }
+            document.title = appName;
+        }
 
         function showCustomAlert(message, title = "Meddelande", parentOverlayElement = null) {
             if (!customAlertModal || !customAlertTitle || !customAlertMessage || !customAlertHeader) {
@@ -1761,7 +1813,7 @@
         function openShareOverlay(){
             if(shareOverlay){
                 closeAllOverlays(shareOverlay);
-                generateQRCode();
+                updateShareableLink();
                 shareOverlay.style.display='flex';
                 document.body.classList.add('overlay-open');
                 if(typeof gtag === 'function') gtag('event', 'open_modal', { 'modal_name': 'share' });
@@ -1783,7 +1835,35 @@
                 document.body.classList.add('overlay-open');
             }
         }
-        function generateQRCode(){if(!qrCodeContainer||typeof QRious==='undefined')return;qrCodeContainer.innerHTML='';const canvas=document.createElement('canvas');try{let size=qrCodeContainer.offsetWidth>0?Math.min(180,qrCodeContainer.offsetWidth-20):180;new QRious({element:canvas,value:appURL,size:size,padding:5,level:'H',background:'white',foreground:'black'});if(canvas.width>0)qrCodeContainer.appendChild(canvas);}catch(e){console.error("QR fel:",e);}if(shareableLink){shareableLink.href=appURL;shareableLink.textContent=appURL;}}
+        
+        function updateShareableLink() {
+            const mainTitleElement = document.querySelector('.app-title-bar h1');
+            const currentAppName = mainTitleElement ? mainTitleElement.textContent : DEFAULT_APP_NAME;
+
+            let shareUrl = appURL;
+            if (currentAppName !== DEFAULT_APP_NAME) {
+                shareUrl = `${appURL}?team=${encodeURIComponent(currentAppName)}`;
+            }
+
+            if (shareableLink) {
+                shareableLink.href = shareUrl;
+                shareableLink.textContent = shareUrl;
+            }
+            generateQRCode(shareUrl); 
+        }
+
+        function generateQRCode(urlToEncode = appURL){
+            if(!qrCodeContainer||typeof QRious==='undefined')return;
+            qrCodeContainer.innerHTML='';
+            const canvas=document.createElement('canvas');
+            try{
+                let size=qrCodeContainer.offsetWidth>0?Math.min(180,qrCodeContainer.offsetWidth-20):180;
+                new QRious({element:canvas,value:urlToEncode,size:size,padding:5,level:'H',background:'white',foreground:'black'});
+                if(canvas.width>0)qrCodeContainer.appendChild(canvas);
+            } catch(e){
+                console.error("QR fel:",e);
+            }
+        }
         
         function copyResultsToClipboard(){
             const list=resultsList;
