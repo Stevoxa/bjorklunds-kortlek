@@ -7,8 +7,9 @@ En webbapp för jaktlag som slumpar passfördelningen inför ett såt. Du lägge
 **Öppna appen:** <https://stevoxa.github.io/bjorklunds-kortlek/>
 
 <p>
-  <img src="docs/passkyttar.png" alt="Fliken Passkyttar med åtta inlagda skyttar" width="260">
-  <img src="docs/passfordelning.png" alt="Slumpad passfördelning för åtta skyttar" width="260">
+  <img src="docs/startskarm.png" alt="Startskärmen när appen öppnas första gången" width="240">
+  <img src="docs/passkyttar.png" alt="Fliken Passkyttar med åtta inlagda skyttar" width="240">
+  <img src="docs/passfordelning.png" alt="Slumpad passfördelning för åtta skyttar" width="240">
 </p>
 
 ## Varför slumpa passen?
