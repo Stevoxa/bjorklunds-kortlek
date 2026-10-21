@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Björklunds Kortlek</title>
+    <meta name="description" content="Slumpa en rättvis passfördelning för ditt jaktlag. Fungerar i mobilen, även utan täckning.">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#284027"> 
     <link rel="apple-touch-icon" href="icon-192x192.png">
@@ -950,9 +951,9 @@
 
                 <ul id="resultsList"></ul>
                 <p id="unassignedParticipantsList" class="info-text" style="display:none;"></p>
-                <p id="noResultsInfo" class="info-text">Klicka på "Slumpa Pass" för att se resultat.</p>
+                <p id="noResultsInfo" class="info-text">Klicka på "Slumpa pass" för att se resultat.</p>
             </section>
-            <button id="randomizeBtn">Slumpa Pass</button>
+            <button id="randomizeBtn">Slumpa pass</button>
         </section>
     </div> <!-- End of #appRootContainer -->
 
@@ -965,7 +966,7 @@
             </div>
             <div class="overlay-scrollable-content">
                 <fieldset class="radio-group-container">
-                    <legend>Typ av Passfördelning</legend>
+                    <legend>Typ av passfördelning</legend>
                     <div class="radio-option">
                         <input type="radio" id="passModeStandard" name="passMode" value="standard" checked>
                         <label for="passModeStandard">Använd standardnumrering 1-n (Standard)</label>
@@ -1012,7 +1013,7 @@
     <div id="resultOverlay" class="content-overlay" style="display: none;">
         <div class="overlay-content-box">
             <div class="overlay-header">
-                <h3>Slumpat Resultat</h3>
+                <h3>Slumpat resultat</h3>
                 <button id="overlayCopyBtn" class="icon-button" title="Kopiera resultat" style="display: none;"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button>
                  <button id="resultOverlayCloseBtn" class="icon-button overlay-close-btn" title="Stäng"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
             </div>
@@ -1030,7 +1031,7 @@
                  <button id="helpOverlayCloseBtn" class="icon-button overlay-close-btn" title="Stäng"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
             </div>
             <div class="overlay-scrollable-content">
-                <h4>Installera Appen på Din Hemskärm</h4>
+                <h4>Installera appen på din hemskärm</h4>
                 <p>För enklare åtkomst kan du lägga till Björklunds Kortlek på din mobils hemskärm. Den kommer då att fungera mer som en vanlig app.</p>
                 <h5>Android (t.ex. Chrome):</h5>
                 <ol>
@@ -1039,7 +1040,7 @@
                     <li>Välj "Installera appen" eller "Lägg till på startskärmen".</li>
                     <li>Följ instruktionerna.</li>
                 </ol>
-                <p><em>Alternativt kan en "Installera App"-knapp ( <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> ) dyka upp automatiskt högst upp i appen när du använt sidan ett tag.</em></p>
+                <p><em>Alternativt kan knappen "Installera appen" ( <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> ) dyka upp automatiskt högst upp i appen när du använt sidan ett tag.</em></p>
                 <h5>iOS (iPhone/iPad - Safari):</h5>
                 <ol>
                     <li>Öppna appen i Safari-webbläsaren.</li>
@@ -1048,18 +1049,19 @@
                     <li>Bekräfta namnet och tryck "Lägg till".</li>
                 </ol>
                 <hr style="margin: 15px 0;">
-                <h4>Grundläggande Användning</h4>
+                <h4>Grundläggande användning</h4>
                 <p><strong>Fliken "Passkyttar":</strong></p>
                 <ul>
-                    <li><strong>Lägg till Passkyttar:</strong> Skriv namn i fältet och klicka "Lägg till" eller tala in namn med mikrofonikonen. Antalet tillagda passkyttar visas under listan.</li>
+                    <li><strong>Lägg till passkyttar:</strong> Skriv namn i fältet och klicka "Lägg till" eller tala in namn med mikrofonikonen. Antalet tillagda passkyttar visas under listan.</li>
                      <li><strong>Filhantering:</strong> Läs in en lista med passkyttar från en .txt-fil eller spara den aktuella listan till en fil.</li>
                 </ul>
                 <p><strong>Fliken "Passfördelning":</strong></p>
                  <ul>
-                    <li><strong>Passinställningar (Kugghjulet <svg style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24-.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>):</strong> Öppnar ett fönster där du kan välja mellan "Standardnumrering 1-n" eller "Använd en egen lista med passnamn/nummer". Om du väljer "Avancerad", visas ytterligare kontroller för att mata in pass-ID manuellt (eller via röst), ladda från/spara till fil, samt rensa listan. Den definierade listan och antalet pass i den visas i detta fönster.</li>
-                    <li><strong>Slumpa Pass:</strong> Klicka på den stora orangea "Slumpa Pass"-knappen. Resultatet visas både i huvudvyn och i ett helskärmsläge. En informationstext under passfördelningsrubriken i huvudvyn anger hur passen kommer att fördelas.</li>
-                    <li><strong>Återöppna Resultat:</strong> Använd ögon-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>) ovanför resultatlistan i huvudvyn för att återöppna helskärmsresultatet.</li>
-                    <li><strong>Kopiera/Dela:</strong> Använd kopieringsikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>) för att kopiera resultatlistan. Använd dela-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>) högst upp för att dela en länk till appen via en QR-kod.</li>
+                    <li><strong>Passinställningar (Kugghjulet <svg style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24-.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49 1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>):</strong> Öppnar ett fönster där du kan välja mellan "Använd standardnumrering 1-n (Standard)" och "Använd en egen lista med passnamn/nummer (Avancerad)". Väljer du Avancerad visas ytterligare kontroller för att mata in pass-ID manuellt (eller via röst), ladda från/spara till fil, samt rensa listan. Den definierade listan och antalet pass i den visas i detta fönster.</li>
+                    <li><strong>Slumpa pass:</strong> Klicka på den stora orange knappen "Slumpa pass". Resultatet visas både i huvudvyn och i ett helskärmsläge. En informationstext under passfördelningsrubriken i huvudvyn anger hur passen kommer att fördelas.</li>
+                    <li><strong>Återöppna resultat:</strong> Använd ögon-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>) ovanför resultatlistan i huvudvyn för att återöppna helskärmsresultatet.</li>
+                    <li><strong>Kopiera resultat:</strong> Använd kopieringsikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>) för att kopiera passfördelningen och klistra in den, t.ex. i lagets chatt.</li>
+                    <li><strong>Dela appen:</strong> Använd dela-ikonen (<svg viewBox="0 0 24 24" style="display:inline-block; width:1em; height:1em; vertical-align:-0.125em; fill:currentColor;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 8.81C7.5 8.31 6.79 8 6 8c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3s3-1.34 3-3-1.34-3-3-3z"/></svg>) högst upp för att dela en länk eller QR-kod till appen.</li>
                 </ul>
                 <hr style="margin: 15px 0;">
                 <h4>Anpassningar</h4>
@@ -1073,10 +1075,12 @@
                     <li><strong>Installera på nytt:</strong> Använd installationsguiden högst upp i hjälpen för att lägga till den nya, anpassade versionen på din hemskärm.</li>
                 </ol>
                 <hr style="margin: 25px 0;">
-                <h4>Din Integritet och Datahantering</h4>
+                <h4>Din integritet och datahantering</h4>
                 <p>All information du matar in i Björklunds Kortlek, såsom namn på passkyttar eller egna definierade passnamn, sparas endast lokalt i din egen webbläsare på din enhet. Denna information lämnar inte din enhet och delas inte med någon tredje part.</p>
-                <p>För att förstå hur appen generellt används och för att kunna förbättra den, samlar vi in anonym användningsstatistik med hjälp av Google Analytics. Denna statistik inkluderar information om vilka funktioner som används (t.ex. om pass slumpas, om listor sparas), vilken typ av enhet appen används på, och ungefärlig geografisk region. **Inga personligt identifierbara uppgifter, såsom de namn eller pass-ID du matar in, skickas till Google Analytics.** Syftet är enbart att få en övergripande bild av appanvändningen för framtida utveckling.</p>
-                <p>Du kan när som helst rensa all lokalt sparad data (passkyttar och egna passlistor) direkt i appen under fliken "Rapporter & Admin" via knappen "Rensa all data".</p>
+                <p>För att förstå hur appen generellt används och för att kunna förbättra den, samlar vi in anonym användningsstatistik med hjälp av Google Analytics. Denna statistik inkluderar information om vilka funktioner som används (t.ex. om pass slumpas, om listor sparas), vilken typ av enhet appen används på, och ungefärlig geografisk region. <strong>Inga personligt identifierbara uppgifter, såsom de namn eller pass-ID du matar in, skickas till Google Analytics.</strong> Om du använder ett anpassat lagnamn (se Anpassningar ovan) registreras lagnamnet i statistiken. Syftet är enbart att få en övergripande bild av appanvändningen för framtida utveckling.</p>
+                <p>Du kan när som helst ta bort de passkyttar och egna pass som är sparade på den här enheten:</p>
+                <button id="clearAllDataBtn" class="button-danger">Rensa passkyttar och egna pass</button>
+                <p id="clearAllDataStatus" class="info-text" style="display: none;">Passkyttar och egna pass har rensats.</p>
                 <hr style="margin: 25px 0;">
                 <h4>Kontakt</h4>
                 <p>För frågor, feedback eller förslag på förbättringar, kontakta gärna utvecklaren:</p>
@@ -1131,7 +1135,15 @@
         </div>
     </div>
 
+    <script src="passes.js"></script>
     <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .catch(error => console.error('ServiceWorker-registrering misslyckades:', error));
+            });
+        }
+
         // --- DOM ELEMENT REFERENSER ---
         let themeToggleBtn, themeIconSun, themeIconMoon, nameInput, addNameBtn, nameList,
             randomizeBtn, resultsList, fileInput, saveNamesBtn, noNamesInfo, noResultsInfo,
@@ -1366,7 +1378,9 @@
             if (helpBtn) helpBtn.addEventListener('click', openHelpOverlay);
             if (shareBtn) shareBtn.addEventListener('click', openShareOverlay);
             if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
-            
+            const clearAllDataBtn = document.getElementById('clearAllDataBtn');
+            if (clearAllDataBtn) clearAllDataBtn.addEventListener('click', confirmClearAllData);
+
             setupSpeechRecognition(); 
             setupPassSpeechRecognition_overlay(); 
             setupPWAInstallation();
@@ -1391,7 +1405,7 @@
             let appName = DEFAULT_APP_NAME;
 
             if (teamNameFromUrl) {
-                appName = decodeURIComponent(teamNameFromUrl.replace(/\+/g, ' '));
+                appName = teamNameFromUrl; // URLSearchParams har redan avkodat värdet
                 localStorage.setItem(CUSTOM_APP_NAME_KEY, appName); // Spara namnet lokalt
                 if (typeof gtag === 'function') {
                     gtag('event', 'custom_team_name_used', {
@@ -1598,9 +1612,9 @@
                 customPassElementsContainer.classList.toggle('disabled-look', !isAdvanced);
             }
             if (passDistributionMethodInfo) {
-                if(passDistributionConfigMode==='standard'){passDistributionMethodInfo.textContent=participants.length>0?`Passkyttarna (${participants.length}st) fördelas över pass 1-${participants.length}.`:"Lägg till passkyttar för att se info.";}
+                if(passDistributionConfigMode==='standard'){passDistributionMethodInfo.textContent=participants.length>0?`Passkyttarna (${participants.length} st) fördelas över pass 1-${participants.length}.`:"Lägg till passkyttar för att se info.";}
                 else{if(customPasses.length>0){if(participants.length<=0){passDistributionMethodInfo.textContent="Lägg till passkyttar för att se info.";}
-                else{passDistributionMethodInfo.textContent=`Passkyttarna (${participants.length}st) fördelas över de ${customPasses.length} specificerade passen.`+ (customPasses.length < participants.length ? ` (${participants.length - customPasses.length} blir oplacerade)` : '');}}
+                else{passDistributionMethodInfo.textContent=`Passkyttarna (${participants.length} st) fördelas över de ${customPasses.length} specificerade passen.`+ (customPasses.length < participants.length ? ` (${participants.length - customPasses.length} blir oplacerade)` : '');}}
                 else{passDistributionMethodInfo.textContent="Avancerad vald, men inga pass definierade. Öppna ⚙️ för att lägga till pass.";}}
                 passDistributionMethodInfo.style.display = (participants.length > 0 || passDistributionConfigMode === 'advanced') ? 'block' : 'none';
             }
@@ -1622,7 +1636,7 @@
         function addPassNameToList(passIdToAdd) { 
             const passId = passIdToAdd.trim(); if (!passId) return false; 
             if (customPasses.some(p => p.toLowerCase() === passId.toLowerCase())) { 
-                showCustomAlert(`Pass-ID "${passId}" finns redan.`, "Dublett", advancedSettingsOverlay);
+                showCustomAlert(`Pass-ID "${escapeHtml(passId)}" finns redan.`, "Dublett", advancedSettingsOverlay);
                 return false; 
             }
             customPasses.push(passId); customPasses.sort(smartSortPasses); 
@@ -1658,7 +1672,7 @@
                         clearResults();
                         if(typeof gtag === 'function') gtag('event', 'add_custom_pass', { 'method': 'file_upload', 'count': added });
                     } 
-                    showCustomAlert(`${added} nya unika pass-ID tillagda.`, "Fil Inläst", advancedSettingsOverlay);
+                    showCustomAlert(`${added} nya unika pass-ID tillagda.`, "Fil inläst", advancedSettingsOverlay);
                     event.target.value='';
                 };
                 reader.readAsText(file);
@@ -1673,7 +1687,7 @@
             if(typeof gtag === 'function') gtag('event', 'save_custom_pass_list');
         }
         function confirmClearLoadedCustomPasses_overlay() {
-            showCustomConfirm("Är du säker på att du vill rensa hela listan med egna pass?", "Bekräfta Rensa", 
+            showCustomConfirm("Är du säker på att du vill rensa hela listan med egna pass?", "Bekräfta rensning", 
             () => { 
                 customPasses = []; 
                 if(passNameInput_overlay) passNameInput_overlay.value = ''; 
@@ -1690,7 +1704,7 @@
             const name=nameToAdd.trim();
             if(!name) return false;
             if(participants.some(p=>p.toLowerCase()===name.toLowerCase())){
-                showCustomAlert(`Passkytten "${name}" finns redan i listan.`, "Dublett");
+                showCustomAlert(`Passkytten "${escapeHtml(name)}" finns redan i listan.`, "Dublett");
                 return false;
             }
             participants.push(name);
@@ -1727,7 +1741,7 @@
                     saveParticipantsToLocalStorage();renderNameList();clearResults();
                     if(typeof gtag === 'function') gtag('event', 'add_participant', { 'method': 'file_upload', 'count': added });
                 } 
-            showCustomAlert(`${added} nya unika passkyttar tillagda från fil.`, "Fil Inläst");
+            showCustomAlert(`${added} nya unika passkyttar tillagda från fil.`, "Fil inläst");
             event.target.value='';};reader.readAsText(file);}
         }
         function saveParticipantNamesToFile() { 
@@ -1742,7 +1756,7 @@
         function clearResults() {
             if(resultsList)resultsList.innerHTML='';if(overlayResultsList)overlayResultsList.innerHTML='';
             if(noResultsInfo){
-                if(participants.length>0||(passDistributionConfigMode==='advanced'&&customPasses.length>0)){noResultsInfo.textContent="Klicka på \"Slumpa Pass\" för resultat.";}
+                if(participants.length>0||(passDistributionConfigMode==='advanced'&&customPasses.length>0)){noResultsInfo.textContent="Klicka på \"Slumpa pass\" för resultat.";}
                 else if(passDistributionConfigMode==='advanced'&&customPasses.length===0){noResultsInfo.textContent="Lägg till egna pass i Passinställningar (⚙️) eller välj Standard.";}
                 else{noResultsInfo.textContent="Lägg till passkyttar för att kunna slumpa pass.";}
                 noResultsInfo.style.display='block';
@@ -1753,8 +1767,30 @@
             if(overlayCopyBtn)overlayCopyBtn.style.display='none';
             if(resultOverlay&&resultOverlay.style.display==='flex'){resultOverlay.style.display='none';checkAndCloseBodyOverlay();}
         }
-        function shuffleArray(arr){const newArr=[...arr];for(let i=newArr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[newArr[i],newArr[j]]=[newArr[j],newArr[i]];}return newArr}
-        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function confirmClearAllData() {
+            showCustomConfirm("Alla passkyttar och egna pass som är sparade på den här enheten tas bort, liksom senaste passfördelningen. Det går inte att ångra. Vill du fortsätta?", "Rensa passkyttar och egna pass",
+            () => {
+                participants = [];
+                customPasses = [];
+                saveParticipantsToLocalStorage();
+                saveCustomPassesToLocalStorage();
+                renderNameList();
+                clearResults();
+                const status = document.getElementById('clearAllDataStatus');
+                if (status) status.style.display = 'block';
+                if(typeof gtag === 'function') gtag('event', 'clear_list', { 'list_type': 'all_data' });
+            },
+            null,
+            helpOverlay
+            );
+        }
+
         function randomizePasses() {
             if(participants.length===0){ 
                 showCustomAlert('Lägg till passkyttar först!', "Information");
@@ -1768,7 +1804,7 @@
             if(passDistributionConfigMode==='advanced'&&customPasses.length<participants.length) {
                  showCustomConfirm(
                     `Det finns ${customPasses.length} egna pass men ${participants.length} passkyttar.<br>Detta innebär att ${participants.length-customPasses.length} skytt(ar) kommer att bli oplacerade.<br><br>Vill du fortsätta ändå?`, 
-                    "Varning: Antal Pass",
+                    "Varning: antal pass",
                     () => { 
                         proceedWithRandomization();
                     } 
@@ -1780,12 +1816,22 @@
 
         function proceedWithRandomization() {
             clearResults();if(noResultsInfo)noResultsInfo.style.display='none';
-            const shuffled=shuffleArray(participants);let unassigned=[];const items=[];
-            const createLi=(id,p)=>{const li=document.createElement('li');li.innerHTML=`<span>${id}:</span> ${p}`;return li;};
-            if(passDistributionConfigMode==='advanced'){const avail=[...shuffled];customPasses.forEach(pID=>items.push(createLi(pID,avail.length>0?avail.shift():"<i>Ledigt</i>")));unassigned=avail;}
-            else{shuffled.forEach((name,i)=>items.push(createLi(`Pass ${i+1}`,name)));}
+            const {assignments,unassigned}=assignPasses(participants,passDistributionConfigMode,customPasses);
+            // Namn och pass-ID är användarinmatning och sätts därför som text, aldrig som HTML.
+            const createLi=({pass,participant})=>{
+                const li=document.createElement('li');
+                const label=document.createElement('span');label.textContent=`${pass}:`;
+                li.append(label,' ');
+                if(participant===null){const free=document.createElement('i');free.textContent='Ledigt';li.append(free);}
+                else{li.append(participant);}
+                return li;
+            };
+            const items=assignments.map(createLi);
             items.forEach(item=>{if(resultsList)resultsList.appendChild(item.cloneNode(!0));if(overlayResultsList)overlayResultsList.appendChild(item);});
-            if(unassigned.length>0){const txt=`<strong>Oplacerade (${unassigned.length}):</strong> ${unassigned.join(', ')}`;if(unassignedParticipantsList){unassignedParticipantsList.innerHTML=txt;unassignedParticipantsList.style.display='block';}if(overlayUnassignedParticipants){overlayUnassignedParticipants.innerHTML=txt;overlayUnassignedParticipants.style.display='block';}}
+            if(unassigned.length>0){
+                const showUnassigned=el=>{if(!el)return;const label=document.createElement('strong');label.textContent=`Oplacerade (${unassigned.length}):`;el.replaceChildren(label,` ${unassigned.join(', ')}`);el.style.display='block';};
+                showUnassigned(unassignedParticipantsList);showUnassigned(overlayUnassignedParticipants);
+            }
             else{if(unassignedParticipantsList)unassignedParticipantsList.style.display='none';if(overlayUnassignedParticipants)overlayUnassignedParticipants.style.display='none';}
             if(items.length>0){if(mainResultActionsTop)mainResultActionsTop.style.display='flex';if(overlayCopyBtn)overlayCopyBtn.style.display='inline-flex';}
             showResultOverlay();
@@ -1810,6 +1856,8 @@
             if(helpOverlay){
                 const helpContent = helpOverlay.querySelector('.overlay-scrollable-content');
                 if(helpContent) helpContent.scrollTop = 0; 
+                const clearStatus = document.getElementById('clearAllDataStatus');
+                if(clearStatus) clearStatus.style.display = 'none';
                 closeAllOverlays(helpOverlay);
                 helpOverlay.style.display='flex';
                 document.body.classList.add('overlay-open');
@@ -1877,9 +1925,9 @@
                 showCustomAlert('Inga resultat att kopiera.', "Information");
                 return;
             }
-            let txt=`${passDistributionTitle.textContent}:\n`;Array.from(list.children).forEach(li=>txt+=li.textContent.replace(/<\/?i>/g,'')+'\n');
+            let txt=`${passDistributionTitle.textContent}:\n`;Array.from(list.children).forEach(li=>txt+=li.textContent+'\n');
             if(unassignedParticipantsList&&unassignedParticipantsList.style.display==='block'&&unassignedParticipantsList.textContent){
-                const div=document.createElement('div');div.innerHTML=unassignedParticipantsList.innerHTML;txt+=`\n${div.textContent||div.innerText||""}\n`;
+                txt+=`\n${unassignedParticipantsList.textContent}\n`;
             }
             if(navigator.clipboard&&navigator.clipboard.writeText){
                 navigator.clipboard.writeText(txt.trim()).then(()=> {
